@@ -1,0 +1,33 @@
+//
+// Root script to display one of the plots made by hello4.fcl
+//
+
+{
+
+  // With this you can reinvoke the script without exiting root.
+  gROOT->Reset();
+
+  // Get rid of grey background (ugly for print out).
+  gROOT->SetStyle("Plain");
+
+  // Statistics box for histograms should include all of:
+  // number of Entries, Mean, Rms, Underflows, Overflows
+  gStyle->SetOptStat("emruo");
+
+  // Open the input file that contains histograms and ntuples
+  // made by ReadBack.cc
+  TFile* file = new TFile( "output/hello4.root" );
+
+  // Get a pointer the histograms.
+  TH1F* hMass;  file->GetObject("massPlot/Mass",  hMass);
+
+  // Open a new canvas on the screen.
+  TCanvas *canvas = new TCanvas("c", "Plots from hello4.root" );
+
+  // Draw the histogram.
+  hMass->Draw("H9");
+
+  // Write the canvas to a pdf file.
+  canvas->Print("output/hell04.pdf");
+
+}

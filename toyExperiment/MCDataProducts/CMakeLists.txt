@@ -1,0 +1,15 @@
+art_make(
+  LIB_LIBRARIES ${CLHEP}
+  ${ART_PERSISTENCY_PROVENANCE}
+  ${ART_PERSISTENCY_COMMON}
+  DICT_LIBRARIES
+  ${ART_PERSISTENCY_CORE}
+  ${ART_PERSISTENCY_PROVENANCE}
+  ${ART_PERSISTENCY_COMMON}
+  ${CETLIB}
+  ${ART_UTILITES}
+  toyExperiment_MCDataProducts
+  )
+
+install_headers()
+install_source()

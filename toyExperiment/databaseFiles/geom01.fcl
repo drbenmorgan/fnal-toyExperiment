@@ -1,0 +1,32 @@
+#
+# This is a mock-up of information that will some day live in a geometry database.
+# For illustrative purposes we are using this file.
+#
+
+world : {
+  halfLengths : [ 1200, 1200, 600 ]   // Include a 20% margin around the tracker; in mm.
+}
+
+tracker : {
+
+  inner : {
+    nShells    :  5      // Number of shells
+    r0         : 20      // Inner Radius, mm
+    dr         : 10      // Radial step from layer to layer, mm
+    halfLength :100      // Half length in z, mm
+    sigma      :  0.005  // Resolution, mm
+  }
+
+  outer : {
+    nShells    :  10
+    r0         : 100     // Inner Radius, mm
+    dr         : 100     // Radial step from layer to layer, mm
+    halfLength : 500     // Half length in z, mm
+    sigma      :   0.200 // Resolution, mm
+  }
+
+}
+
+bfield : {
+  bz : 1.5  // z component of uniform field, in Tesla.
+}

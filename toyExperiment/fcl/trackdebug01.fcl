@@ -1,0 +1,40 @@
+#
+# fcl script for development testing of the art-work-book base product
+#
+
+#include "fcl/minimalMessageService.fcl"
+
+process_name : trackdebug01
+
+source : {
+  module_type : RootInput
+  fileNames   : [ "dev01_data.root" ]
+  maxEvents   : -1
+}
+services : {
+  message               : @local::default_message
+  RandomNumberGenerator : {}
+  TFileService          : { fileName : "trackdebug01.root" }
+
+  user : {
+    Geometry   : { geometryFile   : "databaseFiles/geom01.fcl"    }
+    Conditions : { conditionsFile : "databaseFiles/conditions01.fcl" }
+  }
+
+}
+
+physics :{
+
+  analyzers: {
+    eventDisplay : {
+      module_type : EventDisplayDebug
+      gensModuleLabel : "evtgen"
+      simModuleLabel  : "detsim"
+      maxDisplay  : 10
+    }
+  }
+
+  e1            : [ eventDisplay ]
+  end_paths     : [ e1 ]
+
+}

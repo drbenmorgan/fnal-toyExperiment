@@ -1,0 +1,68 @@
+#
+# Standard configurations for modules.
+#
+#
+
+BEGIN_PROLOG
+
+# Producers
+evtgen_default : {
+  module_type : EventGenerator
+  seed        :   123
+  pmin        :    0.
+  pmax        : 2000.
+}
+
+detsim_default : {
+  module_type      : DetectorSimulation
+  gensModuleLabel  : "evtgen"
+  seed             :   456
+}
+
+makeHits_default : {
+  module_type      : HitMaker
+  seed             : 789
+  inputModuleLabel : "detsim"
+  instanceNames    : [ "inner", "outer" ]
+}
+
+fitter_default : {
+  module_type      : FindAndFitHelix
+  seed             : 101112
+  makerModuleLabel : "makeHits"
+  minHits          : 5
+}
+
+#Analyzers
+inspectGens_default : {
+  module_type      : InspectGenParticles
+  gensModuleLabel  : "evtgen"
+  inputModuleLabel : evtgen
+  maxPrint         : 0
+}
+
+inspectIntersections_default : {
+  module_type    : InspectIntersections
+  simModuleLabel : "detsim"
+  maxPrint       : 0
+}
+
+inspectHits_default : {
+  module_type      : InspectTrkHits
+  makerModuleLabel : "makeHits"
+  maxPrint         : 0
+}
+
+inspectFits_default : {
+  module_type       : InspectFittedHelix
+  fitterModuleLabel : "fitter"
+  maxPrint          : 0
+}
+
+massPlot_default : {
+  module_type       : MassPlot
+  fitterModuleLabel : "fitter"
+  maxPrint          : 0
+}
+
+END_PROLOG

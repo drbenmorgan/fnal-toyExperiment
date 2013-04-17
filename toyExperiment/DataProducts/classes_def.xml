@@ -1,0 +1,10 @@
+<!--  -->
+<!--  $Id: classes_def.xml,v 1.16 2012/11/01 23:38:25 gandr Exp $     -->
+<!--  -->
+
+<lcgdict>
+ <class name="tex::PDGCode"/>
+ <class name="CLHEP::Hep3Vector"/>
+ <class name="CLHEP::HepLorentzVector"/>
+ <class name="CLHEP::HepSymMatrix"/>
+</lcgdict>

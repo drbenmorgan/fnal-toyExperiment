@@ -1,0 +1,32 @@
+#
+# Read the data products produced by dev01.fcl; make histograms and diagnostic
+# printout.
+#
+
+#include "fcl/minimalMessageService.fcl"
+#include "fcl/standardModules.fcl"
+
+process_name : read01
+
+source : {
+  module_type : RootInput
+  fileNames   : [ "dev01_data.root" ]
+  maxEvents   : -1
+}
+
+services : {
+  message       : @local::default_message
+  TFileService  : { fileName : "read01.root" }
+}
+
+physics :{
+  analyzers: {
+    inspectGens      : @local::inspectGens_default
+    inspectHitTruths : @local::inspectHitTruths_default
+    inspectHits      : @local::inspectHits_default
+  }
+
+  e1        : [ inspectGens, inspectHitTruths, inspectHits ]
+  end_paths : [ e1 ]
+
+}

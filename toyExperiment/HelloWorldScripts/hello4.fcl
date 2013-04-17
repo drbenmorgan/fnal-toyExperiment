@@ -1,0 +1,38 @@
+#
+# Make some histograms
+#
+
+#include "fcl/minimalMessageService.fcl"
+
+process_name : hello4
+
+source : {
+  module_type : RootInput
+  fileNames   : [ "inputFiles/input04_data.root" ]
+}
+
+services : {
+  message : @local::default_message
+  TFileService          : { fileName : "output/hello4.root" }
+
+   user : {
+    Geometry   : { geometryFile   : "databaseFiles/geom01.fcl"    }
+    Conditions : { conditionsFile : "databaseFiles/conditions01.fcl" }
+  }
+
+}
+
+physics :{
+  analyzers: {
+    massPlot : {
+       module_type       : MassPlot
+       fitterModuleLabel : "fitter"
+       maxPrint          : 10
+    }
+
+  }
+
+  e1        : [ massPlot ]
+  end_paths : [ e1 ]
+
+}
