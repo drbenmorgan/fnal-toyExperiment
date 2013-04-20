@@ -62,6 +62,12 @@ include(BuildPlugins)
 # source
 add_subdirectory(toyExperiment)
 
+# Scripts
+add_subdirectory(scripts)
+
+# Admin stuff
+add_subdirectory(admin)
+
 # ups - table and config files
 add_subdirectory(ups)
 
