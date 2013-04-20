@@ -4,12 +4,13 @@
 
 #include "fcl/minimalMessageService.fcl"
 
-process_name : hello3
+process_name : writeFile
 
 source : {
   module_type : RootInput
   fileNames   : [ "inputFiles/input01_data.root" ]
-  maxEvents   : 3
+  firstEvent  : 4
+  maxEvents   : 4
 }
 
 services : {
@@ -31,6 +32,6 @@ physics :{
 outputs : {
   output1 : {
     module_type : RootOutput
-    fileName    : "output/hello3_data.root"
+    fileName    : "output/writeFile_data.root"
   }
 }

@@ -17,7 +17,7 @@ services : {
 
   message               : @local::default_message
   RandomNumberGenerator : {}
-  TFileService          : { fileName : "input01.root" }
+  TFileService          : { fileName : "output/input01.root" }
 
   user : {
     Geometry   : { geometryFile   : "databaseFiles/geom01.fcl"    }
@@ -53,7 +53,7 @@ outputs: {
 
   outfile : {
     module_type : RootOutput
-    fileName    : "input01_data.root"
+    fileName    : "output/input01_data.root"
   }
 
 }

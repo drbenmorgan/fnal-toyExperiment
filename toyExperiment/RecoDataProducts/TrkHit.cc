@@ -17,7 +17,7 @@ tex::TrkHit::TrkHit( int    shell,
 }
 
 std::ostream& tex::operator<<(std::ostream& ost,
-				const TrkHit& hit ){
+                              const tex::TrkHit& hit ){
   ost << "Hit( shell: " << hit.shell()
       << " z: "         << hit.z()
       << " phi: "       << hit.phi()

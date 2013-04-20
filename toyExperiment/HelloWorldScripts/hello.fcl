@@ -4,12 +4,11 @@
 
 #include "fcl/minimalMessageService.fcl"
 
-process_name : hello1
+process_name : hello
 
 source : {
   module_type : RootInput
   fileNames   : [ "inputFiles/input01_data.root" ]
-  maxEvents   : 3
 }
 
 services : {

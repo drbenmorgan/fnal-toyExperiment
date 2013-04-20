@@ -20,3 +20,13 @@ tex::Intersection::Intersection( int                            shell,
   _position(position)
 {
 }
+
+std::ostream&
+tex::operator<<(std::ostream& ost,
+                const tex::Intersection& intersec ){
+  ost << "Intersection: shell number: " << intersec.shell()
+      << " GenParticle: "               << intersec.genTrack().id()
+      << " "                            << intersec.genTrack().key()
+      << " Point: "                     << intersec.position();
+  return ost;
+}

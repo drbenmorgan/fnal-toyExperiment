@@ -9,14 +9,22 @@ tex::MCRunSummary::MCRunSummary():
   _nAlive(0), _nGood(0){
 }
 
-void 
+void
 tex::MCRunSummary::increment ( size_t nAlive, size_t nGood){
   _nAlive += nAlive;
   _nGood  += nGood;
 }
 
-void 
+void
 tex::MCRunSummary::clear(){
   _nAlive=0;
   _nGood=0;
+}
+
+std::ostream&
+tex::operator<<(std::ostream& ost,
+                const MCRunSummary& sum ){
+  ost << "MC Run Summary: nAlive " << sum.nAlive()
+      << " nGood: "                << sum.nGood();
+  return ost;
 }

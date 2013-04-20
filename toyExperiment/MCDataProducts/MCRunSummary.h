@@ -34,7 +34,7 @@ namespace tex {
   };
 
   std::ostream& operator<<(std::ostream& ost,
-			   const MCRunSummary& genp );
+			   const MCRunSummary& sum );
 
 }
 

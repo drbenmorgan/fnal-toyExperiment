@@ -37,11 +37,8 @@ namespace tex {
 
   };
 
-  /*
-    // Fixme: make this real
   std::ostream& operator<<(std::ostream& ost,
-			   const GenParticle& hit );
-  */
+			   const Intersection& hit );
 
 }
 

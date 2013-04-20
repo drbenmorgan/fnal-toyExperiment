@@ -45,7 +45,7 @@ namespace tex {
   };
 
   std::ostream& operator<<(std::ostream& ost,
-                           const FittedHelixData& fit );
+                           const tex::FittedHelixData& fit );
 
 
 }

@@ -6,7 +6,8 @@
 // produced by the online system.
 //
 // In this case, the data product is a not a collection type, just to
-// show that data products need not be collection types.
+// show that data products need not be collection types.  It does contain
+// a collection type as member data but that is not necessary.
 //
 
 #include "toyExperiment/RecoDataProducts/DetectorStatusRecord.h"
@@ -25,8 +26,11 @@ namespace tex {
 
     void addRecord( DetectorStatusRecord const& record );
 
+    size_t size() const { return _records.size(); }
+
     DetectorStatusRecord const& record( size_t id ) const { return _records.at(id); }
 
+    void printAll( std::ostream& ost) const;
 
   private:
 
@@ -34,15 +38,8 @@ namespace tex {
 
   };
 
-  /*
-    // Fixme: make this real
-  inline
   std::ostream& operator<<(std::ostream& ost,
-  const DetectorStatus& d ){
-    ost << d.isOn() << " " << d.voltage();
-    return ost;
-  }
-  */
+                           const tex::DetectorStatus& d );
 
 }
 
