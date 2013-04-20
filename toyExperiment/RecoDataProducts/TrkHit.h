@@ -19,7 +19,7 @@ namespace tex {
 	    double phi,
 	    double sz,
 	    double zphi);
-    
+
     int    shell()  const { return _shell; }
     double z()      const { return _z;     }
     double phi()    const { return _phi;   }
@@ -37,7 +37,7 @@ namespace tex {
   };
 
   std::ostream& operator<<(std::ostream& ost,
-                           const TrkHit& hit );
+                           const tex::TrkHit& hit );
 
 }
 

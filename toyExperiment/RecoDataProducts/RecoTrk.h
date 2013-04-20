@@ -49,7 +49,7 @@ namespace tex {
   }
 
   std::ostream& operator<<(std::ostream& ost,
-                           const RecoTrk& hit );
+                           const tex::RecoTrk& hit );
 
 }
 

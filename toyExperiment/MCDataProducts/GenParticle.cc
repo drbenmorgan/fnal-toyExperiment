@@ -34,7 +34,7 @@ tex::GenParticle::addChild(  art::Ptr<GenParticle> const& child ){
 
 std::ostream&
 tex::operator<<(std::ostream& ost,
-		  const GenParticle& genp ){
+                const tex::GenParticle& genp ){
   ost << "[ "
       << "pdg: "       << genp.pdgId()        << " "
       << "Position: "  << genp.position()     << " "

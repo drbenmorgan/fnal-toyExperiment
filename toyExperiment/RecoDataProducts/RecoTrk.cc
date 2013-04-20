@@ -82,7 +82,7 @@ double tex::RecoTrk::sigmaP() const{
 }
 
 std::ostream& tex::operator<<(std::ostream& ost,
-                                const RecoTrk& recoTrk ){
+                              const tex::RecoTrk& recoTrk ){
   ost << "( "
       << recoTrk.momentum()    << ", "
       << recoTrk.momentumCov() << " )";
