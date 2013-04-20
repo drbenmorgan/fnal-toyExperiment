@@ -16,7 +16,7 @@
 
   // Open the input file that contains histograms and ntuples
   // made by ReadBack.cc
-  TFile* file = new TFile( "output/hello4.root" );
+  TFile* file = new TFile( "output/histograms.root" );
 
   // Get a pointer the histograms.
   TH1F* hMass;  file->GetObject("massPlot/Mass",  hMass);

@@ -68,7 +68,7 @@ namespace tex {
   };
 
   std::ostream& operator<<(std::ostream& ost,
-			   const GenParticle& genp );
+			   const tex::GenParticle& genp );
 
 }
 

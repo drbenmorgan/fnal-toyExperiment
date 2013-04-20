@@ -25,12 +25,11 @@ namespace tex {
 
     bool   _isOn;
     double _voltage;
-    
+
   };
 
-  inline
-  std::ostream& operator<<(std::ostream& ost,
-			   const DetectorStatusRecord& d ){
+  inline std::ostream& operator<<(std::ostream& ost,
+                                  const tex::DetectorStatusRecord& d ){
     ost << d.isOn() << " " << d.voltage();
     return ost;
   }

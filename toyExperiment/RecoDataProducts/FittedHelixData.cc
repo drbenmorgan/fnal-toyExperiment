@@ -18,7 +18,7 @@ tex::FittedHelixData::FittedHelixData( Helix               const& helix,
 }
 
 std::ostream& tex::operator<<(std::ostream& ost,
-                                const FittedHelixData& fit ){
+                              const tex::FittedHelixData& fit ){
   ost << "( cu: "  << fit.helix().cu()
       << " phi0: " << fit.helix().phi0()
       << " d0: "   << fit.helix().d0()

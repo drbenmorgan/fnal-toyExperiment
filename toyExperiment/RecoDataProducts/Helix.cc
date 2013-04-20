@@ -127,7 +127,7 @@ double tex::Helix::cosTheta() const{
 }
 
 std::ostream&
-tex::operator<<(std::ostream& ost, Helix const& helix ){
+tex::operator<<(std::ostream& ost, tex::Helix const& helix ){
 
   ost << "( cu: "   << helix.cu()
       <<  " d0: "   << helix.d0()
