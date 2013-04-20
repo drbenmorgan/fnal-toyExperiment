@@ -8,7 +8,7 @@ BEGIN_PROLOG
 # Producers
 evtgen_default : {
   module_type : EventGenerator
-  seed        :   123
+  seed        :    1
   pmin        :    0.
   pmax        : 2000.
 }
@@ -16,19 +16,19 @@ evtgen_default : {
 detsim_default : {
   module_type      : DetectorSimulation
   gensModuleLabel  : "evtgen"
-  seed             :   456
+  seed             : 2
 }
 
 makeHits_default : {
   module_type      : HitMaker
-  seed             : 789
+  seed             : 3
   inputModuleLabel : "detsim"
   instanceNames    : [ "inner", "outer" ]
 }
 
 fitter_default : {
   module_type      : FindAndFitHelix
-  seed             : 101112
+  seed             : 4
   makerModuleLabel : "makeHits"
   minHits          : 5
 }
