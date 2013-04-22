@@ -34,8 +34,8 @@ endif()
 cet_report_compiler_flags()
 
 # these are minimum required versions, not the actual product versions
-find_ups_product( art v1_03_06 )
-find_ups_product( cetbuildtools v3_02_01 )
+find_ups_product( art v1_06_00 )
+find_ups_product( cetbuildtools v3_04_04 )
 
 cet_check_gcc()
 
