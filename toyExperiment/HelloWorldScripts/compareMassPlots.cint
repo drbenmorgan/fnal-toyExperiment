@@ -41,7 +41,7 @@
   mx *= 1.07;
 
   // Open a new canvas on the screen.
-  TCanvas *canvas = new TCanvas("c", "Plots from hello4.root" );
+  TCanvas *canvas = new TCanvas("c", "Comparison of three mass Plots" );
 
   // Divide page into 2, vertically.
   c->Divide(1,2);
