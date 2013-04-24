@@ -10,7 +10,7 @@
 
 if [ -z "$TOYEXPERIMENT_DIR" ]; then
   echo "You cannot run this script until the toyExperiment ups product has been setup."
-  return 1
+  exit 1
 fi
 
 # Name of link that will be made in this directory
@@ -23,7 +23,7 @@ inputDir=${TOYEXPERIMENT_DIR}/inputFiles
 if [ ! -e ${inputDir} ]; then
   echo "Cannot find the directory that contains the input files: " ${inputdir}
   echo "Please rename/remove it and rerun this script"
-  return 1
+  exit 1
 fi
 
 # If the symlink already exists ...
@@ -35,12 +35,12 @@ elif [ -h "${inputLink}" ]; then
      echo "${inputLink} exists and is a symlink to ${existingLink}".
      echo "It should be a link to ${inputDir}"
      echo "Please rename/remove it and rerun this script"
-     return 1
+     exit 1
   fi
 else
   echo "The file ${inputLink} exists but is not a link to ${inputDir}"
   echo "Please rename/remove it and rerun this script"
-  return 1
+  exit 1
 fi
 
 # The name of the output directory; either a real directory or a symlink to one.
@@ -58,7 +58,7 @@ if [ -n "${ART_WORKBOOK_OUTPUT_BASE}" ]; then
     echo "Error making the output directory " ${ART_WORKBOOK_OUTPUT}
     echo "There is already a file with that name and it is not a directory."
     echo "Please rename/remove this file and rerun this script"
-    return 1
+    exit 1
   fi
 
   if [ ! -e "${outputName}" ] && [ ! -h "${outputName}" ]; then
@@ -69,12 +69,12 @@ if [ -n "${ART_WORKBOOK_OUTPUT_BASE}" ]; then
        echo "Error: ${outputName} exists and is a symlink to ${existingLink}".
        echo "It should be a link to ${ART_WORKBOOK_OUTPUT}"
        echo "Please rename/remove it and rerun this script"
-       return 1
+       exit 1
     fi
   else
     echo "Error: ${outputName} exists but is not a link to ${ART_WORKBOOK_OUTPUT}."
     echo "Please rename/remove it and rerun this script"
-    return 1
+    exit 1
   fi
 
 else
@@ -87,7 +87,7 @@ else
     echo "Error making the output directory " ${outputName}
     echo "There is already a file with that name and it is not a directory."
     echo "Please rename/remove this file and rerun this script"
-    return 1
+    exit 1
   fi
 
 fi
