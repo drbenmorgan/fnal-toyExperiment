@@ -1,5 +1,5 @@
 //
-// Root script to display one of the plots made by hello4.fcl
+// Root script to display one of the plots made by histograms.fcl
 //
 
 {
@@ -22,12 +22,12 @@
   TH1F* hMass;  file->GetObject("massPlot/Mass",  hMass);
 
   // Open a new canvas on the screen.
-  TCanvas *canvas = new TCanvas("c", "Plots from hello4.root" );
+  TCanvas *canvas = new TCanvas("c", "Plots from histograms.root" );
 
   // Draw the histogram.
   hMass->Draw("H9");
 
   // Write the canvas to a pdf file.
-  canvas->Print("output/hell04.pdf");
+  canvas->Print("output/histograms.pdf");
 
 }
