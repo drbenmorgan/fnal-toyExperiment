@@ -40,7 +40,7 @@ e2:prof		e2:prof		-nq-	-std=c++0x
 # table_fragment_end
 
 table_fragment_begin
-pathPrepend(FHICL_FILE_PATH, ".:"${UPS_PROD_DIR}"/HelloWorldScripts")
+pathPrepend(FHICL_FILE_PATH, ".:${UPS_PROD_DIR}")
 pathPrepend(PATH, ".:"${UPS_PROD_DIR}/scripts)
 table_fragment_end
 
