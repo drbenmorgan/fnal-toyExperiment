@@ -1,6 +1,6 @@
 # The parent line must be the first non-comment line in the file
 # This line defines the product name and version
-parent	toyExperiment	v0_00_06
+parent	toyExperiment	v0_00_07
 defaultqual	e2
 
 # These optional lines define the installed directories where headers,
@@ -40,7 +40,8 @@ e2:prof		e2:prof		-nq-	-std=c++0x
 # table_fragment_end
 
 table_fragment_begin
-pathPrepend(FHICL_FILE_PATH, ${UPS_PROD_DIR})
+pathPrepend(FHICL_FILE_PATH, ".:"${UPS_PROD_DIR}"/HelloWorldScripts")
+pathPrepend(PATH, ".:"${UPS_PROD_DIR}/scripts)
 table_fragment_end
 
 # Preserve tabs and formatting in emacs and vi / vim:
