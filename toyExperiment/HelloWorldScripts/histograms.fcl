@@ -41,7 +41,7 @@ physics :{
     massPlot : {
       module_type       : MassPlot
       fitterModuleLabel : "fitter"
-      maxPrint          : 10
+      maxPrint          : 0
     }
 
   }
