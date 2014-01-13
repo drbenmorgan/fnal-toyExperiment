@@ -14,7 +14,7 @@ evtgen_default : {
     pmax        : 2000.
   }
   background  : {
-    n    : 1.5
+    n    : 0.75
     pmin : 0.
     pmax : 800.
   }
