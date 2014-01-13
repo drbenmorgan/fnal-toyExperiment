@@ -1,5 +1,7 @@
 art_make(
   LIB_LIBRARIES toyExperiment_Geometry_Geometry_service
+  toyExperiment_PDT_PDT_service
+  toyExperiment_PDT
   toyExperiment_Geometry
   toyExperiment_RecoDataProducts
   toyExperiment_Utilities
@@ -9,6 +11,8 @@ art_make(
   MODULE_LIBRARIES
   toyExperiment_Conditions_Conditions_service
   toyExperiment_Geometry_Geometry_service
+  toyExperiment_PDT_PDT_service
+  toyExperiment_PDT
   toyExperiment_Utilities
   toyExperiment_MCDataProducts
   toyExperiment_RecoDataProducts
