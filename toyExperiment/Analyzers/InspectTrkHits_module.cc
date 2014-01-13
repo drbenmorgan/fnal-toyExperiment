@@ -73,7 +73,7 @@ void tex::InspectTrkHits::beginRun( const art::Run& ){
   double zIn  = 6.*_conditions->shellConditions(inner).sigmaZ();
   double zOut = 6.*_conditions->shellConditions(outer).sigmaZ();
 
-  _hNHits   = _tfs->make<TH1F>( "NHits", "Number of intersections per event",   80,   0.,    80 );
+  _hNHits   = _tfs->make<TH1F>( "NHits", "Number of tracker hits per event",   80,   0.,    80 );
   _hDzInner = _tfs->make<TH1F>( "DzInner", "z (smeared-gen) for Inner shells", 100, -zIn,   zIn );
   _hDzOuter = _tfs->make<TH1F>( "DzOuter", "z (smeared-gen) for Outer shells", 100, -zOut, zOut );
 
