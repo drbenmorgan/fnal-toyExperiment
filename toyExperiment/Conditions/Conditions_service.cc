@@ -6,6 +6,7 @@
 #include "toyExperiment/Geometry/Tracker.h"
 #include "toyExperiment/Utilities/ParameterSetFromFile.h"
 
+#include "art/Framework/Services/Registry/ActivityRegistry.h"
 #include "art/Framework/Services/Registry/ServiceMacros.h"
 #include "art/Framework/Principal/Run.h"
 #include "art/Persistency/Provenance/ModuleDescription.h"
@@ -20,22 +21,16 @@ tex::Conditions::Conditions( fhicl::ParameterSet const& pset,
                                art::ActivityRegistry& iRegistry ) :
   _conditionsFile(pset.get<std::string>("conditionsFile")),
   _verbosity(pset.get<int> ("verbosity",0)),
-  _geom(art::ServiceHandle<Geometry>()),
-  _pdt()
+  _geom(art::ServiceHandle<Geometry>())
 {
 
   iRegistry.sPreBeginRun.watch(this, &Conditions::preBeginRun);
 
   if ( _verbosity > 0 ){
-    std::cout << "Conditions: "  
+    std::cout << "Conditions: "
 	      << " Conditions file: " << _conditionsFile
 	      << " verbosity: "       << _verbosity
 	      << std::endl;
-  }
-
-  if ( _verbosity > 2 ){
-    std::cout << "Contents of particle data table." << std::endl;
-    std::cout << _pdt << std::endl;
   }
 
 }
