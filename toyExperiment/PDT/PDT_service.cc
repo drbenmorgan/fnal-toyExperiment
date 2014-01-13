@@ -38,7 +38,7 @@ tex::PDT::PDT( fhicl::ParameterSet const& pset,
 
     std::string name    = part.get<std::string>("name");
     double      mass    = part.get<double>("mass");
-    double      charge  = part.get<double>("mass");
+    double      charge  = part.get<double>("charge");
     PDGCode::type pdgId = static_cast<PDGCode::type>(part.get<int>("pdgId"));
 
     _pdt[pdgId] = ParticleInfo(pdgId,mass,charge,name);
