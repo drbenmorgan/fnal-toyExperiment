@@ -53,7 +53,7 @@ tex::InspectFittedHelix::InspectFittedHelix(fhicl::ParameterSet const& pset):
 }
 
 void tex::InspectFittedHelix::beginJob(){
-  _hNFits = _tfs->make<TH1F>( "NFits", "Number of fitter tracks per event",   20,   0.,    20 );
+  _hNFits = _tfs->make<TH1F>( "NFits", "Number of fitted tracks per event",   20,   0.,    20 );
 }
 
 void tex::InspectFittedHelix::analyze(const art::Event& event){
