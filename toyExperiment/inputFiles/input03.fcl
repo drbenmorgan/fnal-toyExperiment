@@ -21,8 +21,9 @@ services : {
   TFileService          : { fileName : "output/input03.root" }
 
   user : {
-    Geometry   : { geometryFile   : "databaseFiles/geom01.fcl"    }
+    Geometry   : { geometryFile   : "databaseFiles/geom01.fcl"       }
     Conditions : { conditionsFile : "databaseFiles/conditions01.fcl" }
+    PDT        : { pdtFile        : "databaseFiles/pdt.fcl"          }
   }
 
 }

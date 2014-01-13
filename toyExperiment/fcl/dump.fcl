@@ -8,8 +8,8 @@ process_name : dump
 
 source : {
   module_type : RootInput
-  fileNames   : [ "dev01_data.root" ]
-  maxEvents   : -1
+  fileNames   : @nil
+  maxEvents   : 1
 }
 
 services : {

@@ -3,7 +3,7 @@
 // particle data table class.
 //
 
-#include "toyExperiment/Conditions/ParticleInfo.h"
+#include "toyExperiment/PDT/ParticleInfo.h"
 
 tex::ParticleInfo::ParticleInfo():
   _id(PDGCode::invalid),

@@ -17,8 +17,9 @@ services : {
   TFileService  : { fileName : "eventDisplay01.root" }
 
   user : {
-    Geometry   : { geometryFile   : "databaseFiles/geom01.fcl"    }
+    Geometry   : { geometryFile   : "databaseFiles/geom01.fcl"       }
     Conditions : { conditionsFile : "databaseFiles/conditions01.fcl" }
+    PDT        : { pdtFile        : "databaseFiles/pdt.fcl"          }
   }
 
 }
@@ -27,8 +28,7 @@ physics :{
   analyzers: {
     eventDisplay : {
       module_type     : EventDisplay
-      gensModuleLabel : "evtgen"
-      simModuleLabel  : "detsim"
+      genParticleTag  : "evtgen"
       drawGenTracks   : true
       drawHits        : false
       prompt          : false
