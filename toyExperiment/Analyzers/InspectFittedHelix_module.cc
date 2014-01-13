@@ -31,43 +31,48 @@ namespace tex {
 
   private:
 
-    std::string _fitterModuleLabel;
-    int         _maxPrint;
+    art::InputTag _fitsTag;
+    int           _maxPrint;
 
     art::ServiceHandle<art::TFileService> _tfs;
 
     int _printCount;
+
+    TH1F* _hNFits;
+
   };
 
 }
 
 tex::InspectFittedHelix::InspectFittedHelix(fhicl::ParameterSet const& pset):
-  _fitterModuleLabel( pset.get<std::string>("fitterModuleLabel") ),
+  art::EDAnalyzer(pset),
+  _fitsTag( pset.get<std::string>("fitsTag") ),
   _maxPrint( pset.get<int>("maxPrint",0) ),
   _tfs( art::ServiceHandle<art::TFileService>() ),
   _printCount(0){
 }
 
 void tex::InspectFittedHelix::beginJob(){
+  _hNFits = _tfs->make<TH1F>( "NFits", "Number of fitter tracks per event",   20,   0.,    20 );
 }
 
 void tex::InspectFittedHelix::analyze(const art::Event& event){
 
   // Get the generated particles from the event.
-  art::Handle<FittedHelixDataCollection> fitsHandle;
-  event.getByLabel( _fitterModuleLabel, fitsHandle);
-  FittedHelixDataCollection const& fits(*fitsHandle);
+  auto fits = event.getValidHandle<FittedHelixDataCollection>(_fitsTag);
+
+  _hNFits->Fill( fits->size() );
 
   // Printout, if requested.
   bool doPrint = ( ++_printCount < _maxPrint );
   if ( doPrint ) {
     std::cout << "\nNumber of FittedHelices in event "
               << event.id().event() << " is: "
-              << fits.size()
+              << fits->size()
               << std::endl;
   }
 
-  for ( auto const& fit : fits ){
+  for ( auto const& fit : *fits ){
     if ( doPrint ) {
       std::cout << fit << std::endl;
     }

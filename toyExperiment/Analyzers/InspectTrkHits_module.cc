@@ -32,7 +32,7 @@ namespace tex {
 
   private:
 
-    std::string _makerModuleLabel;
+    art::InputTag _hitsTag;
     int         _maxPrint;
 
     art::ServiceHandle<Geometry>   _geom;
@@ -50,7 +50,8 @@ namespace tex {
 }
 
 tex::InspectTrkHits::InspectTrkHits(fhicl::ParameterSet const& pset):
-  _makerModuleLabel( pset.get<std::string>("makerModuleLabel") ),
+  art::EDAnalyzer(pset),
+  _hitsTag( pset.get<std::string>("hitMakerTag") ),
   _maxPrint( pset.get<int>("maxPrint",0) ),
   _geom(),
   _conditions(),
@@ -83,13 +84,13 @@ void tex::InspectTrkHits::analyze(const art::Event& event){
   Tracker const& tracker(_geom->tracker());
 
   art::Handle<TrkHitCollection> hitsHandle;
-  event.getByLabel( _makerModuleLabel, hitsHandle );
+  event.getByLabel( _hitsTag, hitsHandle );
   TrkHitCollection const& hits(*hitsHandle);
 
   _hNHits->Fill( hits.size() );
 
   // Navigator object to match hits with their truth information.
-  art::FindOne<Intersection> fa(hitsHandle, event, _makerModuleLabel);
+  art::FindOne<Intersection> fa(hitsHandle, event, _hitsTag);
 
   for ( size_t i=0; i<hits.size(); ++i) {
 

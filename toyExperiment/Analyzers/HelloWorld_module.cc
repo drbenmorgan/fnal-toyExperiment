@@ -22,7 +22,8 @@ namespace tex {
 
 }
 
-tex::HelloWorld::HelloWorld(fhicl::ParameterSet const& ){
+tex::HelloWorld::HelloWorld(fhicl::ParameterSet const& pset):
+  art::EDAnalyzer(pset){
 }
 
 void tex::HelloWorld::analyze(art::Event const& event){

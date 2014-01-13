@@ -9,10 +9,10 @@
 //
 
 #include "toyExperiment/Analyzers/PlotOrientation.h"
-#include "toyExperiment/Conditions/Conditions.h"
 #include "toyExperiment/Geometry/Geometry.h"
 #include "toyExperiment/MCDataProducts/IntersectionCollection.h"
 #include "toyExperiment/MCDataProducts/GenParticleCollection.h"
+#include "toyExperiment/PDT/PDT.h"
 #include "toyExperiment/RecoDataProducts/Helix.h"
 #include "toyExperiment/Utilities/eventIDToString.h"
 
@@ -129,8 +129,7 @@ namespace tex {
 
   private:
 
-    std::string     _gensModuleLabel;
-    std::string     _simModuleLabel;
+    art::InputTag   _gensTag;
     bool            _drawGenTracks;
     bool            _drawHits;
     bool            _prompt;
@@ -145,7 +144,7 @@ namespace tex {
 
     art::ServiceHandle<art::TFileService> _tfs;
     art::ServiceHandle<Geometry>          _geom;
-    PDT const&                            _pdt;
+    art::ServiceHandle<PDT>               _pdt;
     TApplication*                         _application;
     TCanvas*                              _canvas;
 
@@ -170,8 +169,8 @@ namespace tex {
 }
 
 tex::EventDisplay::EventDisplay(fhicl::ParameterSet const& pset):
-  _gensModuleLabel( pset.get<std::string>("gensModuleLabel") ),
-  _simModuleLabel ( pset.get<std::string>("simModuleLabel" ) ),
+  art::EDAnalyzer(pset),
+  _gensTag        ( pset.get<std::string>("genParticleTag") ),
   _drawGenTracks  ( pset.get<bool>       ("drawGenTracks",true) ),
   _drawHits       ( pset.get<bool>       ("drawHits",true) ),
   _prompt         ( pset.get<bool>       ("prompt",true) ),
@@ -184,7 +183,7 @@ tex::EventDisplay::EventDisplay(fhicl::ParameterSet const& pset):
   _plotFileType(),
   _tfs( art::ServiceHandle<art::TFileService>() ),
   _geom(art::ServiceHandle<Geometry>()),
-  _pdt(art::ServiceHandle<Conditions>()->pdt()),
+  _pdt(),
   _application(0),
   _displayCount(0){
 
@@ -240,16 +239,15 @@ void tex::EventDisplay::analyze(const art::Event& event ){
   int pageCount = _displayCount++;
 
   // Fetch the input data products.
-  art::Handle<GenParticleCollection> gensHandle;
-  event.getByLabel( _gensModuleLabel, gensHandle);
-  GenParticleCollection const& gens(*gensHandle);
+  auto gens = event.getValidHandle<GenParticleCollection>(_gensTag);
 
   // There may be more than 1 of this type of data product.
   std::vector<art::Handle<IntersectionCollection>> hitsHandles;
   event.getManyByType(hitsHandles);
 
   // Guess at how much space to reserve inside the Helpers;
-  // This computation reserves a too much but the size is small enough that this is OK.
+  // This computation will usually reserve a little too much but the wasted space
+  // is small enough that this is OK.
   int nReserve = 0;
   for ( auto const& handle: hitsHandles ){
     nReserve += handle->size();
@@ -257,7 +255,7 @@ void tex::EventDisplay::analyze(const art::Event& event ){
 
   // Populate the helper objects describing the generated trajectories.
   std::vector<Helper> chargedTracks;
-  fillTracks ( gens, chargedTracks );
+  fillTracks ( *gens, chargedTracks );
 
   // Populate the helper objects holding the hits.
   Helper h1(nReserve, kRed, "P"), h2(nReserve, kBlue, "P"), h3( nReserve, kGreen, "P");
@@ -397,7 +395,7 @@ void tex::EventDisplay::fillTracks ( GenParticleCollection const& gens , std::ve
 
 void  tex::EventDisplay::fillTrack( GenParticle const& gen, Helper& h ){
 
-  double q = _pdt.getById(gen.pdgId()).charge();
+  double q = _pdt->getById(gen.pdgId()).charge();
   double bz(_geom->bz());
 
   Helix trk(gen.position(), gen.momentum().vect(), q, bz);
