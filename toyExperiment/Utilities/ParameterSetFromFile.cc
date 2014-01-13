@@ -20,18 +20,16 @@ ParameterSetFromFile( std::string const& fileName ):
 {
 
   cet::filepath_lookup policy("FHICL_FILE_PATH");
-
   fhicl::intermediate_table tbl;
-  std::string in("test01.fcl");
   fhicl::parse_document(_fileName, policy, tbl);
-
   fhicl::make_ParameterSet(tbl, _pSet);
 
 }
 
 
 void
-tex::ParameterSetFromFile::printKeys( std::ostream& out ) const {
+tex::ParameterSetFromFile::printKeys( std::ostream& out ) const
+{
 
   std::vector<std::string> const& keys = _pSet.get_keys();
   out << "\nParameter set read from file: " << _fileName << std::endl;
