@@ -101,16 +101,13 @@ void tex::MassPlot::analyze(const art::Event& event){
 
   ++_printCount;
 
-  // Get the generated particles from the event.
-  //art::Handle<FittedHelixDataCollection> fitsHandle;
-  //event.getByLabel( _fitsTag, fitsHandle);
-  //FittedHelixDataCollection const& fits(*fitsHandle);
+  // Get the fitted helices from the event.
   auto fits = event.getValidHandle<FittedHelixDataCollection>(_fitsTag);
 
   // Buffer for filling the ntuple.
   float nt[ntNVar];
 
-  // Loop over all unique pairs of tracks.
+  // Loop over all unique pairs of oppositely charged tracks.
   for ( size_t i=0; i+1<fits->size(); ++i ) {
 
     FittedHelix fit1(fits->at(i));
