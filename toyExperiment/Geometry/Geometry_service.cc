@@ -78,13 +78,14 @@ tex::Geometry::makeTracker( fhicl::ParameterSet const& pSet ) {
     double r0       = p.get<double>("r0");
     double dr       = p.get<double>("dr");
     double hlen     = p.get<double>("halfLength");
+    double hthick   = p.get<double>("halfThickness");
     double sigma    = p.get<double>("sigma");
 
     _tracker.reserve(_tracker.nShells()+nShells);
 
     for ( size_t i=0; i<nShells; ++i ){
       double r = r0 + i*dr;
-      _tracker.addShell( Shell( id, component.first, r, hlen, sigma ) );
+      _tracker.addShell( Shell( id, component.first, r, hlen, hthick, sigma ) );
       id++;
     }
 
