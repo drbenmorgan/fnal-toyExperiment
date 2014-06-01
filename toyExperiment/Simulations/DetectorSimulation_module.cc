@@ -34,9 +34,9 @@ namespace tex {
 
     explicit DetectorSimulation( fhicl::ParameterSet const& pset );
 
-    void beginRun ( art::Run&  run    );
-    void endRun   ( art::Run&  run    );
-    void produce  ( art::Event& event );
+    void beginRun ( art::Run&  run    ) override;
+    void endRun   ( art::Run&  run    ) override;
+    void produce  ( art::Event& event ) override;
 
   private:
 

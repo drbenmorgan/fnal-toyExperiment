@@ -27,8 +27,8 @@ namespace tex {
 
     explicit InspectTrkHits(fhicl::ParameterSet const& pset);
 
-    void beginRun( const art::Run& run );
-    void analyze(const art::Event& event);
+    void beginRun( const art::Run& run ) override;
+    void analyze(const art::Event& event) override;
 
   private:
 

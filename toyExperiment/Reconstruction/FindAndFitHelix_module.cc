@@ -32,7 +32,7 @@ namespace tex {
 
     explicit FindAndFitHelix(fhicl::ParameterSet const& pset);
 
-    void produce(  art::Event& event);
+    void produce(  art::Event& event) override;
 
   private:
 

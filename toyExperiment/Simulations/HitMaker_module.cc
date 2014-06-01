@@ -29,7 +29,7 @@ namespace tex {
 
     explicit HitMaker( fhicl::ParameterSet const& pset );
 
-    void produce  ( art::Event& event );
+    void produce  ( art::Event& event ) override;
 
   private:
 

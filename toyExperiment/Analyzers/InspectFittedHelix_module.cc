@@ -26,8 +26,8 @@ namespace tex {
 
     explicit InspectFittedHelix(fhicl::ParameterSet const& pset);
 
-    void beginJob();
-    void analyze(const art::Event& event);
+    void beginJob() override;
+    void analyze(const art::Event& event) override;
 
   private:
 

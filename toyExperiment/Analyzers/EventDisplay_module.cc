@@ -123,9 +123,9 @@ namespace tex {
 
     explicit EventDisplay(fhicl::ParameterSet const& pset);
 
-    void beginJob();
-    void endJob();
-    void analyze(const art::Event& event);
+    void beginJob() override;
+    void endJob() override;
+    void analyze(const art::Event& event) override;
 
   private:
 
