@@ -4,6 +4,7 @@
 
 #include "toyExperiment/Geometry/Geometry.h"
 #include "toyExperiment/Utilities/ParameterSetFromFile.h"
+#include "toyExperiment/Utilities/ParameterSetHelpers.h"
 
 #include "art/Framework/Services/Registry/ServiceMacros.h"
 #include "art/Framework/Principal/Run.h"
@@ -44,6 +45,14 @@ tex::Geometry::preBeginRun(art::Run const & run) {
 
   if ( _verbosity > 1 ){
     std::cout << _tracker << std::endl;
+  }
+
+  // Construct the luminous region
+  fhicl::ParameterSet luminousRegionPSet = pSetFile.pSet().get<fhicl::ParameterSet>("luminousRegion");
+  makeLuminousRegion( luminousRegionPSet );
+
+  if ( _verbosity > 1 ){
+    std::cout << _luminousRegion << std::endl;
   }
 
   // Construct the magnetic field information.
@@ -93,6 +102,12 @@ tex::Geometry::makeTracker( fhicl::ParameterSet const& pSet ) {
 
 
 } // end makeTracker
+
+void
+tex::Geometry::makeLuminousRegion( fhicl::ParameterSet const& pSet ) {
+  _luminousRegion = LuminousRegion( pSet.get<CLHEP::Hep3Vector>("center"),
+                                    pSet.get<CLHEP::Hep3Vector>("sigma")  );
+} // end makeLuminousRegion
 
 void
 tex::Geometry::makeBField( fhicl::ParameterSet const& pSet ) {
