@@ -32,3 +32,8 @@ tracker : {
 bfield : {
   bz : 1.5  // z component of uniform field, in Tesla.
 }
+
+luminousRegion : {
+   center : [ 0., 0., 0.]
+   sigma  : [ 1.0, 0.1, 5.0 ]
+}
