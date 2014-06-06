@@ -116,7 +116,7 @@ void tex::EventGenerator::generateBG( int n , tex::GenParticleCollection& gens )
     // Generate the 4 momentum
     double p              = _flat.fire( _pminExtra, _pmaxExtra);
     CLHEP::Hep3Vector mom = _unitSphere.fire(p);
-    double e              = std::sqrt ( _mka*_mka + p*p );
+    double e              = std::sqrt ( _mpi*_mpi + p*p );
     CLHEP::HepLorentzVector lmom( mom, e);
 
     // Even numbered particles are pi+; odd are pi-
