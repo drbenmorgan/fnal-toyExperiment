@@ -7,7 +7,7 @@
 
 #include "CLHEP/Vector/ThreeVector.h"
 
-#include <ostream>
+#include <iosfwd>
 
 namespace tex {
 
