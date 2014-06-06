@@ -10,6 +10,8 @@ tex::RecoTrk::RecoTrk():
   _momCov(dimension){
 }
 
+#ifndef __GCCXML__
+
 tex::RecoTrk::RecoTrk( CLHEP::HepLorentzVector const& momentum,
                          CLHEP::HepSymMatrix     const& momCov ):
   _momentum(momentum),
@@ -88,3 +90,4 @@ std::ostream& tex::operator<<(std::ostream& ost,
       << recoTrk.momentumCov() << " )";
   return ost;
 }
+#endif  // __GCCXML__

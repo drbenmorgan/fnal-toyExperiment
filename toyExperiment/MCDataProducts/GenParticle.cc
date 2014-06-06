@@ -14,6 +14,7 @@ tex::GenParticle::GenParticle():
   _status(undefined){
   }
 
+#ifndef __GCCXML__
 tex::GenParticle::GenParticle( PDGCode::type                  pdgId,
 				 art::Ptr<GenParticle> const&   parent,
 				 CLHEP::Hep3Vector const&       position,
@@ -62,3 +63,5 @@ tex::operator<<(std::ostream& ost,
   ost << " ]";
   return ost;
 }
+
+#endif

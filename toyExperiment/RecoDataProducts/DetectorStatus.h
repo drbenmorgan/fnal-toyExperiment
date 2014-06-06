@@ -22,6 +22,8 @@ namespace tex {
   public:
 
     DetectorStatus( );
+
+#ifndef __GCCXML__
     DetectorStatus( size_t n);
 
     void addRecord( DetectorStatusRecord const& record );
@@ -31,6 +33,7 @@ namespace tex {
     DetectorStatusRecord const& record( size_t id ) const { return _records.at(id); }
 
     void printAll( std::ostream& ost) const;
+#endif  // __GCCXML__
 
   private:
 
@@ -38,8 +41,10 @@ namespace tex {
 
   };
 
+#ifndef __GCCXML__
   std::ostream& operator<<(std::ostream& ost,
                            const tex::DetectorStatus& d );
+#endif  // __GCCXML__
 
 }
 

@@ -14,6 +14,8 @@ namespace tex {
   public:
 
     TrkHit();
+#ifndef __GCCXML__
+
     TrkHit( int    shell,
 	    double z,
 	    double phi,
@@ -25,6 +27,7 @@ namespace tex {
     double phi()    const { return _phi;   }
     double sigZ()   const { return _sz;    }
     double sigPhi() const { return _sphi;  }
+#endif  // __GCCXML__
 
   private:
 
@@ -36,8 +39,10 @@ namespace tex {
 
   };
 
+#ifndef __GCCXML__
   std::ostream& operator<<(std::ostream& ost,
                            const tex::TrkHit& hit );
+#endif  // __GCCXML__
 
 }
 
