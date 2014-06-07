@@ -24,6 +24,8 @@ namespace tex {
     enum dimension_type { dimension = 4 };
 
     RecoTrk();
+
+#ifndef __GCCXML__
     RecoTrk( CLHEP::HepLorentzVector const& momentum,
              CLHEP::HepSymMatrix     const& momCov );
 
@@ -34,6 +36,7 @@ namespace tex {
     double sigmaP() const;
 
     RecoTrk const& operator+=( RecoTrk const& rhs);
+#endif  // __GCCXML__
 
   private:
 
@@ -42,6 +45,7 @@ namespace tex {
 
   };
 
+#ifndef __GCCXML__
   RecoTrk operator+( RecoTrk const& r1, RecoTrk const& r2){
     RecoTrk r(r1);
     r += r2;
@@ -50,6 +54,7 @@ namespace tex {
 
   std::ostream& operator<<(std::ostream& ost,
                            const tex::RecoTrk& hit );
+#endif  // __GCCXML__
 
 }
 

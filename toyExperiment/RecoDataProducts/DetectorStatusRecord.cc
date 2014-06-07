@@ -10,7 +10,9 @@ tex::DetectorStatusRecord::DetectorStatusRecord():
   _voltage(0){
 }
 
+#ifndef __GCCXML__
 tex::DetectorStatusRecord::DetectorStatusRecord( bool aisOn, double avoltage ):
   _isOn(aisOn),
   _voltage(avoltage){
 }
+#endif  // __GCCXML__
