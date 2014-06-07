@@ -59,3 +59,8 @@ outputs: {
   }
 
 }
+
+physics.producers.evtgen.seed   :  9
+physics.producers.detsim.seed   : 10
+physics.producers.makeHits.seed : 11
+physics.producers.fitter.seed   : 12

@@ -1,5 +1,7 @@
 #include "toyExperiment/Geometry/LuminousRegion.h"
 
+#include <ostream>
+
 tex::LuminousRegion::LuminousRegion():
   center_(0.,0.,0.),
   sigma_ (0.,0.,0.){
