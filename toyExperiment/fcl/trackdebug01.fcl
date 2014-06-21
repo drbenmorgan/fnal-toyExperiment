@@ -30,6 +30,13 @@ physics :{
     eventDisplay : {
       module_type    : EventDisplayDebug
       genParticleTag : "evtgen"
+      drawGenTracks  : true
+      drawHits       : true
+      waitFor        : mouse
+      prompt         : true
+      multipage      : false
+      plotFileName   : "event.png"
+      orientation    : "landscape"
       maxDisplay     : 10
     }
   }
