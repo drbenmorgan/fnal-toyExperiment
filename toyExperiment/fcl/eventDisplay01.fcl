@@ -1,5 +1,5 @@
 #
-# Run the event display on the information produced by dev01.fcl
+# Run the event display on the information.
 #
 
 #include "fcl/minimalMessageService.fcl"
@@ -8,7 +8,7 @@ process_name : eventDisplay01
 
 source : {
   module_type : RootInput
-  fileNames   : [ "dev01_data.root" ]
+  fileNames   : [ "inputFiles/input04_data.root" ]
   maxEvents   : -1
 }
 
@@ -32,6 +32,7 @@ physics :{
       drawGenTracks   : true
       drawHits        : true
       prompt          : true
+      waitFor         : mouse
       multipage       : true
       plotFileName    : "plots.jpg"
       orientation     : "landscape"
