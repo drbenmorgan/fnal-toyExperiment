@@ -31,6 +31,7 @@ physics :{
       genParticleTag  : "evtgen"
       drawGenTracks   : true
       drawHits        : true
+      waitFor         : mouse
       prompt          : true
       multipage       : false
       plotFileName    : "event.png"
