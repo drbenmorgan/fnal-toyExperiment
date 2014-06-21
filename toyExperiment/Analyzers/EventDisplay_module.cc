@@ -1,14 +1,10 @@
 //
-// Draw two 2D views of the event.
-//
-// Notes
-// 1) This example leaks the TApplication object at the end of the job.
-//    This is deliberate; if I delete it at the end of the job it causes a core dump,
-//    probably because some objects managed by ROOT presume that the TApplication
-//    lives longer than they do.
+// Draw two views of the event, xy and rz.
 //
 
+#include "toyExperiment/Analyzers/EnsureTApplication.h"
 #include "toyExperiment/Analyzers/PlotOrientation.h"
+#include "toyExperiment/Analyzers/WaitFor.h"
 #include "toyExperiment/Geometry/Geometry.h"
 #include "toyExperiment/MCDataProducts/IntersectionCollection.h"
 #include "toyExperiment/MCDataProducts/GenParticleCollection.h"
@@ -19,10 +15,10 @@
 #include "art/Framework/Core/EDAnalyzer.h"
 #include "art/Framework/Core/ModuleMacros.h"
 #include "art/Framework/Principal/Event.h"
-#include "art/Framework/Services/Optional/TFileService.h"
+
+#include "messagefacility/MessageLogger/MessageLogger.h"
 
 #include "Rtypes.h"
-#include "TApplication.h"
 #include "TArc.h"
 #include "TArrow.h"
 #include "TCanvas.h"
@@ -30,6 +26,7 @@
 #include "TGraph.h"
 #include "TH1F.h"
 #include "TLine.h"
+#include "TPad.h"
 #include "TString.h"
 
 #include <iostream>
@@ -124,32 +121,37 @@ namespace tex {
     explicit EventDisplay(fhicl::ParameterSet const& pset);
 
     void beginJob() override;
-    void endJob() override;
+    void endJob()   override;
     void analyze(const art::Event& event) override;
 
   private:
 
-    art::InputTag   _gensTag;
-    bool            _drawGenTracks;
-    bool            _drawHits;
-    bool            _prompt;
-    bool            _multipage;
-    std::string     _plotFileName;
-    PlotOrientation _orientation;
-    int             _maxDisplay;
-    int             _verbosity;
+    // When this object is intialized, it will ensure that
+    // interactive ROOT is properly initialized
+    EnsureTApplication ensureTApp_;
 
-    std::string     _plotFileBase;
-    std::string     _plotFileType;
+    // Set by parameter set variables.
+    art::InputTag   gensTag_;
+    bool            drawGenTracks_;
+    bool            drawHits_;
+    bool            prompt_;
+    WaitFor         waitFor_;
+    bool            multipage_;
+    std::string     plotFileName_;
+    PlotOrientation orientation_;
+    int             nStepsTrack_;
+    int             maxDisplay_;
+    int             verbosity_;
 
-    art::ServiceHandle<art::TFileService> _tfs;
-    art::ServiceHandle<Geometry>          _geom;
-    art::ServiceHandle<PDT>               _pdt;
-    TApplication*                         _application;
-    TCanvas*                              _canvas;
+    std::string     plotFileBase_;
+    std::string     plotFileType_;
 
-    TH1F* _hFrame;
-    int _displayCount;
+    art::ServiceHandle<Geometry>          geom_;
+    art::ServiceHandle<PDT>               pdt_;
+    TCanvas*                              canvas_;
+
+    TH1F* hFrame_;
+    int displayCount_;
 
     // Various in-class helper methods.
     void parsePlotFileName();
@@ -164,59 +166,63 @@ namespace tex {
 
     void print( TCanvas*, int );
 
+    void waitForKeyboard();
+    void waitForMouse();
+
   };
 
 }
 
 tex::EventDisplay::EventDisplay(fhicl::ParameterSet const& pset):
   art::EDAnalyzer(pset),
-  _gensTag        ( pset.get<std::string>("genParticleTag") ),
-  _drawGenTracks  ( pset.get<bool>       ("drawGenTracks",true) ),
-  _drawHits       ( pset.get<bool>       ("drawHits",true) ),
-  _prompt         ( pset.get<bool>       ("prompt",true) ),
-  _multipage      ( pset.get<bool>       ("multipage",false) ),
-  _plotFileName   ( pset.get<std::string>("plotFileName","") ),
-  _orientation    ( pset.get<std::string>("orientation", "portrait" ) ),
-  _maxDisplay     ( pset.get<int>        ("maxDisplay", 0  ) ),
-  _verbosity      ( pset.get<int>        ("verbosity",  0  ) ),
-  _plotFileBase(),
-  _plotFileType(),
-  _tfs( art::ServiceHandle<art::TFileService>() ),
-  _geom(art::ServiceHandle<Geometry>()),
-  _pdt(),
-  _application(0),
-  _displayCount(0){
+  ensureTApp_(),
+  gensTag_        ( pset.get<std::string>("genParticleTag") ),
+  drawGenTracks_  ( pset.get<bool>       ("drawGenTracks",true) ),
+  drawHits_       ( pset.get<bool>       ("drawHits",true) ),
+  prompt_         ( pset.get<bool>       ("prompt",true) ),
+  waitFor_        ( pset.get<std::string>("waitFor", "mouse" ) ),
+  multipage_      ( pset.get<bool>       ("multipage",false) ),
+  plotFileName_   ( pset.get<std::string>("plotFileName","") ),
+  orientation_    ( pset.get<std::string>("orientation",  "portrait" ) ),
+  nStepsTrack_    ( pset.get<int>        ("nStepsTrack", 100) ),
+  maxDisplay_     ( pset.get<int>        ("maxDisplay",    0) ),
+  verbosity_      ( pset.get<int>        ("verbosity",     0) ),
+  plotFileBase_(),
+  plotFileType_(),
+  geom_(art::ServiceHandle<Geometry>()),
+  pdt_(),
+  displayCount_(0){
 
   // Split the plot file name into a base and a type.
   parsePlotFileName();
+
+  // Limit nStepsTrack
+  if ( nStepsTrack_ < 25 ){
+    nStepsTrack_ = 25;
+  } else if ( nStepsTrack_ > 1000 ){
+    nStepsTrack_ = 1000;
+  }
 
 }
 
 void tex::EventDisplay::beginJob(){
 
-  // If needed, create the ROOT interactive environment. See note 1.
-  if ( !gApplication ){
-    int    tmp_argc(0);
-    char** tmp_argv(0);
-    _application = new TApplication( "noapplication", &tmp_argc, tmp_argv );
-  }
-
   int windowSizeShort(600);
   int windowSizeLong(1200);
-  if ( _orientation == PlotOrientation::portrait ){
-    _canvas = new TCanvas("canvas_Test","Event Display", windowSizeShort, windowSizeLong );
+  if ( orientation_ == PlotOrientation::portrait ){
+    canvas_ = new TCanvas("canvas_Test","Event Display", windowSizeShort, windowSizeLong );
   } else {
-    _canvas = new TCanvas("canvas_Test","Event Display", windowSizeLong, windowSizeShort );
+    canvas_ = new TCanvas("canvas_Test","Event Display", windowSizeLong, windowSizeShort );
   }
-  _canvas->Modified();
-  _canvas->Update();
+  canvas_->Modified();
+  canvas_->Update();
 
   // Open a multipage plot file.
-  if ( _multipage ){
-    if ( _verbosity > 1 ){
-      std::cout << "Opening multipage plot file: " << _plotFileName << std::endl;
+  if ( multipage_ ){
+    if ( verbosity_ > 1 ){
+      std::cout << "Opening multipage plot file: " << plotFileName_ << std::endl;
     }
-    _canvas->Print( std::string( _plotFileName + "[").c_str() );
+    canvas_->Print( std::string( plotFileName_ + "[").c_str() );
   }
 
 }
@@ -224,22 +230,22 @@ void tex::EventDisplay::beginJob(){
 void tex::EventDisplay::endJob(){
 
   // Close multipage plot file.
-  if ( _multipage ){
-    if ( _verbosity > 1 ){
-      std::cout << "Closing multipage plot file: " << _plotFileName << std::endl;
+  if ( multipage_ ){
+    if ( verbosity_ > 1 ){
+      std::cout << "Closing multipage plot file: " << plotFileName_ << std::endl;
     }
-    _canvas->Print( std::string( _plotFileName + "]").c_str() );
+    canvas_->Print( std::string( plotFileName_ + "]").c_str() );
   }
 
 }
 
 void tex::EventDisplay::analyze(const art::Event& event ){
 
-  if ( _displayCount > _maxDisplay ) return;
-  int pageCount = _displayCount++;
+  if ( displayCount_ > maxDisplay_ ) return;
+  int pageCount = displayCount_++;
 
   // Fetch the input data products.
-  auto gens = event.getValidHandle<GenParticleCollection>(_gensTag);
+  auto gens = event.getValidHandle<GenParticleCollection>(gensTag_);
 
   // There may be more than 1 of this type of data product.
   std::vector<art::Handle<IntersectionCollection>> hitsHandles;
@@ -261,10 +267,10 @@ void tex::EventDisplay::analyze(const art::Event& event ){
   Helper h1(nReserve, kRed, "P"), h2(nReserve, kBlue, "P"), h3( nReserve, kGreen, "P");
   fillHits ( hitsHandles, h1, h2, h3 );
 
-  Tracker const& tracker( _geom->tracker() ) ;
+  Tracker const& tracker( geom_->tracker() ) ;
 
   // Size of the frames is set by the geometry's world size.
-  std::vector<double> const& world = _geom->worldHalfLengths();
+  std::vector<double> const& world = geom_->worldHalfLengths();
 
   // ROOT shape drawing objects.
   TArc arc;
@@ -272,77 +278,79 @@ void tex::EventDisplay::analyze(const art::Event& event ){
   TLine line;
 
   // Clear page.
-  _canvas->cd(0);
-  _canvas->Clear();
+  canvas_->cd(0);
+  canvas_->Clear();
 
   // Split the canvas into two pads
-  if ( _orientation == PlotOrientation::portrait ) {
-    _canvas->Divide(1,2);
+  if ( orientation_ == PlotOrientation::portrait ) {
+    canvas_->Divide(1,2);
   } else{
-    _canvas->Divide(2,1);
+    canvas_->Divide(2,1);
   }
 
   std::string eventID = eventIDToString( event.id() );
 
   // Draw first plot.
-  _canvas->cd(1);
+  canvas_->cd(1);
 
   // Draw the geometry.
   std::string titleXY = "( " + eventID +  ")  Y vs X;[mm];[mm]";
-  _hFrame = gPad->DrawFrame( -world[0], -world[1], world[0], world[1], titleXY.c_str() );
+  double xsize=world[0];
+  double ysize=world[1];
+  hFrame_ = gPad->DrawFrame( -xsize, -ysize, xsize, ysize, titleXY.c_str() );
   for ( auto const& shell : tracker.shells() ){
    arc.DrawArc( 0., 0., shell.radius() );
   }
 
-  if ( _drawHits ) {
+  if ( drawHits_ ) {
     h1.drawXY();
     h2.drawXY();
     h3.drawXY();
   }
 
-  if ( _drawGenTracks ){
+  if ( drawGenTracks_ ){
     for ( auto& track : chargedTracks ){
       track.drawXY();
     }
   }
 
   // Draw second plot.
-  _canvas->cd(2);
+  canvas_->cd(2);
 
   // Draw the geometry.
   std::string titleRZ = "( " + eventID +  ")  R vs Z;[mm];[mm]";
-  _hFrame = gPad->DrawFrame( -world[2], 0., world[2], world[0], titleRZ.c_str() );
+  double rsize=world[0];
+  double zsize=world[2];
+  hFrame_ = gPad->DrawFrame( -zsize, 0., zsize, rsize, titleRZ.c_str() );
   for ( auto const& shell : tracker.shells() ){
     line.DrawLine( -shell.halfLength(), shell.radius(), shell.halfLength(), shell.radius() );
   }
 
-  if ( _drawHits ){
+  if ( drawHits_ ){
     h1.drawRZ();
     h2.drawRZ();
     h3.drawRZ();
   }
 
-  if ( _drawGenTracks ){
+  if ( drawGenTracks_ ){
     for ( auto& track : chargedTracks ){
       track.drawRZ();
     }
   }
 
   // Flush contents to the screen.
-  _canvas->Modified();
-  _canvas->Update();
+  canvas_->Modified();
+  canvas_->Update();
 
   // Print the canvas, if requested.
-  print( _canvas, pageCount );
+  print( canvas_, pageCount );
 
   // Wait for user input.
-  if ( _prompt ) {
-    std::cout << "Type any character and hit return to continue: ";
-    char junk;
-    std::cin >> junk;
-    std::cout << junk << std::endl;
-    if ( junk == 'q' || junk == 'Q' ){
-      throw cet::exception("USERSHUTDOWN") << "User requested shutdown in EventDisplay module.\n";
+  if ( prompt_ ) {
+    if ( waitFor_ == WaitFor::keyboard ){
+      waitForKeyboard();
+    } else if ( waitFor_ == WaitFor::mouse ) {
+      waitForMouse();
     }
   }
 
@@ -395,8 +403,8 @@ void tex::EventDisplay::fillTracks ( GenParticleCollection const& gens , std::ve
 
 void  tex::EventDisplay::fillTrack( GenParticle const& gen, Helper& h ){
 
-  double q = _pdt->getById(gen.pdgId()).charge();
-  double bz(_geom->bz());
+  double q = pdt_->getById(gen.pdgId()).charge();
+  double bz(geom_->bz());
 
   Helix trk(gen.position(), gen.momentum().vect(), q, bz);
 
@@ -404,12 +412,15 @@ void  tex::EventDisplay::fillTrack( GenParticle const& gen, Helper& h ){
   double smax = M_PI*trk.rho()/trk.sinTheta();
 
   // Add points along the trajectory.
-  int nSteps(100);
+  // N steps = N+1 points, to include the beginning of first step and
+  //                       end of the last step.
+  int nSteps(nStepsTrack_);
+  int nPoints=nSteps+1;
   double ds = smax/nSteps;
-  for ( int i=0; i<nSteps; ++i){
+  for ( int i=0; i<nPoints; ++i){
     double s = ds*i;
     CLHEP::Hep3Vector position = trk.position( s );
-    if ( _geom->tracker().insideTracker( position ) ){
+    if ( geom_->tracker().insideTracker( position ) ){
       h.addPoint( position );
     }
   }
@@ -421,24 +432,24 @@ void  tex::EventDisplay::fillTrack( GenParticle const& gen, Helper& h ){
 // Force a file type of .pdf if multipage is selected.
 void tex::EventDisplay::parsePlotFileName(){
 
-  if ( _plotFileName.empty() ) return;
+  if ( plotFileName_.empty() ) return;
 
-  size_t dotPosition = _plotFileName.rfind('.');
+  size_t dotPosition = plotFileName_.rfind('.');
   if ( dotPosition != std::string::npos ){
-    _plotFileBase = _plotFileName.substr(0,dotPosition);
-    _plotFileType = _plotFileName.substr(dotPosition);
+    plotFileBase_ = plotFileName_.substr(0,dotPosition);
+    plotFileType_ = plotFileName_.substr(dotPosition);
   } else {
-    _plotFileBase = _plotFileName;
-    _plotFileType = ( _multipage ) ? ".pdf" : ".png";
+    plotFileBase_ = plotFileName_;
+    plotFileType_ = ( multipage_ ) ? ".pdf" : ".png";
   }
 
-  if ( _multipage ) {
-    if ( _plotFileType != ".pdf" ){
+  if ( multipage_ ) {
+    if ( plotFileType_ != ".pdf" ){
       std::cout << "Warning: multipage has been chosen and file type for the plot file is not .pdf\n"
                 << "         Forcing file type to pdf."
                 << std::endl;
-      _plotFileType = ".pdf";
-      _plotFileName = _plotFileBase + _plotFileType;
+      plotFileType_ = ".pdf";
+      plotFileName_ = plotFileBase_ + plotFileType_;
     }
   }
 
@@ -446,24 +457,47 @@ void tex::EventDisplay::parsePlotFileName(){
 
 void tex::EventDisplay::print( TCanvas*, int count ){
 
-  if ( _plotFileName.empty() ) return;
+  if ( plotFileName_.empty() ) return;
 
-  if ( _multipage ){
-    if ( _verbosity > 1 ){
-      std::cout << "Printing canvas to multipage plot file: " << _plotFileName << std::endl;
+  if ( multipage_ ){
+    if ( verbosity_ > 1 ){
+      std::cout << "Printing canvas to multipage plot file: " << plotFileName_ << std::endl;
     }
-    _canvas->Print( _plotFileName.c_str() );
+    canvas_->Print( plotFileName_.c_str() );
   } else{
     std::string version = std::to_string( count );
-    std::string name = _plotFileBase;
+    std::string name = plotFileBase_;
     name += "_";
     name += version;
-    name += _plotFileType;
-    if ( _verbosity > 1 ){
+    name += plotFileType_;
+    if ( verbosity_ > 1 ){
       std::cout << "Printing canvas to plot file: " << name << std::endl;
     }
-    _canvas->Print( name.c_str() );
+    canvas_->Print( name.c_str() );
   }
+}
+
+// Wait for input from the keyboard.
+// This is a pain because the prompt window keeps overlaying the graphics canvas.
+void tex::EventDisplay::waitForKeyboard(){
+  mf::LogPrint("Prompt")
+    << "To quit: type the Q key, upper or lower case, plus the return key\n"
+    << "To continue: type any key plus the return key:";
+  char junk;
+  std::cin >> junk;
+  std::cerr << junk << std::endl;
+  if ( junk == 'q' || junk == 'Q' ){
+    throw cet::exception("USERSHUTDOWN") << "User requested shutdown in EventDisplay module.\n";
+  }
+}
+
+// Wait for double click by mouse in the final TPad.
+// This does not perform well over slow networks.
+// Also, there is no way to ask the code to shutdown.
+void tex::EventDisplay::waitForMouse(){
+  mf::LogPrint("Prompt")
+    << "To continue: double click inside the right hand graphics pad:";
+  gPad->WaitPrimitive();
 }
 
 DEFINE_ART_MODULE(tex::EventDisplay)
