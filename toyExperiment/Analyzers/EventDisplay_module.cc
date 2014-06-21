@@ -168,6 +168,7 @@ namespace tex {
 
     void waitForKeyboard();
     void waitForMouse();
+    void checkParameters();
 
   };
 
@@ -193,9 +194,14 @@ tex::EventDisplay::EventDisplay(fhicl::ParameterSet const& pset):
   pdt_(),
   displayCount_(0){
 
+  checkParameters();
+
   // Split the plot file name into a base and a type.
   parsePlotFileName();
 
+}
+
+void tex::EventDisplay::checkParameters(){
   // Limit nStepsTrack
   if ( nStepsTrack_ < 25 ){
     nStepsTrack_ = 25;
@@ -414,9 +420,10 @@ void  tex::EventDisplay::fillTrack( GenParticle const& gen, Helper& h ){
   // Add points along the trajectory.
   // N steps = N+1 points, to include the beginning of first step and
   //                       end of the last step.
-  int nSteps(nStepsTrack_);
-  int nPoints=nSteps+1;
-  double ds = smax/nSteps;
+  // Fixme: The first time that a point is outside the tracker,
+  // add a point on the boundary of the tracker; then stop the loop.
+  int nPoints=nStepsTrack_+1;
+  double ds = smax/nStepsTrack_;
   for ( int i=0; i<nPoints; ++i){
     double s = ds*i;
     CLHEP::Hep3Vector position = trk.position( s );
