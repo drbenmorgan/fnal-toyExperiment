@@ -14,13 +14,11 @@ tex::PlotOrientationDetail::typeName() {
 std::map<tex::PlotOrientationDetail::enum_type,std::string> const&
 tex::PlotOrientationDetail::names(){
 
-  static std::map<enum_type,std::string> nam;
-
-  if ( nam.empty() ){
-    nam[unknown]   = "unknown";
-    nam[portrait]  = "portrait";
-    nam[landscape] = "landscape";
-  }
+  static const std::map<enum_type,std::string> nam =
+    { { unknown,   "unknown" },
+      { portrait,  "portrait"},
+      { landscape, "landscape"}
+    };
 
   return nam;
 }

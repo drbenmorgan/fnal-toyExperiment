@@ -1,4 +1,7 @@
-art_make_library(SOURCE PlotOrientation.cc
+art_make_library(SOURCE EnsureTApplication.cc PlotOrientation.cc
+                        WaitFor.cc
+   LIBRARIES
+   ${ROOT_CORE}
   )
 
 set(COMMON_LIBRARIES
@@ -72,6 +75,7 @@ simple_plugin( EventDisplay "module"
   toyExperiment_Analyzers
   toyExperiment_Utilities
   ${COMMON_LIBRARIES}
+  ${MF_MESSAGELOGGER}
   ${ROOT_GRAF}
   ${ROOT_GPAD}
   ${ROOT_HIST}
