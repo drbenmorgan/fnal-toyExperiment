@@ -67,7 +67,7 @@ tex::MassPlot::MassPlot(fhicl::ParameterSet const& pset):
   _maxPrint( pset.get<int>("maxPrint",0) ),
   _geom(),
   _pdt(),
-  _tfs( art::ServiceHandle<art::TFileService>() ),
+  _tfs(),
   _mka(_pdt->getById(PDGCode::K_plus).mass()),
   _mphi(_pdt->getById(PDGCode::phi).mass()),
   _printCount(0),

@@ -190,7 +190,7 @@ tex::EventDisplay::EventDisplay(fhicl::ParameterSet const& pset):
   verbosity_      ( pset.get<int>        ("verbosity",     0) ),
   plotFileBase_(),
   plotFileType_(),
-  geom_(art::ServiceHandle<Geometry>()),
+  geom_(),
   pdt_(),
   displayCount_(0){
 
