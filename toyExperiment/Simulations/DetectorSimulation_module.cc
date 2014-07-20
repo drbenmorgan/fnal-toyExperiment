@@ -106,7 +106,8 @@ void tex::DetectorSimulation::produce( art::Event& event ){
     // Index of this particle within the GenParticleCollection.
     int genIndex = &gen - &gens.front();
 
-    if ( gen.status() == GenParticle::alive ) {
+    // Skip particles that were decayed in the generator.
+    if ( !gen.hasChildren() ) {
 
       ++nAlive;
 

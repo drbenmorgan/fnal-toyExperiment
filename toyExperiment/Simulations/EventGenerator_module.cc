@@ -123,7 +123,7 @@ void tex::EventGenerator::generateBG( int n , tex::GenParticleCollection& gens )
     PDGCode::type id = (i%2 == 0) ? PDGCode::pi_plus : PDGCode::pi_minus;
 
     // Put the particle on the output collection.
-    gens.push_back ( GenParticle( id, art::Ptr<GenParticle>(), origin, lmom, GenParticle::alive));
+    gens.push_back ( GenParticle( id, art::Ptr<GenParticle>(), origin, lmom));
 
   }
 }
@@ -145,15 +145,15 @@ void tex::EventGenerator::generateSignal( tex::GenParticleCollection& gens, art:
   int idxKminus(idxPhi+2);
 
   // Put the phi into the output collection; it is a primary particle that has no parent.
-  gens.push_back ( GenParticle( PDGCode::phi, art::Ptr<GenParticle>(), origin, lmom, GenParticle::decayed));
+  gens.push_back ( GenParticle( PDGCode::phi, art::Ptr<GenParticle>(), origin, lmom ));
 
   // Particles 1 and 2, have a parent, it is particle 0;
   art::Ptr<GenParticle> parent( gensID, idxPhi, event.productGetter(gensID));
 
   // Decay the phi and add its decay products to the output collection.
   Decay2Body decay( lmom, _mka, _mka, _unitSphere );
-  gens.push_back ( GenParticle( PDGCode::K_plus,  parent, origin, decay.p1(), GenParticle::alive));
-  gens.push_back ( GenParticle( PDGCode::K_minus, parent, origin, decay.p2(), GenParticle::alive));
+  gens.push_back ( GenParticle( PDGCode::K_plus,  parent, origin, decay.p1() ));
+  gens.push_back ( GenParticle( PDGCode::K_minus, parent, origin, decay.p2() ));
 
   // Tell particle 0 about its children.
   gens.at(idxPhi).addChild( art::Ptr<GenParticle>( gensID, idxKplus,  event.productGetter(gensID)) );

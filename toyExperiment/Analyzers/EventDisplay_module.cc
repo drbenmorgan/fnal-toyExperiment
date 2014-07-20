@@ -395,8 +395,8 @@ void tex::EventDisplay::fillTracks ( GenParticleCollection const& gens , std::ve
 
   for ( auto const& gen: gens){
 
-    // Skip neutral tracks
-    if ( gen.status() != GenParticle::alive ) continue;
+    // Skip particles that are already decayed.
+    if ( gen.hasChildren() ) continue;
 
     int color = selectColor(gen.pdgId());
     tracks.push_back( Helper( 100, color, "L", &gen ) );
