@@ -10,22 +10,19 @@ tex::GenParticle::GenParticle():
   _parent(),
   _children(),
   _position(),
-  _momentum(),
-  _status(undefined){
+  _momentum(){
   }
 
 #ifndef __GCCXML__
 tex::GenParticle::GenParticle( PDGCode::type                  pdgId,
 				 art::Ptr<GenParticle> const&   parent,
 				 CLHEP::Hep3Vector const&       position,
-				 CLHEP::HepLorentzVector const& momentum,
-				 status_type                    status):
+				 CLHEP::HepLorentzVector const& momentum):
   _pdgId(pdgId),
   _parent(parent),
   _children(),
   _position(position),
-  _momentum(momentum),
-  _status(status){
+  _momentum(momentum){
   }
 
 void
@@ -40,12 +37,11 @@ tex::operator<<(std::ostream& ost,
       << "pdg: "       << genp.pdgId()        << " "
       << "Position: "  << genp.position()     << " "
       << "4-momentum " << genp.momentum()     << " "
-      << "status:    " << genp.status()       << " "
       << "parent: ";
   if ( genp.parent().id() == art::ProductID() ){
     ost << "none ";
   } else{
-    ost << genp.parent().id()  << " "
+    ost << genp.parent().id()  << "."
 	<< genp.parent().key() << " ";
   }
   ost << " children: ";
