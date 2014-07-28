@@ -69,4 +69,11 @@ tex::PDT::getById( PDGCode::type id) const{
   return i->second;
 }
 
+std::ostream& tex::operator<<(std::ostream& ost,
+                              const tex::PDT& t ){
+  t.print(ost);
+  return ost;
+}
+
+
 DEFINE_ART_SERVICE(tex::PDT)

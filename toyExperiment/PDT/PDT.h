@@ -41,11 +41,8 @@ private:
 
   };
 
-  inline std::ostream& operator<<(std::ostream& ost,
-                                  const PDT& t ){
-    t.print(ost);
-    return ost;
-  }
+  std::ostream& operator<<(std::ostream& ost,
+                           const PDT& t );
 
 }
 
