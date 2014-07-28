@@ -21,3 +21,14 @@ tex::ParticleInfo::ParticleInfo( PDGCode::type id,
   _q(q),
   _name(name){
 }
+
+std::ostream& tex::operator<<(std::ostream& ost,
+                              const tex::ParticleInfo& p ){
+  ost << "( "
+      << p.id()     << ", "
+      << p.mass()   << ", "
+      << p.charge() << ", "
+      << p.name()   << " )";
+
+  return ost;
+}

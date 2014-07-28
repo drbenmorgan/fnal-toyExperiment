@@ -33,16 +33,8 @@ namespace tex {
 
   };
 
-  inline std::ostream& operator<<(std::ostream& ost,
-                                  const ParticleInfo& p ){
-    ost << "( "
-        << p.id()     << ", "
-        << p.mass()   << ", "
-	<< p.charge() << ", "
-        << p.name()   << " )";
-
-    return ost;
-  }
+  std::ostream& operator<<(std::ostream& ost,
+                           const ParticleInfo& p );
 
 }  // namespace tex
 
