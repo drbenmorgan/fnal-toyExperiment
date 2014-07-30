@@ -21,11 +21,11 @@ bindir      fq_dir      bin
 #
 product		version
 gcc		v4_8_2
-art		v1_09_03
+art		v1_10_00b
 
 # list products required ONLY for the build
 # any products here must NOT have qualifiers
-only_for_build	cetbuildtools	v3_11_00
+only_for_build	cetbuildtools	v3_13_00
 
 # e5  - with gcc 4.8.2 and -std=c++11
 # -nq- here means there is no qualifier
