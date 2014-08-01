@@ -17,7 +17,6 @@ defaultqual	e5
 incdir      product_dir include
 libdir      fq_dir      lib
 bindir      fq_dir      bin
-fcldir      product_dir
 
 #
 product		version
@@ -47,6 +46,7 @@ s3:nu:e5:prof	nu:e5:prof	-nq-	-std=c++11
 end_qualifier_list
 
 table_fragment_begin
+pathPrepend(FHICL_FILE_PATH, ".:${UPS_PROD_DIR}")
 pathPrepend(PATH, ".:"${UPS_PROD_DIR}/scripts)
 table_fragment_end
 

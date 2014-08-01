@@ -81,6 +81,9 @@ source $CETBUILDTOOLS_DIR/bin/set_dev_bin
 # final sanity check and report
 source $CETBUILDTOOLS_DIR/bin/set_dev_check_report
 
+# ugly hack for now
+setenv FHICL_FILE_PATH .:${CETPKG_SOURCE}/toyExperiment
+
 # cleanup before exiting
 test "$ss" = csh && unalias tnotnull nullout set_ vecho_ return
 unset ss db me thisdir msg1 msg2 msg3 msg4 msg5 setup_fail
