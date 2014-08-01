@@ -17,34 +17,34 @@ defaultqual	e5
 incdir      product_dir include
 libdir      fq_dir      lib
 bindir      fq_dir      bin
+fcldir      product_dir
 
 #
 product		version
 gcc		v4_8_2
-art		v1_10_00b
-
-# list products required ONLY for the build
-# any products here must NOT have qualifiers
-only_for_build	cetbuildtools	v3_13_00
+art		v1_09_03      s1
+art		v1_09_04      s2
+art		v1_10_00b     s3
+cetbuildtools	v4_00_00	-	only_for_build
+end_product_list
 
 # e5  - with gcc 4.8.2 and -std=c++11
 # -nq- here means there is no qualifier
 # a - here means the dependent product is not required by the parent and will not be setup
 qualifier	art		gcc	notes
-e5:debug	e5:debug	-nq-	-std=c++11
-e5:prof		e5:prof		-nq-	-std=c++11
-nu:e5:debug	nu:e5:debug	-nq-	-std=c++11
-nu:e5:prof	nu:e5:prof	-nq-	-std=c++11
-
-# table_fragment_begin
-# this is a table file fragment
-# it will be copied verbatim
-# table_fragment_end
-
-table_fragment_begin
-pathPrepend(FHICL_FILE_PATH, ".:${UPS_PROD_DIR}")
-pathPrepend(PATH, ".:"${UPS_PROD_DIR}/scripts)
-table_fragment_end
+s1:e5:debug	e5:debug	-nq-	-std=c++11
+s1:e5:prof	e5:prof		-nq-	-std=c++11
+s1:nu:e5:debug	nu:e5:debug	-nq-	-std=c++11
+s1:nu:e5:prof	nu:e5:prof	-nq-	-std=c++11
+s2:e5:debug	e5:debug	-nq-	-std=c++11
+s2:e5:prof	e5:prof		-nq-	-std=c++11
+s2:nu:e5:debug	nu:e5:debug	-nq-	-std=c++11
+s2:nu:e5:prof	nu:e5:prof	-nq-	-std=c++11
+s3:e5:debug	e5:debug	-nq-	-std=c++11
+s3:e5:prof	e5:prof		-nq-	-std=c++11
+s3:nu:e5:debug	nu:e5:debug	-nq-	-std=c++11
+s3:nu:e5:prof	nu:e5:prof	-nq-	-std=c++11
+end_qualifier_list
 
 # Preserve tabs and formatting in emacs and vi / vim:
 
