@@ -6,7 +6,6 @@
 #include "toyExperiment/Utilities/RandomUnitSphere.h"
 #include "toyExperiment/Utilities/polar3Vector.h"
 
-#include "art/Framework/Services/Registry/ServiceHandle.h"
 #include "art/Framework/Services/Optional/RandomNumberGenerator.h"
 
 tex::RandomUnitSphere::RandomUnitSphere( CLHEP::HepRandomEngine& engine,
@@ -22,7 +21,7 @@ tex::RandomUnitSphere::RandomUnitSphere( CLHEP::HepRandomEngine& engine,
 }
 
 tex::RandomUnitSphere::RandomUnitSphere( CLHEP::HepRandomEngine& engine,
-                                           const RandomUnitSphereParams& pars): 
+                                           const RandomUnitSphereParams& pars):
   _czmin(pars.czmin),
   _czmax(pars.czmax),
   _phimin(pars.phimin),
