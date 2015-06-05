@@ -6,6 +6,7 @@ art_make(
   ${CLHEP}
   ${FHICLCPP}
   ${CETLIB}
+  ${Boost_SYSTEM_LIBRARY}
   )
 
 install_headers()

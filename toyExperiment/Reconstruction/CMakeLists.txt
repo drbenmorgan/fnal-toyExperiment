@@ -8,6 +8,7 @@ art_make(
   ${ART_FRAMEWORK_SERVICES_REGISTRY}
   ${ART_UTILITIES}
   ${CETLIB}
+  ${Boost_SYSTEM_LIBRARY}
   MODULE_LIBRARIES
   toyExperiment_Conditions_Conditions_service
   toyExperiment_Geometry_Geometry_service
