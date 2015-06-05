@@ -26,16 +26,11 @@ cet_cmake_env()
 
 cet_set_compiler_flags(DIAGS VIGILANT WERROR NO_UNDEFINED EXTRA_FLAGS -pedantic)
 
-cet_have_qual( e5 )
-if ( ${CET_HAVE_QUAL} )
-  # -D_GLIBCXX_USE_NANOSLEEP is needed to make std::this_thread::sleep_for available.
-  cet_add_compiler_flags(CXX -std=c++11 -D_GLIBCXX_USE_NANOSLEEP)
-endif()
 cet_report_compiler_flags()
 
 # these are minimum required versions, not the actual product versions
-find_ups_product( art v1_09_03 )
-find_ups_product( cetbuildtools v4_00_00 )
+find_ups_product( art v1_14_02 )
+find_ups_product( cetbuildtools v4_10_02 )
 
 # include search path
 # notice use of ENV to invoke an external variable
