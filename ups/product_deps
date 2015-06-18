@@ -1,7 +1,7 @@
 # The parent line must be the first non-comment line in the file
 # This line defines the product name and version
 parent	toyExperiment	v0_00_22
-defaultqual	e7
+defaultqual	s11:e7
 
 # These optional lines define the installed directories where headers,
 # libraries, and executables will be found.
@@ -21,7 +21,7 @@ bindir      fq_dir      bin
 #
 product		version
 art		v1_14_02      s11
-cetbuildtools	v4_10_02	-	only_for_build
+cetbuildtools	v4_12_02	-	only_for_build
 end_product_list
 
 # e5  - with gcc 4.8.2 and -std=c++11
