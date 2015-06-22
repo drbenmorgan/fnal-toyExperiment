@@ -29,7 +29,7 @@ cet_set_compiler_flags(DIAGS VIGILANT WERROR NO_UNDEFINED EXTRA_FLAGS -pedantic)
 cet_report_compiler_flags()
 
 # these are minimum required versions, not the actual product versions
-find_ups_product( art v1_14_02 )
+find_ups_product( art v1_13_01 )
 find_ups_product( cetbuildtools v4_10_02 )
 
 # include search path
