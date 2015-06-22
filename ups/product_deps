@@ -20,6 +20,8 @@ bindir      fq_dir      bin
 
 #
 product		version
+art		v1_13_01      s7
+art		v1_13_02      s8
 art		v1_14_02      s11
 cetbuildtools	v4_12_02	-	only_for_build
 end_product_list
@@ -28,10 +30,18 @@ end_product_list
 # -nq- here means there is no qualifier
 # a - here means the dependent product is not required by the parent and will not be setup
 qualifier	art		compiler  notes
-s11:e7:debug	e7:debug	gcc       -std=c++1y
-s11:e7:prof	e7:prof		gcc	  -std=c++1y
-s11:nu:e7:debug	nu:e7:debug	gcc	  -std=c++1y
-s11:nu:e7:prof	nu:e7:prof	gcc	  -std=c++1y
+s7:e7:debug	e7:debug	gcc
+s7:e7:prof	e7:prof		gcc
+s7:nu:e7:debug	nu:e7:debug	gcc
+s7:nu:e7:prof	nu:e7:prof	gcc
+s8:e7:debug	e7:debug	gcc
+s8:e7:prof	e7:prof		gcc
+s8:nu:e7:debug	nu:e7:debug	gcc
+s8:nu:e7:prof	nu:e7:prof	gcc
+s11:e7:debug	e7:debug	gcc
+s11:e7:prof	e7:prof		gcc
+s11:nu:e7:debug	nu:e7:debug	gcc
+s11:nu:e7:prof	nu:e7:prof	gcc
 end_qualifier_list
 
 table_fragment_begin
