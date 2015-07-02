@@ -26,15 +26,6 @@ tex::RecoTrk const& tex::RecoTrk::operator+=( RecoTrk const& rhs){
   return *this;
 }
 
-double tex::RecoTrk::mass() const{
-  return _momentum.mag();
-}
-
-double tex::RecoTrk::p() const{
-  CLHEP::Hep3Vector const& pp = _momentum;
-  return pp.mag();
-}
-
 double tex::RecoTrk::sigmaMass() const{
 
   double m = _momentum.mag();
