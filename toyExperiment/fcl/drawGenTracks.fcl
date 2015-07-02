@@ -16,11 +16,10 @@ services : {
   message       : @local::default_message
   TFileService  : { fileName : "eventDisplay01.root" }
 
-  user : {
-    Geometry   : { geometryFile   : "databaseFiles/geom01.fcl"       }
-    Conditions : { conditionsFile : "databaseFiles/conditions01.fcl" }
-    PDT        : { pdtFile        : "databaseFiles/pdt.fcl"          }
-  }
+  # From toyExperiment
+  Geometry   : { geometryFile   : "databaseFiles/geom01.fcl"       }
+  Conditions : { conditionsFile : "databaseFiles/conditions01.fcl" }
+  PDT        : { pdtFile        : "databaseFiles/pdt.fcl"          }
 
 }
 

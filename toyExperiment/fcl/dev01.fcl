@@ -18,19 +18,18 @@ services : {
   RandomNumberGenerator : {}
   TFileService          : { fileName : "dev01.root" }
 
-  user : {
-    Geometry   : {
-      geometryFile : "databaseFiles/geom01.fcl"
-      verbosity    : 0
-    }
-    Conditions : {
-      conditionsFile : "databaseFiles/conditions01.fcl"
-      verbosity      : 0
-    }
-    PDT : {
-      pdtFile   : "databaseFiles/pdt.fcl"
-      verbosity : 0
-    }
+  # From toyExperiment
+  Geometry   : {
+    geometryFile : "databaseFiles/geom01.fcl"
+    verbosity    : 0
+  }
+  Conditions : {
+    conditionsFile : "databaseFiles/conditions01.fcl"
+    verbosity      : 0
+  }
+  PDT : {
+    pdtFile   : "databaseFiles/pdt.fcl"
+    verbosity : 0
   }
 
 }

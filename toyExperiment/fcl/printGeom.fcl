@@ -14,11 +14,10 @@ source : {
 services : {
   message : @local::default_message
 
-  user : {
-    Geometry   : {
-      geometryFile   : "databaseFiles/geom01.fcl"
-      verbosity      : 2
-    }
+  # From toyExperiment
+  Geometry   : {
+    geometryFile   : "databaseFiles/geom01.fcl"
+    verbosity      : 2
   }
 
 }
