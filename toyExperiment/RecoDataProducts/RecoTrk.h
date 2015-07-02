@@ -32,6 +32,9 @@ namespace tex {
     CLHEP::HepLorentzVector const& momentum()    const { return _momentum; }
     CLHEP::HepSymMatrix     const& momentumCov() const { return _momCov;   }
 
+    double mass() const;
+    double p() const;
+
     double sigmaMass() const;
     double sigmaP() const;
 
