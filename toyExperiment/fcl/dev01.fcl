@@ -61,7 +61,7 @@ outputs: {
 
   outfile : {
     module_type : RootOutput
-    fileName    : "dev01_data.root"
+    fileName    : "dev01.art"
   }
 
 }

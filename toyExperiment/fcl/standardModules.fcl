@@ -39,6 +39,10 @@ fitter_default : {
   minHits          : 5
 }
 
+randomsaver_default : {
+  module_type   : RandomNumberSaver
+}
+
 #Analyzers
 inspectGens_default : {
   module_type      : InspectGenParticles

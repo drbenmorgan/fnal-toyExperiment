@@ -8,7 +8,7 @@ process_name : eventDisplay01
 
 source : {
   module_type : RootInput
-  fileNames   : [ "inputFiles/input04_data.root" ]
+  fileNames   : [ "inputFiles/input04.art" ]
   maxEvents   : -1
 }
 

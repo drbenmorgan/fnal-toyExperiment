@@ -29,10 +29,11 @@ services : {
 
 physics :{
   producers : {
-    evtgen   : @local::evtgen_default
-    detsim   : @local::detsim_default
-    makeHits : @local::makeHits_default
-    fitter   : @local::fitter_default
+    evtgen      : @local::evtgen_default
+    detsim      : @local::detsim_default
+    makeHits    : @local::makeHits_default
+    fitter      : @local::fitter_default
+    randomsaver : @local::randomsaver_default
   }
 
   analyzers: {
@@ -43,7 +44,7 @@ physics :{
     massPlot             : @local::massPlot_default
   }
 
-  p1            : [ evtgen, detsim, makeHits, fitter ]
+  p1            : [ evtgen, detsim, makeHits, fitter, randomsaver ]
   e1            : [ inspectGens, inspectIntersections, inspectHits, inspectFits, massPlot, outfile ]
   trigger_paths : [ p1 ]
   end_paths     : [ e1 ]
@@ -54,7 +55,7 @@ outputs: {
 
   outfile : {
     module_type : RootOutput
-    fileName    : "output/input03_data.root"
+    fileName    : "output/input03.art"
   }
 
 }
