@@ -98,13 +98,13 @@ namespace tex {
     CLHEP::HepLorentzVector fourMomentum( double s, double m, double bz  ) const;
 
     // Electric charge.
-    double q( double bz ) const{
+    int q( double bz ) const{
       return (bz >= 0.) ? qgeo() : -qgeo();
     }
 
     // Geometric charge
-    double qgeo() const{
-      return ( cu() > 0 ) ? 1. : -1.;
+    int qgeo() const{
+      return ( cu() > 0 ) ? 1 : -1;
     }
 
     // Derived information about the helix pitch: returns values on [0,1]
