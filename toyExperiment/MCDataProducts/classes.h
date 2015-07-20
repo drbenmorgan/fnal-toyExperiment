@@ -22,8 +22,9 @@ template class art::Wrapper<tex::MCRunSummary>;
 namespace {
   struct Instantiations {
     tex::TrkHitMatch junk00;
+    tex::ReverseTrkHitMatch junk01;
   };
 }
 
 template class art::Wrapper<tex::TrkHitMatch >;
-
+template class art::Wrapper<tex::ReverseTrkHitMatch >;

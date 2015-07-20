@@ -13,6 +13,7 @@
 namespace tex {
 
   typedef art::Assns<TrkHit,Intersection> TrkHitMatch;
+  typedef art::Assns<Intersection,TrkHit> ReverseTrkHitMatch;
 
 }
 

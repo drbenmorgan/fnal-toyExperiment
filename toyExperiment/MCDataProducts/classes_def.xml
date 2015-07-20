@@ -27,5 +27,6 @@
  <class name="art::Wrapper<tex::MCRunSummary>"/>
  <class name="tex::TrkHitMatch"/>
  <class name="art::Wrapper<tex::TrkHitMatch>"/>
-
+ <class name="tex::ReverseTrkHitMatch"/>
+ <class name="art::Wrapper<tex::ReverseTrkHitMatch>"/>
 </lcgdict>
