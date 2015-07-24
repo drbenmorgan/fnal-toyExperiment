@@ -55,6 +55,7 @@ namespace tex {
   };
 
 #ifndef __GCCXML__
+  inline
   RecoTrk operator+( RecoTrk const& r1, RecoTrk const& r2){
     RecoTrk r(r1);
     r += r2;
