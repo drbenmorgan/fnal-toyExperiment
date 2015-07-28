@@ -33,6 +33,7 @@ namespace tex {
                                 iz0  =Helix::iz0 };
 
     explicit FittedHelix ( FittedHelixData const& fit);
+    explicit FittedHelix ( FittedHelixData const& fit, double const bz );
 
     // See note 1.
     virtual ~FittedHelix(){}

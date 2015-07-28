@@ -18,6 +18,12 @@ tex::FittedHelix::FittedHelix ( FittedHelixData const& fit):
   bz_(art::ServiceHandle<Geometry>()->bz()){
 }
 
+tex::FittedHelix::FittedHelix ( FittedHelixData const& fit,
+                                double const bz )
+  : fit_(fit)
+  , bz_(bz)
+{}
+
 CLHEP::HepLorentzVector
 tex::FittedHelix::lorentzAtPoca( double m ) const{
   double e = sqrt( cet::square(fit_.helix().p(bz_)) + cet::square(m) );
