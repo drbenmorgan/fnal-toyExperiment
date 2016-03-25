@@ -28,7 +28,7 @@ art		v1_14_03      s12
 art		v1_15_00      s13
 art		v1_15_01      s14
 art             v1_17_07      s30
-cetbuildtools	v4_14_01	-	only_for_build
+cetbuildtools	v4_19_00	-	only_for_build
 end_product_list
 
 # e5  - with gcc 4.8.2 and -std=c++11
