@@ -1,7 +1,7 @@
 # The parent line must be the first non-comment line in the file
 # This line defines the product name and version
 parent	toyExperiment	v0_00_29
-defaultqual	s14:e7
+defaultqual	s30:e9
 
 # These optional lines define the installed directories where headers,
 # libraries, and executables will be found.
@@ -27,7 +27,8 @@ art		v1_14_02      s11
 art		v1_14_03      s12
 art		v1_15_00      s13
 art		v1_15_01      s14
-cetbuildtools	v4_12_05	-	only_for_build
+art             v1_17_07      s30
+cetbuildtools	v4_14_01	-	only_for_build
 end_product_list
 
 # e5  - with gcc 4.8.2 and -std=c++11
@@ -62,6 +63,10 @@ s14:e7:debug	e7:debug	gcc
 s14:e7:prof	e7:prof		gcc
 s14:nu:e7:debug	nu:e7:debug	gcc
 s14:nu:e7:prof	nu:e7:prof	gcc
+s30:e9:debug	e9:debug	gcc
+s30:e9:prof	e9:prof		gcc
+s30:nu:e9:debug	nu:e9:debug	gcc
+s30:nu:e9:prof	nu:e9:prof	gcc
 end_qualifier_list
 
 table_fragment_begin
