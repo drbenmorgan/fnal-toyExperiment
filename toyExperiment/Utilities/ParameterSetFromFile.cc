@@ -28,15 +28,15 @@ ParameterSetFromFile( std::string const& fileName ):
 
 
 void
-tex::ParameterSetFromFile::printKeys( std::ostream& out ) const
+tex::ParameterSetFromFile::printNames( std::ostream& out ) const
 {
 
-  std::vector<std::string> const& keys = _pSet.get_keys();
+  std::vector<std::string> const& names = _pSet.get_names();
   out << "\nParameter set read from file: " << _fileName << std::endl;
-  out << "Number of keys: " << keys.size() << std::endl;
-  for ( std::vector<std::string>::const_iterator i=keys.begin();
-        i != keys.end(); ++i ){
-    out << " " << i-keys.begin() << " " << *i << std::endl;
+  out << "Number of names: " << names.size() << std::endl;
+  for ( std::vector<std::string>::const_iterator i=names.begin();
+        i != names.end(); ++i ){
+    out << " " << i-names.begin() << " " << *i << std::endl;
   }
 
 }

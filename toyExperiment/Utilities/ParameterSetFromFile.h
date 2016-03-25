@@ -19,7 +19,7 @@ public:
 
     fhicl::ParameterSet const& pSet() const { return _pSet; }
 
-    void printKeys( std::ostream& ) const;
+    void printNames( std::ostream& ) const;
 
 private:
 
