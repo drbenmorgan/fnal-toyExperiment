@@ -4,7 +4,8 @@
 
 <lcgdict>
 
- <class name="tex::GenParticle" ClassVersion="4">
+ <class name="tex::GenParticle" ClassVersion="5">
+  <version ClassVersion="5" checksum="2551214631"/>
   <version ClassVersion="4" checksum="697829685"/>
   <version ClassVersion="3" checksum="3786123848"/>
  </class>
@@ -26,5 +27,6 @@
  <class name="art::Wrapper<tex::MCRunSummary>"/>
  <class name="tex::TrkHitMatch"/>
  <class name="art::Wrapper<tex::TrkHitMatch>"/>
-
+ <class name="tex::ReverseTrkHitMatch"/>
+ <class name="art::Wrapper<tex::ReverseTrkHitMatch>"/>
 </lcgdict>

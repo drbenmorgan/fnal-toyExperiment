@@ -8,7 +8,7 @@ process_name : trackdebug01
 
 source : {
   module_type : RootInput
-  fileNames   : [ "dev01_data.root" ]
+  fileNames   : [ "dev01.art" ]
   maxEvents   : -1
 }
 services : {
@@ -16,10 +16,10 @@ services : {
   RandomNumberGenerator : {}
   TFileService          : { fileName : "trackdebug01.root" }
 
-  user : {
-    Geometry   : { geometryFile   : "databaseFiles/geom01.fcl"    }
-    Conditions : { conditionsFile : "databaseFiles/conditions01.fcl" }
-  }
+  # From toyExperiment
+  Geometry   : { geometryFile   : "databaseFiles/geom01.fcl"       }
+  Conditions : { conditionsFile : "databaseFiles/conditions01.fcl" }
+  PDT        : { pdtFile        : "databaseFiles/pdt.fcl"          }
 
 }
 
@@ -27,10 +27,16 @@ physics :{
 
   analyzers: {
     eventDisplay : {
-      module_type : EventDisplayDebug
-      gensModuleLabel : "evtgen"
-      simModuleLabel  : "detsim"
-      maxDisplay  : 10
+      module_type    : EventDisplayDebug
+      genParticleTag : "evtgen"
+      drawGenTracks  : true
+      drawHits       : true
+      waitFor        : mouse
+      prompt         : true
+      multipage      : false
+      plotFileName   : "event.png"
+      orientation    : "landscape"
+      maxDisplay     : 10
     }
   }
 

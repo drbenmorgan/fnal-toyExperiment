@@ -8,12 +8,12 @@
 //  and its point of closest approach to the z axis, are inside the innermost tracker shell;
 //  if they are not, then the algorithm may miss hits or mis-order hits.
 
-#include "toyExperiment/Conditions/Conditions.h"
 #include "toyExperiment/Geometry/Geometry.h"
 #include "toyExperiment/Geometry/IntersectionFinder.h"
 #include "toyExperiment/MCDataProducts/GenParticleCollection.h"
 #include "toyExperiment/MCDataProducts/IntersectionCollection.h"
 #include "toyExperiment/MCDataProducts/MCRunSummary.h"
+#include "toyExperiment/PDT/PDT.h"
 #include "toyExperiment/RecoDataProducts/DetectorStatus.h"
 #include "toyExperiment/RecoDataProducts/Helix.h"
 
@@ -22,8 +22,6 @@
 #include "art/Framework/Principal/Event.h"
 #include "art/Framework/Principal/Run.h"
 #include "art/Framework/Services/Registry/ServiceHandle.h"
-
-#include "CLHEP/Random/RandGaussQ.h"
 
 #include <iostream>
 #include <cmath>
@@ -36,17 +34,14 @@ namespace tex {
 
     explicit DetectorSimulation( fhicl::ParameterSet const& pset );
 
-    void beginRun ( art::Run&  run    );
-    void endRun   ( art::Run&  run    );
-    void produce  ( art::Event& event );
+    void beginRun ( art::Run&  run    ) override;
+    void endRun   ( art::Run&  run    ) override;
+    void produce  ( art::Event& event ) override;
 
   private:
 
-    // The label of the module that created the GenParticles.
-    std::string _gensModuleLabel;
-
-    // Seed for the random number engine
-    int    _seed;
+    // The input tag the module that created the GenParticles.
+    art::InputTag _gensTag;
 
     // The instance names of the TrkHitColleciton data products.
     // This is a more convenient form than that provided by TrackerComponent.
@@ -57,10 +52,7 @@ namespace tex {
     art::ServiceHandle<Geometry> _geom;
 
     // The particle data table; defined at c'tor-time.
-    PDT const& _pdt;
-
-    // The random number engine that will be used by this data product.
-    art::RandomNumberGenerator::base_engine_t & _engine;
+    art::ServiceHandle<PDT> _pdt;
 
     // Keep some running statistics about the run to date.
     MCRunSummary _runSummary;
@@ -70,12 +62,10 @@ namespace tex {
 }
 
 tex::DetectorSimulation::DetectorSimulation( fhicl::ParameterSet const& pset ):
-  _gensModuleLabel( pset.get<std::string>("gensModuleLabel") ),
-  _seed(pset.get<int>("seed")),
+  _gensTag( pset.get<std::string>("genParticleTag") ),
   _instanceNames(),
   _geom(art::ServiceHandle<Geometry>()),
-  _pdt(art::ServiceHandle<Conditions>()->pdt()),
-  _engine(createEngine(_seed)),
+  _pdt(),
   _runSummary(){
 
   // This module produces one data product for each element of the TrackComponent enum.
@@ -94,7 +84,7 @@ void tex::DetectorSimulation::produce( art::Event& event ){
 
   // Fetch input data product.
   art::Handle<GenParticleCollection> gensHandle;
-  event.getByLabel( _gensModuleLabel, gensHandle );
+  event.getByLabel( _gensTag, gensHandle );
   GenParticleCollection const& gens(*gensHandle);
 
   // Create empty output data products.
@@ -116,11 +106,12 @@ void tex::DetectorSimulation::produce( art::Event& event ){
     // Index of this particle within the GenParticleCollection.
     int genIndex = &gen - &gens.front();
 
-    if ( gen.status() == GenParticle::alive ) {
+    // Skip particles that were decayed in the generator.
+    if ( !gen.hasChildren() ) {
 
       ++nAlive;
 
-      double q  = _pdt.getById(gen.pdgId()).charge();
+      double q  = _pdt->getById(gen.pdgId()).charge();
       Helix helix( gen.position(), gen.momentum().vect(), q, bz);
 
       // Another counter for the MCRunSummary

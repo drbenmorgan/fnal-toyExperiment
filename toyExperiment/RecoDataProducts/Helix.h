@@ -50,6 +50,8 @@ namespace tex {
 
     Helix ();
 
+#ifndef __GCCXML__
+
     Helix ( CLHEP::HepVector const& v);
 
     Helix ( double cu, double phi0, double d0, double ct, double z0);
@@ -96,13 +98,13 @@ namespace tex {
     CLHEP::HepLorentzVector fourMomentum( double s, double m, double bz  ) const;
 
     // Electric charge.
-    double q( double bz ) const{
+    int q( double bz ) const{
       return (bz >= 0.) ? qgeo() : -qgeo();
     }
 
     // Geometric charge
-    double qgeo() const{
-      return ( cu() > 0 ) ? 1. : -1.;
+    int qgeo() const{
+      return ( cu() > 0 ) ? 1 : -1;
     }
 
     // Derived information about the helix pitch: returns values on [0,1]
@@ -115,6 +117,7 @@ namespace tex {
     double radiusToCenter() const{
       return std::abs(d0() - 0.5/cu());
     }
+#endif  // __GCCXML__
 
   private:
 
@@ -122,8 +125,10 @@ namespace tex {
 
   };
 
+#ifndef __GCCXML__
   std::ostream& operator<<(std::ostream& ost,
                            const tex::Helix& helix );
+#endif  // __GCCXML__
 
 }
 #endif  /* RecoDataProducts_Helix_h */

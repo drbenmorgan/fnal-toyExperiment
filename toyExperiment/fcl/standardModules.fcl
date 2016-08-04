@@ -9,59 +9,68 @@ BEGIN_PROLOG
 evtgen_default : {
   module_type : EventGenerator
   seed        :    1
-  pmin        :    0.
-  pmax        : 2000.
+  signal : {
+    pmin        :    0.
+    pmax        : 2000.
+  }
+  background  : {
+    n    : 0.75
+    pmin : 0.
+    pmax : 800.
+  }
 }
 
 detsim_default : {
   module_type      : DetectorSimulation
-  gensModuleLabel  : "evtgen"
+  genParticleTag   : "evtgen"
   seed             : 2
 }
 
 makeHits_default : {
   module_type      : HitMaker
   seed             : 3
-  inputModuleLabel : "detsim"
-  instanceNames    : [ "inner", "outer" ]
+  intersectionTags : [ "detsim:outer", "detsim:inner" ]
 }
 
 fitter_default : {
   module_type      : FindAndFitHelix
   seed             : 4
-  makerModuleLabel : "makeHits"
+  hitsTag          : "makeHits"
   minHits          : 5
+}
+
+randomsaver_default : {
+  module_type   : RandomNumberSaver
 }
 
 #Analyzers
 inspectGens_default : {
   module_type      : InspectGenParticles
-  gensModuleLabel  : "evtgen"
-  inputModuleLabel : evtgen
+  genParticleTag   : "evtgen"
   maxPrint         : 0
 }
 
 inspectIntersections_default : {
-  module_type    : InspectIntersections
-  simModuleLabel : "detsim"
-  maxPrint       : 0
+  module_type      : InspectIntersections
+  intersectionTags : [ "detsim:outer", "detsim:inner" ]
+  maxPrint         : 0
 }
 
 inspectHits_default : {
   module_type      : InspectTrkHits
-  makerModuleLabel : "makeHits"
+  hitMakerTag      : "makeHits"
   maxPrint         : 0
 }
 
 inspectFits_default : {
   module_type       : InspectFittedHelix
-  fitterModuleLabel : "fitter"
+  fitsTag           : "fitter"
   maxPrint          : 0
 }
 
 massPlot_default : {
   module_type       : MassPlot
-  fitterModuleLabel : "fitter"
+  fitsTag           : "fitter"
   maxPrint          : 0
 }
 

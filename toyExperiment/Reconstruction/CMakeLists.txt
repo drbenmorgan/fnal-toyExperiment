@@ -1,14 +1,19 @@
 art_make(
   LIB_LIBRARIES toyExperiment_Geometry_Geometry_service
+  toyExperiment_PDT_PDT_service
+  toyExperiment_PDT
   toyExperiment_Geometry
   toyExperiment_RecoDataProducts
   toyExperiment_Utilities
   ${ART_FRAMEWORK_SERVICES_REGISTRY}
   ${ART_UTILITIES}
   ${CETLIB}
+  ${Boost_SYSTEM_LIBRARY}
   MODULE_LIBRARIES
   toyExperiment_Conditions_Conditions_service
   toyExperiment_Geometry_Geometry_service
+  toyExperiment_PDT_PDT_service
+  toyExperiment_PDT
   toyExperiment_Utilities
   toyExperiment_MCDataProducts
   toyExperiment_RecoDataProducts

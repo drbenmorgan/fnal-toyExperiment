@@ -3,6 +3,7 @@
 //
 
 #include "toyExperiment/Geometry/Geometry.h"
+#include "toyExperiment/Utilities/ParameterSetHelpers.h"
 #include "toyExperiment/Utilities/ParameterSetFromFile.h"
 
 #include "art/Framework/Services/Registry/ServiceMacros.h"
@@ -10,6 +11,7 @@
 #include "art/Persistency/Provenance/ModuleDescription.h"
 
 #include "messagefacility/MessageLogger/MessageLogger.h"
+
 
 #include <iostream>
 
@@ -46,6 +48,14 @@ tex::Geometry::preBeginRun(art::Run const & run) {
     std::cout << _tracker << std::endl;
   }
 
+  // Construct the luminous region
+  fhicl::ParameterSet luminousRegionPSet = pSetFile.pSet().get<fhicl::ParameterSet>("luminousRegion");
+  makeLuminousRegion( luminousRegionPSet );
+
+  if ( _verbosity > 1 ){
+    std::cout << _luminousRegion << std::endl;
+  }
+
   // Construct the magnetic field information.
   fhicl::ParameterSet bFieldPSet = pSetFile.pSet().get<fhicl::ParameterSet>("bfield");
   makeBField( bFieldPSet );
@@ -78,13 +88,14 @@ tex::Geometry::makeTracker( fhicl::ParameterSet const& pSet ) {
     double r0       = p.get<double>("r0");
     double dr       = p.get<double>("dr");
     double hlen     = p.get<double>("halfLength");
+    double hthick   = p.get<double>("halfThickness");
     double sigma    = p.get<double>("sigma");
 
     _tracker.reserve(_tracker.nShells()+nShells);
 
     for ( size_t i=0; i<nShells; ++i ){
       double r = r0 + i*dr;
-      _tracker.addShell( Shell( id, component.first, r, hlen, sigma ) );
+      _tracker.addShell( Shell( id, component.first, r, hlen, hthick, sigma ) );
       id++;
     }
 
@@ -92,6 +103,12 @@ tex::Geometry::makeTracker( fhicl::ParameterSet const& pSet ) {
 
 
 } // end makeTracker
+
+void
+tex::Geometry::makeLuminousRegion( fhicl::ParameterSet const& pSet ) {
+  _luminousRegion = LuminousRegion( pSet.get<CLHEP::Hep3Vector>("center"),
+                                    pSet.get<CLHEP::Hep3Vector>("sigma")  );
+} // end makeLuminousRegion
 
 void
 tex::Geometry::makeBField( fhicl::ParameterSet const& pSet ) {

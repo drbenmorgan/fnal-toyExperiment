@@ -7,6 +7,5 @@
 # The working directory in which the directory will be named.
 dir="${1}"
 
-mkdir ${dir}/output
+mkdir -p ${dir}/output
 
-exit 0

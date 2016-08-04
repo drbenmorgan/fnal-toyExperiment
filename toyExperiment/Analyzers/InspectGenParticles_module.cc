@@ -3,6 +3,7 @@
 //
 
 #include "toyExperiment/MCDataProducts/GenParticleCollection.h"
+#include "toyExperiment/PDT/PDT.h"
 
 #include "art/Framework/Core/EDAnalyzer.h"
 #include "art/Framework/Core/ModuleMacros.h"
@@ -10,11 +11,9 @@
 #include "art/Framework/Services/Optional/TFileService.h"
 
 #include "TH1F.h"
-#include "TNtuple.h"
 
 #include "CLHEP/Units/SystemOfUnits.h"
 
-#include <iostream>
 #include <string>
 
 namespace tex {
@@ -25,17 +24,22 @@ namespace tex {
 
     explicit InspectGenParticles(fhicl::ParameterSet const& pset);
 
-    void beginJob();
-    void analyze(const art::Event& event);
+    void beginJob() override;
+    void analyze(const art::Event& event) override;
 
   private:
 
-    std::string _gensModuleLabel;
-    int         _maxPrint;
+    // Particle data table.
+    art::ServiceHandle<PDT> _pdt;
+
+    art::InputTag _gensTag;
+    int           _maxPrint;
 
     art::ServiceHandle<art::TFileService> _tfs;
 
     TH1F* _hNGens;
+    TH1F* _hCharge;
+    TH1F* _hQTot;
     TH1F* _hpPhi;
     TH1F* _hpKplus;
     TH1F* _hpKminus;
@@ -49,58 +53,63 @@ namespace tex {
     TH1F* _hAngle;
     TH1F* _hMassCheck;
 
-    TNtuple* _nt;
-
     int _printCount;
+
+    void checkMass( GenParticle const& );
   };
 
 }
 
 tex::InspectGenParticles::InspectGenParticles(fhicl::ParameterSet const& pset):
-  _gensModuleLabel( pset.get<std::string>("gensModuleLabel") ),
+  art::EDAnalyzer(pset),
+  _pdt(),
+
+  _gensTag( pset.get<std::string>("genParticleTag") ),
   _maxPrint( pset.get<int>("maxPrint",0) ),
   _tfs( art::ServiceHandle<art::TFileService>() ),
   _printCount(0){
 }
 
 void tex::InspectGenParticles::beginJob(){
-  _hNGens   = _tfs->make<TH1F>( "nGens",   "Number of generated particles",        20, 0.,   20. );
-  _hpPhi    = _tfs->make<TH1F>( "pPhi",    "Momentum of generated Phi; [MeV]",    100, 0., 2000. );
-  _hpKplus  = _tfs->make<TH1F>( "pKplus",  "Momentum of decay K+; [MeV]",         100, 0., 2000. );
-  _hpKminus = _tfs->make<TH1F>( "pKminus", "Momentum of decay K-; [MeV]",         100, 0., 2000. );
-  _hpOther  = _tfs->make<TH1F>( "pKOther", "Momentum of other particles; [MeV]",  100, 0., 2000. );
+  _hNGens   = _tfs->make<TH1F>( "nGens",   "Number of generated particles",        20,  0.,   20. );
+  _hCharge  = _tfs->make<TH1F>( "Charge",  "Charge of generated particles",         5, -2.,    2. );
+  _hQTot    = _tfs->make<TH1F>( "QTot",    "Total charge of the event",             5, -2.,    2. );
+  _hpPhi    = _tfs->make<TH1F>( "pPhi",    "Momentum of generated Phi; [MeV]",    100,  0., 2000. );
+  _hpKplus  = _tfs->make<TH1F>( "pKplus",  "Momentum of decay K+; [MeV]",         100,  0., 2000. );
+  _hpKminus = _tfs->make<TH1F>( "pKminus", "Momentum of decay K-; [MeV]",         100,  0., 2000. );
+  _hpOther  = _tfs->make<TH1F>( "pOther",  "Momentum of other particles; [MeV]",  100,  0., 2000. );
 
   _hczPhi    = _tfs->make<TH1F>( "czPhi",    "cos(theta) of generated Phi; [MeV]",    100, -1., 1. );
   _hczKplus  = _tfs->make<TH1F>( "czKplus",  "cos(theta) of decay K+; [MeV]",         100, -1., 1. );
   _hczKminus = _tfs->make<TH1F>( "czKminus", "cos(theta) of decay K-; [MeV]",         100, -1., 1. );
-  _hczOther  = _tfs->make<TH1F>( "czKOther", "cos(theta) of other particles; [MeV]",  100, -1., 1. );
+  _hczOther  = _tfs->make<TH1F>( "czOther",  "cos(theta) of other particles; [MeV]",  100, -1., 1. );
 
   _hAngle     = _tfs->make<TH1F>( "Angle", "Openning angle between K+ K-; [degrees]",  100,    0.,  180. );
   _hMassCheck = _tfs->make<TH1F>( "MassCheck", "Mass of K+ K- pair; [MeV]",             40, 1000., 1040. );
 
-  _nt = _tfs->make<TNtuple>( "nt", "Phi Decay Information", "p0:p1:p2" );
 }
 
 void tex::InspectGenParticles::analyze(const art::Event& event){
 
   // Get the generated particles from the event.
-  art::Handle<GenParticleCollection> gensHandle;
-  event.getByLabel( _gensModuleLabel, gensHandle);
-  GenParticleCollection const& gens(*gensHandle);
+  auto gens = event.getValidHandle<GenParticleCollection>(_gensTag);
 
   // Printout, if required.
   bool doPrint = ( ++_printCount < _maxPrint );
   if ( doPrint ) {
     std::cout << "\nNumber of GenParticles in event "
               << event.id().event() << " is: "
-              << gens.size()
+              << gens->size()
               << std::endl;
   }
 
-  _hNGens->Fill(gens.size());
+  _hNGens->Fill(gens->size());
+
+  // Total charge of the generated event.
+  int qtot(0.);
 
   // Loop over all of the generated particles.
-  for ( auto const& gen:gens ){
+  for ( auto const& gen: *gens ){
 
     if ( doPrint ) {
       std::cout << gen << std::endl;
@@ -109,9 +118,15 @@ void tex::InspectGenParticles::analyze(const art::Event& event){
     double p  = gen.momentum().vect().mag();
     double cz = gen.momentum().vect().cosTheta();
 
+    double q = _pdt->getById( gen.pdgId()).charge();
+    qtot += q;
+
+    _hCharge->Fill( q );
+
     if ( gen.pdgId() == PDGCode::phi ){
       _hpPhi->Fill( p );
       _hczPhi->Fill( cz );
+      checkMass( gen );
 
     } else if ( gen.pdgId() == PDGCode::K_plus ){
       _hpKplus->Fill( p );
@@ -127,24 +142,21 @@ void tex::InspectGenParticles::analyze(const art::Event& event){
     }
   }
 
-  if ( gens.size() > 2 ) {
-    CLHEP::Hep3Vector const& p1 = gens.at(1).momentum().vect();
-    CLHEP::Hep3Vector const& p2 = gens.at(2).momentum().vect();
+  _hQTot->Fill(qtot);
 
-    double angle = p1.angle(p2)/CLHEP::degree;
-    _hAngle->Fill(angle);
+}
 
-    float ntData[3];
-    ntData[0] = gens.at(0).momentum().vect().mag();
-    ntData[1] = gens.at(1).momentum().vect().mag();
-    ntData[2] = gens.at(2).momentum().vect().mag();
+void tex::InspectGenParticles::checkMass(const tex::GenParticle& gen ){
+  if ( gen.children().size() != 2 ) return;
 
-    _nt->Fill(ntData);
+  CLHEP::Hep3Vector const& p1 = gen.child(0)->momentum().vect();
+  CLHEP::Hep3Vector const& p2 = gen.child(1)->momentum().vect();
 
-    CLHEP::HepLorentzVector psum = gens.at(1).momentum() + gens.at(2).momentum();
-    _hMassCheck->Fill( psum.mag() );
+  double angle = p1.angle(p2)/CLHEP::degree;
+  _hAngle->Fill(angle);
 
-  }
+  CLHEP::HepLorentzVector psum = gen.child(0)->momentum() + gen.child(1)->momentum();
+  _hMassCheck->Fill( psum.mag() );
 
 }
 

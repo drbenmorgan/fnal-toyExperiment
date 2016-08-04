@@ -33,6 +33,7 @@ namespace tex {
                                 iz0  =Helix::iz0 };
 
     explicit FittedHelix ( FittedHelixData const& fit);
+    explicit FittedHelix ( FittedHelixData const& fit, double const bz );
 
     // See note 1.
     virtual ~FittedHelix(){}
@@ -51,8 +52,8 @@ namespace tex {
     double ct()   const { return fit_.helix().ct();   }
     double z0()   const { return fit_.helix().z0();   }
 
-    double q   () const { return fit_.helix().q(bz_); }
-    double qgeo() const { return fit_.helix().qgeo(); }
+    int q   () const { return fit_.helix().q(bz_); }
+    int qgeo() const { return fit_.helix().qgeo(); }
 
     art::Ptr<TrkHit> const&  hit ( size_t i ) const { return fit_.hit(i); }
 

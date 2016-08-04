@@ -8,7 +8,7 @@ process_name : skipEvents
 
 source : {
   module_type : RootInput
-  fileNames   : [ "inputFiles/input01_data.root" ]
+  fileNames   : [ "inputFiles/input01.art" ]
   firstEvent  : 5
   maxEvents   : 3
 }

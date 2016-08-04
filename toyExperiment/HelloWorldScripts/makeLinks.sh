@@ -22,7 +22,7 @@ inputDir=${TOYEXPERIMENT_DIR}/inputFiles
 # Are the input files present?
 if [ ! -e ${inputDir} ]; then
   echo "Cannot find the directory that contains the input files: " ${inputdir}
-  echo "Please rename/remove it and rerun this script"
+  echo "Please make sure that the directory exists and rerun this script"
   exit 1
 fi
 

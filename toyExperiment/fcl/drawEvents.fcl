@@ -8,7 +8,7 @@ process_name : eventDisplay01
 
 source : {
   module_type : RootInput
-  fileNames   : [ "dev01_data.root" ]
+  fileNames   : [ "dev01.art" ]
   maxEvents   : 20
 }
 
@@ -16,10 +16,10 @@ services : {
   message       : @local::default_message
   TFileService  : { fileName : "eventDisplay01.root" }
 
-  user : {
-    Geometry   : { geometryFile   : "databaseFiles/geom01.fcl"    }
-    Conditions : { conditionsFile : "databaseFiles/conditions01.fcl" }
-  }
+  # From toyExperiment
+  Geometry   : { geometryFile   : "databaseFiles/geom01.fcl"       }
+  Conditions : { conditionsFile : "databaseFiles/conditions01.fcl" }
+  PDT        : { pdtFile        : "databaseFiles/pdt.fcl"          }
 
 }
 
@@ -27,10 +27,10 @@ physics :{
   analyzers: {
     eventDisplay : {
       module_type     : EventDisplay
-      gensModuleLabel : "evtgen"
-      simModuleLabel  : "detsim"
+      genParticleTag  : "evtgen"
       drawGenTracks   : true
       drawHits        : true
+      waitFor         : mouse
       prompt          : true
       multipage       : false
       plotFileName    : "event.png"

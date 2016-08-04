@@ -1,4 +1,7 @@
-art_make_library(SOURCE PlotOrientation.cc
+art_make_library(SOURCE EnsureTApplication.cc PlotOrientation.cc
+                        WaitFor.cc
+   LIBRARIES
+   ${ROOT_CORE}
   )
 
 set(COMMON_LIBRARIES
@@ -20,14 +23,20 @@ simple_plugin( HelloWorld "module"
   )
 
 simple_plugin( InspectGenParticles "module"
+  toyExperiment_PDT_PDT_service
+  toyExperiment_PDT
   toyExperiment_MCDataProducts
+  toyExperiment_Conditions_Conditions_service
   ${COMMON_LIBRARIES}
   ${ROOT_HIST}
   ${ROOT_TREE}
   )
 
 simple_plugin( InspectIntersections "module"
+  toyExperiment_PDT_PDT_service
+  toyExperiment_PDT
   toyExperiment_MCDataProducts
+  toyExperiment_Utilities
   ${COMMON_LIBRARIES}
   ${ROOT_HIST}
   ${ROOT_TREE}
@@ -48,7 +57,8 @@ simple_plugin( InspectFittedHelix "module"
   )
 
 simple_plugin( MassPlot "module"
-  toyExperiment_Conditions
+  toyExperiment_PDT_PDT_service
+  toyExperiment_PDT
   toyExperiment_Reconstruction
   toyExperiment_RecoDataProducts
   ${COMMON_LIBRARIES}
@@ -59,10 +69,13 @@ simple_plugin( MassPlot "module"
 simple_plugin( EventDisplay "module"
   toyExperiment_Conditions_Conditions_service
   toyExperiment_Geometry_Geometry_service
+  toyExperiment_PDT_PDT_service
+  toyExperiment_PDT
   toyExperiment_MCDataProducts
   toyExperiment_Analyzers
   toyExperiment_Utilities
   ${COMMON_LIBRARIES}
+  ${MF_MESSAGELOGGER}
   ${ROOT_GRAF}
   ${ROOT_GPAD}
   ${ROOT_HIST}

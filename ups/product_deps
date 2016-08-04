@@ -1,7 +1,7 @@
 # The parent line must be the first non-comment line in the file
 # This line defines the product name and version
-parent	toyExperiment	v0_00_14
-defaultqual	e2
+parent	toyExperiment	v0_00_30
+defaultqual	s30:e9
 
 # These optional lines define the installed directories where headers,
 # libraries, and executables will be found.
@@ -20,28 +20,54 @@ bindir      fq_dir      bin
 
 #
 product		version
-gcc		v4_7_1
-art		v1_06_00
+art		v1_13_01      s7
+art		v1_13_02      s8
+art		v1_14_01      s10
+art		v1_14_02      s11
+art		v1_14_03      s12
+art		v1_15_00      s13
+art		v1_15_01      s14
+art             v1_17_07      s30
+cetbuildtools	v4_19_00	-	only_for_build
+end_product_list
 
-# list products required ONLY for the build
-# any products here must NOT have qualifiers
-only_for_build	cetbuildtools	v3_05_01
-
-# e2  - with gcc 4.7.1 and -std=c++0x
+# e5  - with gcc 4.8.2 and -std=c++11
 # -nq- here means there is no qualifier
 # a - here means the dependent product is not required by the parent and will not be setup
-qualifier	art		gcc	notes
-e2:debug	e2:debug	-nq-	-std=c++0x
-e2:prof		e2:prof		-nq-	-std=c++0x
-mu2e:e2:debug	mu2e:e2:debug	-nq-	-std=c++0x
-mu2e:e2:prof	mu2e:e2:prof	-nq-	-std=c++0x
-nu:e2:debug	nu:e2:debug	-nq-	-std=c++0x
-nu:e2:prof	nu:e2:prof	-nq-	-std=c++0x
-
-# table_fragment_begin
-# this is a table file fragment
-# it will be copied verbatim
-# table_fragment_end
+qualifier	art		compiler  notes
+s7:e7:debug	e7:debug	gcc
+s7:e7:prof	e7:prof		gcc
+s7:nu:e7:debug	nu:e7:debug	gcc
+s7:nu:e7:prof	nu:e7:prof	gcc
+s8:e7:debug	e7:debug	gcc
+s8:e7:prof	e7:prof		gcc
+s8:nu:e7:debug	nu:e7:debug	gcc
+s8:nu:e7:prof	nu:e7:prof	gcc
+s10:e7:debug	e7:debug	gcc
+s10:e7:prof	e7:prof		gcc
+s10:nu:e7:debug	nu:e7:debug	gcc
+s10:nu:e7:prof	nu:e7:prof	gcc
+s11:e7:debug	e7:debug	gcc
+s11:e7:prof	e7:prof		gcc
+s11:nu:e7:debug	nu:e7:debug	gcc
+s11:nu:e7:prof	nu:e7:prof	gcc
+s12:e7:debug	e7:debug	gcc
+s12:e7:prof	e7:prof		gcc
+s12:nu:e7:debug	nu:e7:debug	gcc
+s12:nu:e7:prof	nu:e7:prof	gcc
+s13:e7:debug	e7:debug	gcc
+s13:e7:prof	e7:prof		gcc
+s13:nu:e7:debug	nu:e7:debug	gcc
+s13:nu:e7:prof	nu:e7:prof	gcc
+s14:e7:debug	e7:debug	gcc
+s14:e7:prof	e7:prof		gcc
+s14:nu:e7:debug	nu:e7:debug	gcc
+s14:nu:e7:prof	nu:e7:prof	gcc
+s30:e9:debug	e9:debug	gcc
+s30:e9:prof	e9:prof		gcc
+s30:nu:e9:debug	nu:e9:debug	gcc
+s30:nu:e9:prof	nu:e9:prof	gcc
+end_qualifier_list
 
 table_fragment_begin
 pathPrepend(FHICL_FILE_PATH, ".:${UPS_PROD_DIR}")

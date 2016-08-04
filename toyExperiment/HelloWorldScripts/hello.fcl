@@ -8,7 +8,7 @@ process_name : hello
 
 source : {
   module_type : RootInput
-  fileNames   : [ "inputFiles/input01_data.root" ]
+  fileNames   : [ "inputFiles/input01.art" ]
 }
 
 services : {

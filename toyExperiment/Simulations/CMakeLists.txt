@@ -1,5 +1,6 @@
 simple_plugin( EventGenerator "module"
                toyExperiment_Conditions_Conditions_service
+               toyExperiment_PDT_PDT_service
                toyExperiment_Utilities
                toyExperiment_MCDataProducts
                ${ART_FRAMEWORK_CORE}
@@ -9,6 +10,7 @@ simple_plugin( EventGenerator "module"
 
 simple_plugin( DetectorSimulation "module"
                toyExperiment_Conditions_Conditions_service
+               toyExperiment_PDT_PDT_service
                toyExperiment_Geometry_Geometry_service
                toyExperiment_Utilities
                toyExperiment_MCDataProducts

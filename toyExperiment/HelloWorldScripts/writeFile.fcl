@@ -8,7 +8,7 @@ process_name : writeFile
 
 source : {
   module_type : RootInput
-  fileNames   : [ "inputFiles/input01_data.root" ]
+  fileNames   : [ "inputFiles/input01.art" ]
   firstEvent  : 4
   maxEvents   : 4
 }
@@ -32,6 +32,6 @@ physics :{
 outputs : {
   output1 : {
     module_type : RootOutput
-    fileName    : "output/writeFile_data.root"
+    fileName    : "output/writeFile.art"
   }
 }

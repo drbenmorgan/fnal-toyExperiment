@@ -10,6 +10,7 @@
 #include "toyExperiment/Conditions/Conditions.h"
 #include "toyExperiment/Geometry/Geometry.h"
 #include "toyExperiment/MCDataProducts/IntersectionCollection.h"
+#include "toyExperiment/PDT/PDT.h"
 #include "toyExperiment/RecoDataProducts/Helix.h"
 #include "toyExperiment/RecoDataProducts/TrkHitCollection.h"
 #include "toyExperiment/RecoDataProducts/FittedHelixDataCollection.h"
@@ -31,18 +32,18 @@ namespace tex {
 
     explicit FindAndFitHelix(fhicl::ParameterSet const& pset);
 
-    void produce(  art::Event& event);
+    void produce(  art::Event& event) override;
 
   private:
 
-    std::string _makerModuleLabel;
-    int         _seed;
-    size_t      _minHits;
-    int         _maxPrint;
+    art::InputTag _hitsTag;
+    int           _seed;
+    size_t        _minHits;
+    int           _maxPrint;
 
     art::ServiceHandle<Geometry>   _geom;
     art::ServiceHandle<Conditions> _conditions;
-    PDT const& _pdt;
+    art::ServiceHandle<PDT>        _pdt;
 
     // The random number engine that will be used by this data product.
     art::RandomNumberGenerator::base_engine_t & _engine;
@@ -67,13 +68,12 @@ namespace tex {
 }
 
 tex::FindAndFitHelix::FindAndFitHelix(fhicl::ParameterSet const& pset):
-  _makerModuleLabel( pset.get<std::string>("makerModuleLabel") ),
-  _seed(pset.get<int>("seed")),
-  _minHits(          pset.get<size_t>     ("minHits")    ),
-  _maxPrint(         pset.get<int>        ("maxPrint",0) ),
+  _hitsTag(  pset.get<std::string>("hitsTag") ),
+  _seed(     pset.get<int>        ("seed")),
+  _minHits(  pset.get<size_t>     ("minHits")    ),
+  _maxPrint( pset.get<int>        ("maxPrint",0) ),
   _geom(),
-  _conditions(),
-  _pdt(_conditions->pdt()),
+  _pdt(),
   _engine(createEngine(_seed)),
   _gauss(_engine),
   _printCount(0){
@@ -88,6 +88,7 @@ tex::FindAndFitHelix::FindAndFitHelix(fhicl::ParameterSet const& pset):
 
 void tex::FindAndFitHelix::produce( art::Event& event){
 
+  // Create an empty output data product.
   std::unique_ptr<FittedHelixDataCollection> tracks(new FittedHelixDataCollection);
 
   // Fake pattern recognition: use MC truth to learn which hits are on which tracks.
@@ -111,15 +112,15 @@ void
 tex::FindAndFitHelix::cheatPatternRecognition ( art::Event const & event, hitmap_type& hitsOnTracks){
 
   art::Handle<TrkHitCollection> hitsHandle;
-  event.getByLabel( _makerModuleLabel, hitsHandle );
+  event.getByLabel( _hitsTag, hitsHandle );
   TrkHitCollection const& hits(*hitsHandle);
 
   // Navigator object to match hits with their truth information.
-  art::FindOne<Intersection> fa(hitsHandle, event, _makerModuleLabel);
+  art::FindOne<Intersection> fa(hitsHandle, event, _hitsTag);
 
   for ( size_t i=0; i<hits.size(); ++i) {
     Intersection const& truth( fa.at(i).ref() );
-    hitsOnTracks[truth.genTrack()].push_back( art::Ptr<TrkHit>( hitsHandle, i ) );
+    hitsOnTracks[truth.genTrack()].emplace_back( hitsHandle, i );
   }
 
 }
@@ -134,7 +135,7 @@ tex::FindAndFitHelix::parameterizedSmear( art::Ptr<GenParticle> const& gen,
                     ict=Helix::ict, iz0=Helix::iz0 };
 
   double bz = _geom->bz();
-  double q  = _pdt.getById(gen->pdgId()).charge();
+  double q  = _pdt->getById(gen->pdgId()).charge();
   Helix trk ( gen->position(), gen->momentum().vect(), q, bz);
 
   CLHEP::HepVector par(5);

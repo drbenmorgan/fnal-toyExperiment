@@ -1,8 +1,8 @@
 install(FILES
-  input01_data.root
-  input02_data.root
-  input03_data.root
-  input04_data.root
+  input01.art
+  input02.art
+  input03.art
+  input04.art
   DESTINATION ${product}/${version}/inputFiles
   )
 install_fhicl()

@@ -8,6 +8,7 @@
 #include "toyExperiment/MCDataProducts/IntersectionCollection.h"
 #include "toyExperiment/MCDataProducts/TrkHitMatch.h"
 #include "toyExperiment/RecoDataProducts/TrkHitCollection.h"
+#include "toyExperiment/Utilities/inputTagsFromStrings.h"
 
 #include "art/Framework/Core/EDProducer.h"
 #include "art/Framework/Core/ModuleMacros.h"
@@ -28,18 +29,15 @@ namespace tex {
 
     explicit HitMaker( fhicl::ParameterSet const& pset );
 
-    void produce  ( art::Event& event );
+    void produce  ( art::Event& event ) override;
 
   private:
 
-    // Label of the module that made the Intersection objects.
-    std::string _simsModuleLabel;
+    // Input tags for the products to process.
+    std::vector<art::InputTag> _intersectionTags;
 
     // Seed for the random number engine
     int _seed;
-
-    // Which instance names of the input product should we do?
-    std::vector<std::string> _instanceNames;
 
     // Handle to the geometry and conditions services; handles are defined at
     // c'tor-time but the contents of the underlying objects may change on
@@ -59,9 +57,8 @@ namespace tex {
 }
 
 tex::HitMaker::HitMaker( fhicl::ParameterSet const& pset ):
-  _simsModuleLabel(pset.get<std::string>("inputModuleLabel")),
+   _intersectionTags( inputTagsFromStrings( pset.get<std::vector<std::string>>("intersectionTags"))),
   _seed(pset.get<int>("seed")),
-  _instanceNames(pset.get<std::vector<std::string>>("instanceNames")),
   _geom(art::ServiceHandle<Geometry>()),
   _engine(createEngine(_seed)),
   _flat(_engine),
@@ -73,13 +70,13 @@ tex::HitMaker::HitMaker( fhicl::ParameterSet const& pset ):
 
 void tex::HitMaker::produce( art::Event& event ){
 
-  // Fetch input data products and count the total size.
+  // Fetch input data products and count the total of all intersections.
   int nHitMax(0);
   std::vector<art::Handle<IntersectionCollection>> handles;
-  handles.reserve(_instanceNames.size());
-  for ( auto const& instance : _instanceNames ) {
+  handles.reserve(_intersectionTags.size());
+  for ( auto const& tag : _intersectionTags ){
     art::Handle<IntersectionCollection> handle;
-    event.getByLabel(_simsModuleLabel, instance, handle);
+    event.getByLabel<IntersectionCollection>(tag,handle);
     handles.emplace_back( handle );
     nHitMax += handle->size();
   }
@@ -97,11 +94,11 @@ void tex::HitMaker::produce( art::Event& event ){
 
   for ( auto const& handle : handles ){
 
-    for ( auto const& truth: *handle ){
+    for ( auto const& intersection: *handle ){
 
-      CLHEP::Hep3Vector const& pos = truth.position();
-      Shell const& shell           =  tracker.shell( truth.shell() );
-      ShellConditions const& cond  = _conditions->shellConditions( truth.shell() );
+      CLHEP::Hep3Vector const& pos = intersection.position();
+      Shell const& shell           = tracker.shell( intersection.shell() );
+      ShellConditions const& cond  = _conditions->shellConditions( intersection.shell() );
 
       // Apply efficiency.
       if ( _flat.fire() > cond.efficiency() ) continue;
@@ -111,10 +108,10 @@ void tex::HitMaker::produce( art::Event& event ){
       double phi = pos.phi() + _gauss.fire()*cond.sigmaPhi();
       hits->emplace_back( shell.id(), z, phi, cond.sigmaZ(), cond.sigmaPhi() );
 
-      // Record connection betwween the hit and its truth information.
-      art::Ptr<Intersection> ptruth( handle, &truth-&handle->front() );
-      art::Ptr<TrkHit>      phit  ( trkHitID, hits->size()-1, event.productGetter(trkHitID) );
-      matches->addSingle( phit, ptruth );
+      // Record connection betwween the hit and the intersection from which it was made.
+      art::Ptr<Intersection> pintersection( handle, &intersection-&handle->front() );
+      art::Ptr<TrkHit>       phit  ( trkHitID, hits->size()-1, event.productGetter(trkHitID) );
+      matches->addSingle( phit, pintersection );
 
     }
   }

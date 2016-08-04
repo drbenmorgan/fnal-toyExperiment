@@ -5,10 +5,14 @@
 #include "toyExperiment/RecoDataProducts/RecoTrk.h"
 #include "CLHEP/Matrix/Vector.h"
 
+#include <array>
+
 tex::RecoTrk::RecoTrk():
   _momentum(),
   _momCov(dimension){
 }
+
+#ifndef __GCCXML__
 
 tex::RecoTrk::RecoTrk( CLHEP::HepLorentzVector const& momentum,
                          CLHEP::HepSymMatrix     const& momCov ):
@@ -27,11 +31,7 @@ double tex::RecoTrk::sigmaMass() const{
   double m = _momentum.mag();
 
   // Derivatives of the mass wrt the 4-vector components.
-  double dm[dimension];
-  dm[ipx] = - _momentum.x()/m;
-  dm[ipy] = - _momentum.y()/m;
-  dm[ipz] = - _momentum.z()/m;
-  dm[ie ] =   _momentum.e()/m;
+  std::array<double,dimension> dm{ - _momentum.x()/m, - _momentum.y()/m, - _momentum.z()/m, _momentum.e()/m };
 
   // Alias for typographic convenience.
   CLHEP::HepSymMatrix const& v(_momCov);
@@ -59,10 +59,7 @@ double tex::RecoTrk::sigmaP() const{
   double p = _momentum.vect().mag();
 
   // Derivatives of the mass wrt the 4-vector components.
-  double d[3];
-  d[ipx] = _momentum.x()/p;
-  d[ipy] = _momentum.y()/p;
-  d[ipz] = _momentum.z()/p;
+  std::array<double,3> d{_momentum.x()/p, _momentum.y()/p, _momentum.z()/p};
 
   // Alias for typographic convenience.
   CLHEP::HepSymMatrix const& v(_momCov);
@@ -85,6 +82,8 @@ std::ostream& tex::operator<<(std::ostream& ost,
                               const tex::RecoTrk& recoTrk ){
   ost << "( "
       << recoTrk.momentum()    << ", "
-      << recoTrk.momentumCov() << " )";
+      << recoTrk.momentumCov() << ", "
+      << recoTrk.mass()        << " )";
   return ost;
 }
+#endif  // __GCCXML__

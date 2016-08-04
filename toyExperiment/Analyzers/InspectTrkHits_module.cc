@@ -27,12 +27,12 @@ namespace tex {
 
     explicit InspectTrkHits(fhicl::ParameterSet const& pset);
 
-    void beginRun( const art::Run& run );
-    void analyze(const art::Event& event);
+    void beginRun( const art::Run& run ) override;
+    void analyze(const art::Event& event) override;
 
   private:
 
-    std::string _makerModuleLabel;
+    art::InputTag _hitsTag;
     int         _maxPrint;
 
     art::ServiceHandle<Geometry>   _geom;
@@ -50,7 +50,8 @@ namespace tex {
 }
 
 tex::InspectTrkHits::InspectTrkHits(fhicl::ParameterSet const& pset):
-  _makerModuleLabel( pset.get<std::string>("makerModuleLabel") ),
+  art::EDAnalyzer(pset),
+  _hitsTag( pset.get<std::string>("hitMakerTag") ),
   _maxPrint( pset.get<int>("maxPrint",0) ),
   _geom(),
   _conditions(),
@@ -72,7 +73,7 @@ void tex::InspectTrkHits::beginRun( const art::Run& ){
   double zIn  = 6.*_conditions->shellConditions(inner).sigmaZ();
   double zOut = 6.*_conditions->shellConditions(outer).sigmaZ();
 
-  _hNHits   = _tfs->make<TH1F>( "NHits", "Number of intersections per event",   80,   0.,    80 );
+  _hNHits   = _tfs->make<TH1F>( "NHits", "Number of tracker hits per event",   80,   0.,    80 );
   _hDzInner = _tfs->make<TH1F>( "DzInner", "z (smeared-gen) for Inner shells", 100, -zIn,   zIn );
   _hDzOuter = _tfs->make<TH1F>( "DzOuter", "z (smeared-gen) for Outer shells", 100, -zOut, zOut );
 
@@ -83,13 +84,13 @@ void tex::InspectTrkHits::analyze(const art::Event& event){
   Tracker const& tracker(_geom->tracker());
 
   art::Handle<TrkHitCollection> hitsHandle;
-  event.getByLabel( _makerModuleLabel, hitsHandle );
+  event.getByLabel( _hitsTag, hitsHandle );
   TrkHitCollection const& hits(*hitsHandle);
 
   _hNHits->Fill( hits.size() );
 
   // Navigator object to match hits with their truth information.
-  art::FindOne<Intersection> fa(hitsHandle, event, _makerModuleLabel);
+  art::FindOne<Intersection> fa(hitsHandle, event, _hitsTag);
 
   for ( size_t i=0; i<hits.size(); ++i) {
 

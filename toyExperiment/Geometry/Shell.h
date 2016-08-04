@@ -21,13 +21,16 @@ namespace tex {
            TrackerComponent::enum_type section,
            double r,
            double halfLength,
+           double halfThickness,
            double sigma );
 
-    int    id()           const { return _id;            }
-    double radius()       const { return _radius;        }
-    double halfLength()   const { return _halfLength;    }
-    double length()       const { return 2.*_halfLength; }
-    double sigma()        const { return _sigma;         }
+    int    id()            const { return _id;               }
+    double radius()        const { return _radius;           }
+    double halfLength()    const { return _halfLength;       }
+    double length()        const { return 2.*_halfLength;    }
+    double halfThickness() const { return _halfThickness;    }
+    double thickness()     const { return 2.*_halfThickness; }
+    double sigma()         const { return _sigma;            }
 
     TrackerComponent trackerComponent() const { return _trackerComponent;  }
 
@@ -37,6 +40,7 @@ namespace tex {
     TrackerComponent _trackerComponent;
     double           _radius;
     double           _halfLength;
+    double           _halfThickness;
     double           _sigma;
 
   };
@@ -47,6 +51,7 @@ namespace tex {
         << s.trackerComponent() << " "
         << s.radius()           << " "
         << s.halfLength()       << " "
+        << s.halfThickness()    << " "
         << s.sigma();
     return ost;
   }

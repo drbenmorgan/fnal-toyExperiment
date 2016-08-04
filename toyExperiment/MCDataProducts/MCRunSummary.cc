@@ -9,6 +9,8 @@ tex::MCRunSummary::MCRunSummary():
   _nAlive(0), _nGood(0){
 }
 
+#ifndef __GCCXML__
+
 void
 tex::MCRunSummary::increment ( size_t nAlive, size_t nGood){
   _nAlive += nAlive;
@@ -28,3 +30,4 @@ tex::operator<<(std::ostream& ost,
       << " nGood: "                << sum.nGood();
   return ost;
 }
+#endif  // __GCCXML__

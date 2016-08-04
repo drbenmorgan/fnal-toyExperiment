@@ -7,5 +7,5 @@ foreach(script check_outputDir check_inputFiles_symlink )
     ${script} ${CMAKE_BINARY_DIR})
 
   cet_script(${script} NO_INSTALL)
-  add_dependencies(run_${script} !${script})
+  add_dependencies(run_${script} ${script})
 endforeach()

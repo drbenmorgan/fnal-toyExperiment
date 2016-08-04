@@ -115,6 +115,10 @@ mf_coutInfo:
                         # Alternatively, one could just omit the limit
                         # entry, which would mean no limit.
    }
+   Prompt:              # A category to use for prompt messages.
+   {                    # These should never be prescaled.
+     limit : -1
+   }
    default:
    {
      limit : 10

@@ -10,23 +10,32 @@ process_name : read01
 
 source : {
   module_type : RootInput
-  fileNames   : [ "dev01_data.root" ]
+  fileNames   : @nil
   maxEvents   : -1
 }
 
 services : {
   message       : @local::default_message
-  TFileService  : { fileName : "read01.root" }
+  TFileService  : { fileName : "output/read01.root" }
+
+  # From toyExperiment
+  Geometry   : { geometryFile   : "databaseFiles/geom01.fcl"       }
+  Conditions : { conditionsFile : "databaseFiles/conditions01.fcl" }
+  PDT        : { pdtFile        : "databaseFiles/pdt.fcl"          }
+
 }
 
 physics :{
   analyzers: {
-    inspectGens      : @local::inspectGens_default
-    inspectHitTruths : @local::inspectHitTruths_default
-    inspectHits      : @local::inspectHits_default
+    inspectGens          : @local::inspectGens_default
+    inspectIntersections : @local::inspectIntersections_default
+    inspectHits          : @local::inspectHits_default
+    inspectFits          : @local::inspectFits_default
+    massPlot             : @local::massPlot_default
   }
 
-  e1        : [ inspectGens, inspectHitTruths, inspectHits ]
+  e1        : [ inspectGens, inspectIntersections, inspectHits, inspectFits,
+                massPlot ]
   end_paths : [ e1 ]
 
 }

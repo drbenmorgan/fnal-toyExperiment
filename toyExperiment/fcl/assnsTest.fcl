@@ -34,7 +34,7 @@ outputs: {
 
   outfile : {
     module_type : RootOutput
-    fileName    : "assnsTest_data.root"
+    fileName    : "assnsTest.art"
   }
 
 }
