@@ -4,7 +4,7 @@
 
 #include "toyExperiment/Utilities/eventIDToString.h"
 
-#include "art/Persistency/Provenance/EventID.h"
+#include "canvas/Persistency/Provenance/EventID.h"
 
 #include <sstream>
 

@@ -4,7 +4,8 @@
 
 <lcgdict>
 
- <class name="tex::GenParticle" ClassVersion="5">
+ <class name="tex::GenParticle" ClassVersion="6">
+  <version ClassVersion="6" checksum="1177866370"/>
   <version ClassVersion="5" checksum="2551214631"/>
   <version ClassVersion="4" checksum="697829685"/>
   <version ClassVersion="3" checksum="3786123848"/>

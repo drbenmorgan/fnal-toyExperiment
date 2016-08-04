@@ -1,8 +1,8 @@
 art_make(
   LIB_LIBRARIES
   toyExperiment_RecoDataProducts
-  ${ART_PERSISTENCY_PROVENANCE}
-  ${ART_UTILITIES}
+  art_Persistency_Provenance canvas_Persistency_Provenance
+  art_Utilities canvas_Utilities
   ${CLHEP}
   ${FHICLCPP}
   ${CETLIB}

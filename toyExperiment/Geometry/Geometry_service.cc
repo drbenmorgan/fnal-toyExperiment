@@ -8,7 +8,7 @@
 
 #include "art/Framework/Services/Registry/ServiceMacros.h"
 #include "art/Framework/Principal/Run.h"
-#include "art/Persistency/Provenance/ModuleDescription.h"
+#include "canvas/Persistency/Provenance/ModuleDescription.h"
 
 #include "messagefacility/MessageLogger/MessageLogger.h"
 

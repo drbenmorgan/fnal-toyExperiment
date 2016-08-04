@@ -7,7 +7,7 @@ art_make_library(SOURCE EnsureTApplication.cc PlotOrientation.cc
 set(COMMON_LIBRARIES
   ${ART_FRAMEWORK_CORE}
   ${ART_FRAMEWORK_PRINCIPAL}
-  ${ART_PERSISTENCY_COMMON}
+  art_Persistency_Common canvas_Persistency_Common
   ${ART_FRAMEWORK_SERVICES_REGISTRY}
   ${ART_FRAMEWORK_SERVICES_OPTIONAL_TFILESERVICE_SERVICE}
   ${ART_FRAMEWORK_SERVICES_OPTIONAL}
@@ -19,7 +19,7 @@ set(COMMON_LIBRARIES
 simple_plugin( HelloWorld "module"
   ${ART_FRAMEWORK_CORE}
   ${ART_FRAMEWORK_PRINCIPAL}
-  ${ART_PERSISTENCY_COMMON}
+  art_Persistency_Common canvas_Persistency_Common
   )
 
 simple_plugin( InspectGenParticles "module"

@@ -5,7 +5,7 @@
 // an std::vector of std::strings
 //
 
-#include "art/Utilities/InputTag.h"
+#include "canvas/Utilities/InputTag.h"
 
 #include <string>
 #include <vector>

@@ -7,7 +7,7 @@
 
 #include "toyExperiment/MCDataProducts/GenParticle.h"
 
-#include "art/Persistency/Common/Ptr.h"
+#include "canvas/Persistency/Common/Ptr.h"
 
 #include "CLHEP/Vector/ThreeVector.h"
 

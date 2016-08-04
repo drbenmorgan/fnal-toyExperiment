@@ -9,7 +9,7 @@
 #include "toyExperiment/RecoDataProducts/Helix.h"
 #include "toyExperiment/RecoDataProducts/TrkHit.h"
 
-#include "art/Persistency/Common/Ptr.h"
+#include "canvas/Persistency/Common/Ptr.h"
 
 #include "CLHEP/Matrix/SymMatrix.h"
 
