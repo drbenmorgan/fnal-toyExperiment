@@ -8,7 +8,7 @@
 #include "toyExperiment/RecoDataProducts/TrkHit.h"
 #include "toyExperiment/MCDataProducts/Intersection.h"
 
-#include "art/Persistency/Common/Assns.h"
+#include "canvas/Persistency/Common/Assns.h"
 
 namespace tex {
 

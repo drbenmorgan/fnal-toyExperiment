@@ -17,7 +17,7 @@ ENDIF()
 
 set(CMAKE_MODULE_PATH
 #          ${CMAKE_PROJECT_DIR}/Modules
-          $ENV{ART_DIR}/Modules
+          $ENV{CANVAS_DIR}/Modules
 		      $ENV{CETBUILDTOOLS_DIR}/Modules
 		      ${CMAKE_MODULE_PATH})
 
@@ -28,9 +28,10 @@ cet_set_compiler_flags(DIAGS VIGILANT WERROR NO_UNDEFINED EXTRA_FLAGS -pedantic)
 
 cet_report_compiler_flags()
 
-# these are minimum required versions, not the actual product versions
-find_ups_product( art v1_17_07 )
-find_ups_product( cetbuildtools v4_14_01 )
+# Versions are specified in the ups/product_deps file
+find_ups_product( art )
+find_ups_product( cetbuildtools )
+find_ups_root( )
 
 # include search path
 # notice use of ENV to invoke an external variable

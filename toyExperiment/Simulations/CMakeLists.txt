@@ -5,7 +5,7 @@ simple_plugin( EventGenerator "module"
                toyExperiment_MCDataProducts
                ${ART_FRAMEWORK_CORE}
                ${ART_FRAMEWORK_PRINCIPAL}
-               ${ART_PERSISTENCY_COMMON}
+               art_Persistency_Common canvas_Persistency_Common
              )
 
 simple_plugin( DetectorSimulation "module"
@@ -17,7 +17,7 @@ simple_plugin( DetectorSimulation "module"
                toyExperiment_RecoDataProducts
                ${ART_FRAMEWORK_CORE}
                ${ART_FRAMEWORK_PRINCIPAL}
-               ${ART_PERSISTENCY_COMMON}
+               art_Persistency_Common canvas_Persistency_Common
                ${ART_FRAMEWORK_SERVICES_REGISTRY}
                ${ART_FRAMEWORK_SERVICES_OPTIONAL_TFILESERVICE_SERVICE}
                ${ART_FRAMEWORK_SERVICES_OPTIONAL}
@@ -33,7 +33,7 @@ simple_plugin( HitMaker "module"
                toyExperiment_RecoDataProducts
                ${ART_FRAMEWORK_CORE}
                ${ART_FRAMEWORK_PRINCIPAL}
-               ${ART_PERSISTENCY_COMMON}
+               art_Persistency_Common canvas_Persistency_Common
                ${ART_FRAMEWORK_SERVICES_REGISTRY}
                ${ART_FRAMEWORK_SERVICES_OPTIONAL_TFILESERVICE_SERVICE}
                ${ART_FRAMEWORK_SERVICES_OPTIONAL}

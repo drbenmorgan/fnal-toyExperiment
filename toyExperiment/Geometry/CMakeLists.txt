@@ -7,10 +7,11 @@ art_make(
   SERVICE_LIBRARIES
   toyExperiment_Geometry
   toyExperiment_Utilities
-  ${ART_PERSISTENCY_PROVENANCE}
+  art_Persistency_Provenance canvas_Persistency_Provenance
   ${FHICLCPP}
   ${CETLIB}
   ${CLHEP}
+  ${ROOT_CORE}
   )
 
 install_headers()

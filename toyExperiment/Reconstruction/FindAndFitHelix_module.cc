@@ -18,7 +18,7 @@
 #include "art/Framework/Core/EDProducer.h"
 #include "art/Framework/Core/ModuleMacros.h"
 #include "art/Framework/Principal/Event.h"
-#include "art/Framework/Core/FindOne.h"
+#include "canvas/Persistency/Common/FindOne.h"
 
 #include "CLHEP/Random/RandGaussQ.h"
 

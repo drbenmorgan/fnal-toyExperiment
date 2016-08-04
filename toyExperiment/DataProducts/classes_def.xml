@@ -4,7 +4,4 @@
 
 <lcgdict>
  <class name="tex::PDGCode"/>
- <class name="CLHEP::Hep3Vector"/>
- <class name="CLHEP::HepLorentzVector"/>
- <class name="CLHEP::HepSymMatrix"/>
 </lcgdict>

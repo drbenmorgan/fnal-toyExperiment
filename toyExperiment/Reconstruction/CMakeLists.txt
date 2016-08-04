@@ -6,7 +6,7 @@ art_make(
   toyExperiment_RecoDataProducts
   toyExperiment_Utilities
   ${ART_FRAMEWORK_SERVICES_REGISTRY}
-  ${ART_UTILITIES}
+  art_Utilities canvas_Utilities
   ${CETLIB}
   ${Boost_SYSTEM_LIBRARY}
   MODULE_LIBRARIES
@@ -19,7 +19,7 @@ art_make(
   toyExperiment_RecoDataProducts
   ${ART_FRAMEWORK_CORE}
   ${ART_FRAMEWORK_PRINCIPAL}
-  ${ART_PERSISTENCY_COMMON}
+  art_Persistency_Common canvas_Persistency_Common
   ${ART_FRAMEWORK_SERVICES_REGISTRY}
   ${ART_FRAMEWORK_SERVICES_OPTIONAL_TFILESERVICE_SERVICE}
   ${ART_FRAMEWORK_SERVICES_OPTIONAL}
