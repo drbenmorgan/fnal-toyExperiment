@@ -10,7 +10,6 @@ art_make(
   ${ART_FRAMEWORK_SERVICES_REGISTRY}
   art_Utilities canvas_Utilities
   ${CLHEP}
-  ${ROOT_CORE}
   )
 
 install_headers()

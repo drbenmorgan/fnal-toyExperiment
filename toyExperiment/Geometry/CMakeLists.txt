@@ -11,7 +11,6 @@ art_make(
   ${FHICLCPP}
   ${CETLIB}
   ${CLHEP}
-  ${ROOT_CORE}
   )
 
 install_headers()
