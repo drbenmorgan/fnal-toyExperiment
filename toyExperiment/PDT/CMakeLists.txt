@@ -10,7 +10,6 @@ art_make(
   art_Persistency_Provenance canvas_Persistency_Provenance
   ${ART_FRAMEWORK_SERVICES_REGISTRY}
   art_Utilities canvas_Utilities
-  ${ROOT_CORE}
   )
 
 install_headers()
