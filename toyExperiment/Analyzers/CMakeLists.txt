@@ -5,20 +5,20 @@ art_make_library(SOURCE EnsureTApplication.cc PlotOrientation.cc
   )
 
 set(COMMON_LIBRARIES
-  ${ART_FRAMEWORK_CORE}
-  ${ART_FRAMEWORK_PRINCIPAL}
+  art_Framework_Core
+  art_Framework_Principal
   art_Persistency_Common canvas_Persistency_Common
-  ${ART_FRAMEWORK_SERVICES_REGISTRY}
-  ${ART_FRAMEWORK_SERVICES_OPTIONAL_TFILESERVICE_SERVICE}
-  ${ART_FRAMEWORK_SERVICES_OPTIONAL}
-  ${FHICLCPP}
-  ${CETLIB}
+  art_Framework_Services_Registry
+  art_Framework_Services_Optional_TFileService_service
+  art_Framework_Services_Optional
+  fhiclcpp
+  cetlib
   ${CLHEP}
 )
 
 simple_plugin( HelloWorld "module"
-  ${ART_FRAMEWORK_CORE}
-  ${ART_FRAMEWORK_PRINCIPAL}
+  art_Framework_Core
+  art_Framework_Principal
   art_Persistency_Common canvas_Persistency_Common
   )
 
@@ -75,7 +75,7 @@ simple_plugin( EventDisplay "module"
   toyExperiment_Analyzers
   toyExperiment_Utilities
   ${COMMON_LIBRARIES}
-  ${MF_MESSAGELOGGER}
+  MF_MessageLogger
   ${ROOT_GRAF}
   ${ROOT_GPAD}
   ${ROOT_HIST}
