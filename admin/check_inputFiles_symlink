@@ -7,7 +7,11 @@ if [[ -z "${CETPKG_SOURCE}" ]]; then
   exit 1
 fi
 
+if [[ -z "${MRB_SOURCE}" ]]; then
 link_src=${CETPKG_SOURCE}/toyExperiment/inputFiles
+else
+link_src=${MRB_SOURCE}/toyExperiment/toyExperiment/inputFiles
+fi
 
 if [[ ! -d "${link_src}" ]]; then
   cat 1>&2 <<EOF

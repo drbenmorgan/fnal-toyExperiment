@@ -3,11 +3,11 @@ art_make(
   LIB_LIBRARIES toyExperiment_Utilities
   SERVICE_LIBRARIES
   toyExperiment_Conditions
-  ${ART_FRAMEWORK_CORE}
-  ${ART_FRAMEWORK_PRINCIPAL}
+  art_Framework_Core
+  art_Framework_Principal
   art_Persistency_Common canvas_Persistency_Common
 	art_Persistency_Provenance canvas_Persistency_Provenance
-  ${ART_FRAMEWORK_SERVICES_REGISTRY}
+  art_Framework_Services_Registry
   art_Utilities canvas_Utilities
   ${CLHEP}
   )

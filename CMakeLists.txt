@@ -9,17 +9,18 @@
 # use cmake 2.8 or later
 cmake_minimum_required (VERSION 2.8)
 
+project(toyexperiment)
+
 # cetbuildtools contains our cmake modules
 SET ( CETBUILDTOOLS_VERSION $ENV{CETBUILDTOOLS_VERSION} )
 IF (NOT CETBUILDTOOLS_VERSION)
     MESSAGE (FATAL_ERROR "ERROR: setup cetbuildtools to get the cmake modules")
 ENDIF()
 
-set(CMAKE_MODULE_PATH
-#          ${CMAKE_PROJECT_DIR}/Modules
-          $ENV{CANVAS_DIR}/Modules
-		      $ENV{CETBUILDTOOLS_DIR}/Modules
-		      ${CMAKE_MODULE_PATH})
+set(CMAKE_MODULE_PATH $ENV{ART_DIR}/Modules
+                      $ENV{CANVAS_DIR}/Modules
+                      $ENV{CETBUILDTOOLS_DIR}/Modules
+                      ${CMAKE_MODULE_PATH})
 
 include(CetCMakeEnv)
 cet_cmake_env()
@@ -30,8 +31,10 @@ cet_report_compiler_flags()
 
 # Versions are specified in the ups/product_deps file
 find_ups_product( art )
+find_ups_product( clhep )
 find_ups_product( cetbuildtools )
 find_ups_root( )
+find_ups_boost( )
 
 # include search path
 # notice use of ENV to invoke an external variable

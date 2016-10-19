@@ -4,11 +4,10 @@ art_make(
   SERVICE_LIBRARIES
   toyExperiment_PDT
   toyExperiment_Utilities
-  ${ART_FRAMEWORK_CORE}
-  ${ART_FRAMEWORK_PRINCIPAL}
+  art_Framework_Principal
   art_Persistency_Common canvas_Persistency_Common
   art_Persistency_Provenance canvas_Persistency_Provenance
-  ${ART_FRAMEWORK_SERVICES_REGISTRY}
+  art_Framework_Services_Registry
   art_Utilities canvas_Utilities
   )
 
