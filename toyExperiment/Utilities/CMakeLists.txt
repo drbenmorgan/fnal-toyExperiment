@@ -4,8 +4,8 @@ art_make(
   art_Persistency_Provenance canvas_Persistency_Provenance
   art_Utilities canvas_Utilities
   ${CLHEP}
-  ${FHICLCPP}
-  ${CETLIB}
+  fhiclcpp
+  cetlib
   ${Boost_SYSTEM_LIBRARY}
   )
 

@@ -4,7 +4,7 @@ simple_plugin( EventGenerator "module"
                toyExperiment_Utilities
                toyExperiment_MCDataProducts
                ${ART_FRAMEWORK_CORE}
-               ${ART_FRAMEWORK_PRINCIPAL}
+               art_Framework_Principal
                art_Persistency_Common canvas_Persistency_Common
              )
 
@@ -16,13 +16,13 @@ simple_plugin( DetectorSimulation "module"
                toyExperiment_MCDataProducts
                toyExperiment_RecoDataProducts
                ${ART_FRAMEWORK_CORE}
-               ${ART_FRAMEWORK_PRINCIPAL}
+               art_Framework_Principal
                art_Persistency_Common canvas_Persistency_Common
-               ${ART_FRAMEWORK_SERVICES_REGISTRY}
-               ${ART_FRAMEWORK_SERVICES_OPTIONAL_TFILESERVICE_SERVICE}
-               ${ART_FRAMEWORK_SERVICES_OPTIONAL}
-               ${FHICLCPP}
-               ${CETLIB}
+               art_Framework_Services_Registry
+               art_Framework_Services_Optional_TFileService_service
+               art_Framework_Services_Optional
+               fhiclcpp
+               cetlib
              )
 
 simple_plugin( HitMaker "module"
@@ -32,13 +32,13 @@ simple_plugin( HitMaker "module"
                toyExperiment_MCDataProducts
                toyExperiment_RecoDataProducts
                ${ART_FRAMEWORK_CORE}
-               ${ART_FRAMEWORK_PRINCIPAL}
+               art_Framework_Principal
                art_Persistency_Common canvas_Persistency_Common
-               ${ART_FRAMEWORK_SERVICES_REGISTRY}
-               ${ART_FRAMEWORK_SERVICES_OPTIONAL_TFILESERVICE_SERVICE}
-               ${ART_FRAMEWORK_SERVICES_OPTIONAL}
-               ${FHICLCPP}
-               ${CETLIB}
+               art_Framework_Services_Registry
+               art_Framework_Services_Optional_TFileService_service
+               art_Framework_Services_Optional
+               fhiclcpp
+               cetlib
              )
 
 install_headers()
