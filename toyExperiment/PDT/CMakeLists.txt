@@ -1,4 +1,18 @@
 
+if(DEFINED ENV{CETLIB_EXCEPT_DIR})
+art_make(
+  LIB_LIBRARIES toyExperiment_Utilities
+  SERVICE_LIBRARIES
+  toyExperiment_PDT
+  toyExperiment_Utilities
+  art_Framework_Principal
+  art_Persistency_Common
+  art_Persistency_Provenance
+  art_Framework_Services_Registry
+  art_Utilities
+  canvas
+  )
+else()
 art_make(
   LIB_LIBRARIES toyExperiment_Utilities
   SERVICE_LIBRARIES
@@ -10,6 +24,7 @@ art_make(
   art_Framework_Services_Registry
   art_Utilities canvas_Utilities
   )
+endif()
 
 install_headers()
 install_source()

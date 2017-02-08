@@ -4,6 +4,20 @@ art_make_library(SOURCE EnsureTApplication.cc PlotOrientation.cc
    ${ROOT_CORE}
   )
 
+if(DEFINED ENV{CETLIB_EXCEPT_DIR})
+set(COMMON_LIBRARIES
+  art_Framework_Core
+  art_Framework_Principal
+  art_Persistency_Common
+  art_Framework_Services_Registry
+  art_Framework_Services_Optional_TFileService_service
+  art_Framework_Services_Optional
+  canvas
+  fhiclcpp
+  cetlib cetlib_except
+  ${CLHEP}
+)
+else()
 set(COMMON_LIBRARIES
   art_Framework_Core
   art_Framework_Principal
@@ -15,12 +29,22 @@ set(COMMON_LIBRARIES
   cetlib
   ${CLHEP}
 )
+endif()
 
+if(DEFINED ENV{CETLIB_EXCEPT_DIR})
+simple_plugin( HelloWorld "module"
+  art_Framework_Core
+  art_Framework_Principal
+  art_Persistency_Common
+  canvas
+  )
+else()
 simple_plugin( HelloWorld "module"
   art_Framework_Core
   art_Framework_Principal
   art_Persistency_Common canvas_Persistency_Common
   )
+endif()
 
 simple_plugin( InspectGenParticles "module"
   toyExperiment_PDT_PDT_service

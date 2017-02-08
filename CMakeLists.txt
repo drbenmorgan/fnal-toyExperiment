@@ -36,16 +36,6 @@ find_ups_product( cetbuildtools )
 find_ups_root( )
 find_ups_boost( )
 
-# include search path
-# notice use of ENV to invoke an external variable
-include_directories ( $ENV{LIBSIGCPP_INC}/sigc++-2.0 )
-include_directories ( $ENV{LIBSIGCPP_LIB}/sigc++-2.0/include )
-
-#  Find all the libraries needed by our dependent CMakeList.txt files
-find_library( CPPUNIT NAMES cppunit   PATHS $ENV{CPPUNIT_LIB}   NO_DEFAULT_PATH )
-find_library( SIGC    NAMES sigc-2.0  PATHS $ENV{LIBSIGCPP_LIB} NO_DEFAULT_PATH )
-
-
 message(STATUS "Project is ${product} ${version} ${qualifier}")
 
 # macros for artdaq_dictionary and simple_plugin
