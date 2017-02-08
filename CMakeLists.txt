@@ -36,10 +36,6 @@ find_ups_product( cetbuildtools )
 find_ups_root( )
 find_ups_boost( )
 
-# notice use of ENV to invoke an external variable
-
-
-
 message(STATUS "Project is ${product} ${version} ${qualifier}")
 
 # macros for artdaq_dictionary and simple_plugin
