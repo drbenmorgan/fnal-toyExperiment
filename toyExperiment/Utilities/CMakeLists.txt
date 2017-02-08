@@ -1,3 +1,17 @@
+
+if(DEFINED ENV{CETLIB_EXCEPT_DIR})
+art_make(
+  LIB_LIBRARIES
+  toyExperiment_RecoDataProducts
+  art_Persistency_Provenance
+  art_Utilities
+  ${CLHEP}
+  canvas
+  fhiclcpp
+  cetlib cetlib_except
+  ${Boost_SYSTEM_LIBRARY}
+  )
+else()
 art_make(
   LIB_LIBRARIES
   toyExperiment_RecoDataProducts
@@ -8,6 +22,7 @@ art_make(
   cetlib
   ${Boost_SYSTEM_LIBRARY}
   )
+endif()
 
 install_headers()
 install_source()

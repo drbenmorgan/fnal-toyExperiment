@@ -1,3 +1,19 @@
+
+if(DEFINED ENV{CETLIB_EXCEPT_DIR})
+art_make(
+  LIB_LIBRARIES ${CLHEP}
+    art_Persistency_Provenance
+    art_Persistency_Common
+    canvas
+  DICT_LIBRARIES
+    art_Persistency_Provenance
+    art_Persistency_Common
+    art_Utilities
+    canvas
+    cetlib cetlib_except
+    toyExperiment_MCDataProducts
+  )
+else()
 art_make(
   LIB_LIBRARIES ${CLHEP}
     art_Persistency_Provenance canvas_Persistency_Provenance
@@ -9,6 +25,7 @@ art_make(
     art_Utilities canvas_Utilities
     toyExperiment_MCDataProducts
   )
+endif()
 
 install_headers()
 install_source()
