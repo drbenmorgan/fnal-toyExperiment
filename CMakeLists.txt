@@ -31,6 +31,7 @@ cet_report_compiler_flags()
 
 # Versions are specified in the ups/product_deps file
 find_ups_product( art )
+find_ups_product( messagefacility )
 find_ups_product( clhep )
 find_ups_product( cetbuildtools )
 find_ups_root( )
