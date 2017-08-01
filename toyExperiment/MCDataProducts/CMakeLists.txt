@@ -4,7 +4,6 @@ art_make(
     art_Persistency_Provenance
     art_Persistency_Common
     canvas
-    cetlib  # FIGURE THIS OUT
   DICT_LIBRARIES
     art_Persistency_Provenance
     art_Persistency_Common
