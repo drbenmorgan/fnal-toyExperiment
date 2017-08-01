@@ -8,13 +8,11 @@ tex::TrkHit::TrkHit():
   _shell(0), _z(0), _phi(0), _sz(0), _sphi(0){
 }
 
-#ifndef __GCCXML__
-
 tex::TrkHit::TrkHit( int    shell,
-		       double z,
-		       double phi,
-		       double sz,
-		       double sphi):
+                       double z,
+                       double phi,
+                       double sz,
+                       double sphi):
   _shell(shell), _z(z), _phi(phi), _sz(sz), _sphi(sphi){
 }
 
@@ -27,4 +25,3 @@ std::ostream& tex::operator<<(std::ostream& ost,
       << " sig(phi): "  << hit.sigPhi();
   return ost;
 }
-#endif  // __GCCXML__

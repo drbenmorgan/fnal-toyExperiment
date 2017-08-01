@@ -4,14 +4,6 @@
 //
 // A minimal class to hold information about generated particles.
 //
-// Notes:
-//
-// 1) There is a bad interaction between art::PtrVector and gccxml that is not successfully
-//    hidden behind the #ifndef __GCCXML__ ... #endif.  The result is that the dictionary
-//    for an art::PtrVector<T> can only be generated if the class T contains operator< ;
-//    this is true even though the operator will never be used!  So this class provides
-//    a dummy version of the operator.
-//
 
 #include "toyExperiment/DataProducts/PDGCode.h"
 
@@ -48,11 +40,6 @@ namespace tex {
     CLHEP::HepLorentzVector const& momentum()        const { return  _momentum;           }
 
     void addChild( art::Ptr<GenParticle> const& child );
-
-    // This operator is a do-nothing dummy..  See note 1.
-    bool operator<( GenParticle const&) const{
-      return true;
-    }
 
   private:
 

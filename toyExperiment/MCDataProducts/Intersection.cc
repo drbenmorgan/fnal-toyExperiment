@@ -11,12 +11,10 @@ tex::Intersection::Intersection():
 {
 }
 
-#ifndef __GCCXML__
-
 tex::Intersection::Intersection( int                            shell,
-				 art::Ptr<GenParticle> const&   genTrack,
-				 CLHEP::Hep3Vector const&       position
-				 ):
+                                 art::Ptr<GenParticle> const&   genTrack,
+                                 CLHEP::Hep3Vector const&       position
+                                 ):
   _shell(shell),
   _genTrack(genTrack),
   _position(position)
@@ -32,4 +30,3 @@ tex::operator<<(std::ostream& ost,
       << " Point: "                     << intersec.position();
   return ost;
 }
-#endif  // __GCCXML__

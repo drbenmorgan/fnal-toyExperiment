@@ -11,7 +11,6 @@ tex::FittedHelixData::FittedHelixData():
   hits_(){
 }
 
-#ifndef __GCCXML__
 tex::FittedHelixData::FittedHelixData( Helix               const& helix,
                                          CLHEP::HepSymMatrix const& cov,
                                          hits_type           const& hits ):
@@ -36,4 +35,3 @@ std::ostream& tex::operator<<(std::ostream& ost,
 
   return ost;
 }
-#endif  // __GCCXML__
