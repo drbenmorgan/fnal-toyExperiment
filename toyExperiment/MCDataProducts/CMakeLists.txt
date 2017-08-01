@@ -1,10 +1,10 @@
-
 if(DEFINED ENV{CETLIB_EXCEPT_DIR})
 art_make(
   LIB_LIBRARIES ${CLHEP}
     art_Persistency_Provenance
     art_Persistency_Common
     canvas
+    cetlib  # FIGURE THIS OUT
   DICT_LIBRARIES
     art_Persistency_Provenance
     art_Persistency_Common

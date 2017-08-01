@@ -52,18 +52,22 @@ namespace tex {
     CLHEP::RandFlat   _flat;
     CLHEP::RandGaussQ _gauss;
 
+    // ProductID for TrkHitCollection, to be used in creating
+    // art::Ptrs.
+    art::ProductID _trkHitID;
   };
 
 }
 
 tex::HitMaker::HitMaker( fhicl::ParameterSet const& pset ):
-   _intersectionTags( inputTagsFromStrings( pset.get<std::vector<std::string>>("intersectionTags"))),
+  _intersectionTags( inputTagsFromStrings( pset.get<std::vector<std::string>>("intersectionTags"))),
   _seed(pset.get<int>("seed")),
   _geom(art::ServiceHandle<Geometry>()),
   _engine(createEngine(_seed)),
   _flat(_engine),
-  _gauss(_engine){
-
+  _gauss(_engine),
+  _trkHitID{getProductID<TrkHitCollection>()}
+{
   produces<TrkHitCollection>();
   produces<TrkHitMatch>();
 }
@@ -86,9 +90,6 @@ void tex::HitMaker::produce( art::Event& event ){
   std::unique_ptr<TrkHitMatch> matches(new TrkHitMatch());
   hits->reserve(nHitMax);
 
-  // Product ID of the Assns product to be created.
-  art::ProductID trkHitID(getProductID<TrkHitCollection>(event));
-
   // Access geometry information.
   Tracker const& tracker( _geom->tracker() ) ;
 
@@ -110,7 +111,7 @@ void tex::HitMaker::produce( art::Event& event ){
 
       // Record connection betwween the hit and the intersection from which it was made.
       art::Ptr<Intersection> pintersection( handle, &intersection-&handle->front() );
-      art::Ptr<TrkHit>       phit  ( trkHitID, hits->size()-1, event.productGetter(trkHitID) );
+      art::Ptr<TrkHit>       phit  (_trkHitID, hits->size()-1, event.productGetter(_trkHitID));
       matches->addSingle( phit, pintersection );
 
     }

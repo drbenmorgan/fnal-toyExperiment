@@ -33,9 +33,8 @@ namespace tex {
 
     GenParticle();
 
-#ifndef __GCCXML__
     GenParticle( PDGCode::type                  pdgId,
-		 art::Ptr<GenParticle> const&   parent,
+                 art::Ptr<GenParticle> const&   parent,
                  CLHEP::Hep3Vector const&       position,
                  CLHEP::HepLorentzVector const& momentum );
 
@@ -55,8 +54,6 @@ namespace tex {
       return true;
     }
 
-#endif  // __GCCXML__
-
   private:
 
     // PDG particle ID code.
@@ -72,10 +69,8 @@ namespace tex {
 
   };
 
-#ifndef __GCCXML__
   std::ostream& operator<<(std::ostream& ost,
-			   const tex::GenParticle& genp );
-#endif  // __GCCXML__
+                           const tex::GenParticle& genp );
 
 }
 

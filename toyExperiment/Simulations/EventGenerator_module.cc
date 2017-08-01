@@ -52,6 +52,9 @@ namespace tex {
     CLHEP::RandPoissonQ                         _poisson;
     RandomUnitSphere                            _unitSphere;
 
+    // Product Id of the data product to be created; needed for persistent pointers.
+    art::ProductID _gensID{getProductID<GenParticleCollection>()};
+
     // Helper functions.
     void generateBG    ( int nExtra, GenParticleCollection& gens);
     void generateSignal( GenParticleCollection& gens, art::Event& );
@@ -130,9 +133,6 @@ void tex::EventGenerator::generateBG( int n , tex::GenParticleCollection& gens )
 
 void tex::EventGenerator::generateSignal( tex::GenParticleCollection& gens, art::Event& event ){
 
-  // Product Id of the data product to be created; needed for persistent pointers.
-  art::ProductID gensID(getProductID<GenParticleCollection>(event));
-
   // Generate the 4 momentum of a phi, ignoring its natural width.
   double p              = _flat.fire( _pmin, _pmax);
   CLHEP::Hep3Vector mom = _unitSphere.fire(p);
@@ -148,7 +148,7 @@ void tex::EventGenerator::generateSignal( tex::GenParticleCollection& gens, art:
   gens.push_back ( GenParticle( PDGCode::phi, art::Ptr<GenParticle>(), origin, lmom ));
 
   // Particles 1 and 2, have a parent, it is particle 0;
-  art::Ptr<GenParticle> parent( gensID, idxPhi, event.productGetter(gensID));
+  art::Ptr<GenParticle> parent( _gensID, idxPhi, event.productGetter(_gensID));
 
   // Decay the phi and add its decay products to the output collection.
   Decay2Body decay( lmom, _mka, _mka, _unitSphere );
@@ -156,8 +156,8 @@ void tex::EventGenerator::generateSignal( tex::GenParticleCollection& gens, art:
   gens.push_back ( GenParticle( PDGCode::K_minus, parent, origin, decay.p2() ));
 
   // Tell particle 0 about its children.
-  gens.at(idxPhi).addChild( art::Ptr<GenParticle>( gensID, idxKplus,  event.productGetter(gensID)) );
-  gens.at(idxPhi).addChild( art::Ptr<GenParticle>( gensID, idxKminus, event.productGetter(gensID)) );
+  gens.at(idxPhi).addChild( art::Ptr<GenParticle>( _gensID, idxKplus,  event.productGetter(_gensID)) );
+  gens.at(idxPhi).addChild( art::Ptr<GenParticle>( _gensID, idxKminus, event.productGetter(_gensID)) );
 
 }
 
