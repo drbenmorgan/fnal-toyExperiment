@@ -8,8 +8,6 @@
 tex::DetectorStatus::DetectorStatus( ):_records(){
 }
 
-#ifndef __GCCXML__
-
 tex::DetectorStatus::DetectorStatus( size_t n):_records(){
   _records.reserve(n);
 }
@@ -25,5 +23,3 @@ void tex::DetectorStatus::printAll( std::ostream& ost ) const {
     ost << "Status Record: " << i << ": " << _records[i] << std::endl;
   }
 }
-
-#endif  // __GCCXML__

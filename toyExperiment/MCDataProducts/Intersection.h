@@ -21,16 +21,14 @@ namespace tex {
 
     Intersection();
 
-#ifndef __GCCXML__
     Intersection( int                            shell,
-		 art::Ptr<GenParticle> const&   genTrack,
+                 art::Ptr<GenParticle> const&   genTrack,
                  CLHEP::Hep3Vector const&       position
                );
 
     int                          shell()    const { return _shell;    }
     art::Ptr<GenParticle> const& genTrack() const { return _genTrack; }
     CLHEP::Hep3Vector const&     position() const { return _position; }
-#endif // __GCCXML__
 
     private:
 
@@ -40,10 +38,8 @@ namespace tex {
 
   };
 
-#ifndef __GCCXML__
   std::ostream& operator<<(std::ostream& ost,
-			   const Intersection& hit );
-#endif // __GCCXML__
+                           const Intersection& hit );
 
 }
 

@@ -37,6 +37,11 @@ find_ups_product( cetbuildtools )
 find_ups_root( )
 find_ups_boost( )
 
+check_ups_version(art "$ENV{ART_VERSION}" v2_08_00 PRODUCT_OLDER_VAR GET_PRODUCT_ID_WITH_EVENT)
+if (GET_PRODUCT_ID_WITH_EVENT)
+  add_definitions(-DGET_PRODUCT_ID_WITH_EVENT)
+endif()
+
 message(STATUS "Project is ${product} ${version} ${qualifier}")
 
 # macros for artdaq_dictionary and simple_plugin

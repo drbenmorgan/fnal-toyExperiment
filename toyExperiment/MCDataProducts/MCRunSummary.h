@@ -16,13 +16,11 @@ namespace tex {
 
     MCRunSummary();
 
-#ifndef __GCCXML__
     void increment ( size_t ngens, size_t nwith);
     void clear();
 
     size_t nAlive() const { return _nAlive; }
     size_t nGood()  const { return _nGood;  }
-#endif  // __GCCXML__
 
   private:
 
@@ -35,11 +33,8 @@ namespace tex {
 
   };
 
-#ifndef __GCCXML__
   std::ostream& operator<<(std::ostream& ost,
-			   const MCRunSummary& sum );
-#endif  // __GCCXML__
-
+                           const MCRunSummary& sum );
 }
 
 #endif /* MCDataProducts_MCRunSummary_h */

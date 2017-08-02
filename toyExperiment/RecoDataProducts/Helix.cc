@@ -10,8 +10,6 @@
 
 tex::Helix::Helix ():par_(dim,0){}
 
-#ifndef __GCCXML__
-
 tex::Helix::Helix ( CLHEP::HepVector const& v):
   par_(v){
 }
@@ -140,4 +138,3 @@ tex::operator<<(std::ostream& ost, tex::Helix const& helix ){
 
   return ost;
 }
-#endif  // __GCCXML__

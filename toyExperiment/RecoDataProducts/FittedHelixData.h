@@ -27,7 +27,6 @@ namespace tex {
 
     FittedHelixData();
 
-#ifndef __GCCXML__
     FittedHelixData( Helix               const& helix,
                      CLHEP::HepSymMatrix const& cov,
                      hits_type           const& hits );
@@ -37,7 +36,6 @@ namespace tex {
     hits_type           const& hits()  const { return hits_;  }
 
     art::Ptr<TrkHit>    const& hit ( size_t i ) const { return hits_.at(i); }
-#endif  // __GCCXML__
 
   private:
 
@@ -47,11 +45,8 @@ namespace tex {
 
   };
 
-#ifndef __GCCXML__
   std::ostream& operator<<(std::ostream& ost,
                            const tex::FittedHelixData& fit );
-#endif  // __GCCXML__
-
 }
 
 #endif /* RecoDataProducts_FittedHelixData_h */

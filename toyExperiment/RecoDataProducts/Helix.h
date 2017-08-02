@@ -50,8 +50,6 @@ namespace tex {
 
     Helix ();
 
-#ifndef __GCCXML__
-
     Helix ( CLHEP::HepVector const& v);
 
     Helix ( double cu, double phi0, double d0, double ct, double z0);
@@ -117,7 +115,6 @@ namespace tex {
     double radiusToCenter() const{
       return std::abs(d0() - 0.5/cu());
     }
-#endif  // __GCCXML__
 
   private:
 
@@ -125,10 +122,7 @@ namespace tex {
 
   };
 
-#ifndef __GCCXML__
   std::ostream& operator<<(std::ostream& ost,
                            const tex::Helix& helix );
-#endif  // __GCCXML__
-
 }
 #endif  /* RecoDataProducts_Helix_h */

@@ -14,20 +14,18 @@ namespace tex {
   public:
 
     TrkHit();
-#ifndef __GCCXML__
 
     TrkHit( int    shell,
-	    double z,
-	    double phi,
-	    double sz,
-	    double zphi);
+            double z,
+            double phi,
+            double sz,
+            double zphi);
 
     int    shell()  const { return _shell; }
     double z()      const { return _z;     }
     double phi()    const { return _phi;   }
     double sigZ()   const { return _sz;    }
     double sigPhi() const { return _sphi;  }
-#endif  // __GCCXML__
 
   private:
 
@@ -39,12 +37,8 @@ namespace tex {
 
   };
 
-#ifndef __GCCXML__
   std::ostream& operator<<(std::ostream& ost,
                            const tex::TrkHit& hit );
-#endif  // __GCCXML__
-
 }
 
 #endif /* RecoDataProducts_TrkHit_h */
-
