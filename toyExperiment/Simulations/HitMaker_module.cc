@@ -87,7 +87,13 @@ void tex::HitMaker::produce( art::Event& event ){
   hits->reserve(nHitMax);
 
   // Product ID of the Assns product to be created.
-  art::ProductID trkHitID(getProductID<TrkHitCollection>(event));
+  art::ProductID trkHitID(
+#ifdef GET_PRODUCT_ID_WITH_EVENT
+                          getProductID<TrkHitCollection>(event)
+#else
+                          getProductID<TrkHitCollection>()
+#endif
+                          );
 
   // Access geometry information.
   Tracker const& tracker( _geom->tracker() ) ;

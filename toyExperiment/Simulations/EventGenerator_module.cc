@@ -131,7 +131,13 @@ void tex::EventGenerator::generateBG( int n , tex::GenParticleCollection& gens )
 void tex::EventGenerator::generateSignal( tex::GenParticleCollection& gens, art::Event& event ){
 
   // Product Id of the data product to be created; needed for persistent pointers.
-  art::ProductID gensID(getProductID<GenParticleCollection>(event));
+  art::ProductID gensID(
+#ifdef GET_PRODUCT_ID_WITH_EVENT
+                        getProductID<GenParticleCollection>(event)
+#else
+                        getProductID<GenParticleCollection>()
+#endif
+                        );
 
   // Generate the 4 momentum of a phi, ignoring its natural width.
   double p              = _flat.fire( _pmin, _pmax);
