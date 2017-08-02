@@ -58,7 +58,6 @@ namespace tex {
 
   std::ostream& operator<<(std::ostream& ost,
                            const tex::GenParticle& genp );
-
 }
 
 #endif /* MCDataProducts_GenParticle_h */

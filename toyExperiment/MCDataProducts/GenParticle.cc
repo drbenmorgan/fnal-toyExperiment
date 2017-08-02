@@ -13,10 +13,11 @@ tex::GenParticle::GenParticle():
   _momentum(){
   }
 
+#ifndef __GCCXML__
 tex::GenParticle::GenParticle( PDGCode::type                  pdgId,
-                                 art::Ptr<GenParticle> const&   parent,
-                                 CLHEP::Hep3Vector const&       position,
-                                 CLHEP::HepLorentzVector const& momentum):
+				 art::Ptr<GenParticle> const&   parent,
+				 CLHEP::Hep3Vector const&       position,
+				 CLHEP::HepLorentzVector const& momentum):
   _pdgId(pdgId),
   _parent(parent),
   _children(),
@@ -41,7 +42,7 @@ tex::operator<<(std::ostream& ost,
     ost << "none ";
   } else{
     ost << genp.parent().id()  << "."
-        << genp.parent().key() << " ";
+	<< genp.parent().key() << " ";
   }
   ost << " children: ";
 
@@ -58,3 +59,5 @@ tex::operator<<(std::ostream& ost,
   ost << " ]";
   return ost;
 }
+
+#endif
