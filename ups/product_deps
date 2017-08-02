@@ -1,6 +1,6 @@
 # The parent line must be the first non-comment line in the file
 # This line defines the product name and version
-parent	toyExperiment	v0_02_06
+parent	toyExperiment	v0_03_00
 defaultqual	s51:e14
 
 # These optional lines define the installed directories where headers,
