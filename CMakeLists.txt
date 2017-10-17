@@ -12,13 +12,13 @@ cmake_minimum_required (VERSION 2.8)
 project(toyexperiment)
 
 # cetbuildtools contains our cmake modules
-SET ( CETBUILDTOOLS_VERSION $ENV{CETBUILDTOOLS_VERSION} )
+SET(CETBUILDTOOLS_VERSION $ENV{CETBUILDTOOLS_VERSION})
 IF (NOT CETBUILDTOOLS_VERSION)
     MESSAGE (FATAL_ERROR "ERROR: setup cetbuildtools to get the cmake modules")
 ENDIF()
 
 set(CMAKE_MODULE_PATH $ENV{ART_DIR}/Modules
-                      $ENV{CANVAS_DIR}/Modules
+                      $ENV{CANVAS_IO_DIR}/Modules
                       $ENV{CETBUILDTOOLS_DIR}/Modules
                       ${CMAKE_MODULE_PATH})
 
@@ -30,12 +30,12 @@ cet_set_compiler_flags(DIAGS VIGILANT WERROR NO_UNDEFINED EXTRA_FLAGS -pedantic)
 cet_report_compiler_flags()
 
 # Versions are specified in the ups/product_deps file
-find_ups_product( art )
-find_ups_product( messagefacility )
-find_ups_product( clhep )
-find_ups_product( cetbuildtools )
-find_ups_root( )
-find_ups_boost( )
+find_ups_product(art)
+find_ups_product(messagefacility)
+find_ups_product(clhep)
+find_ups_product(cetbuildtools)
+find_ups_root()
+find_ups_boost()
 
 check_ups_version(art "$ENV{ART_VERSION}" v2_08_00 PRODUCT_OLDER_VAR GET_PRODUCT_ID_WITH_EVENT)
 if (GET_PRODUCT_ID_WITH_EVENT)
