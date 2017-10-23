@@ -20,6 +20,7 @@ bindir      fq_dir      bin
 
 #
 product		version
+art             v2_08_04      s56
 art             v2_09_00      s55
 art             v2_08_03      s54
 art             v2_08_02      s53
@@ -42,87 +43,91 @@ end_product_list
 # e5  - with gcc 4.8.2 and -std=c++11
 # -nq- here means there is no qualifier
 # a - here means the dependent product is not required by the parent and will not be setup
-qualifier	  art		notes
-s55:e15:debug	 e15:debug
-s55:e15:prof	 e15:prof
+qualifier         art		notes
+s56:e14:debug    e14:debug
+s56:e14:prof     e14:prof
+s56:nu:e14:debug nu:e14:debug
+s56:nu:e14:prof  nu:e14:prof
+s55:e15:debug    e15:debug
+s55:e15:prof     e15:prof
 s55:nu:e15:debug nu:e15:debug
-s55:nu:e15:prof	 nu:e15:prof
-s55:e14:debug	 e14:debug
-s55:e14:prof	 e14:prof
+s55:nu:e15:prof  nu:e15:prof
+s55:e14:debug    e14:debug
+s55:e14:prof     e14:prof
 s55:nu:e14:debug nu:e14:debug
-s55:nu:e14:prof	 nu:e14:prof
-s54:e14:debug	 e14:debug
-s54:e14:prof	 e14:prof
+s55:nu:e14:prof  nu:e14:prof
+s54:e14:debug    e14:debug
+s54:e14:prof     e14:prof
 s54:nu:e14:debug nu:e14:debug
-s54:nu:e14:prof	 nu:e14:prof
-s53:e14:debug	 e14:debug
-s53:e14:prof	 e14:prof
+s54:nu:e14:prof  nu:e14:prof
+s53:e14:debug    e14:debug
+s53:e14:prof     e14:prof
 s53:nu:e14:debug nu:e14:debug
-s53:nu:e14:prof	 nu:e14:prof
-s50:e14:debug	 e14:debug
-s50:e14:prof	 e14:prof
+s53:nu:e14:prof  nu:e14:prof
+s50:e14:debug    e14:debug
+s50:e14:prof     e14:prof
 s50:nu:e14:debug nu:e14:debug
-s50:nu:e14:prof	 nu:e14:prof
-s48:e14:debug	 e14:debug
-s48:e14:prof	 e14:prof
+s50:nu:e14:prof  nu:e14:prof
+s48:e14:debug    e14:debug
+s48:e14:prof     e14:prof
 s48:nu:e14:debug nu:e14:debug
-s48:nu:e14:prof	 nu:e14:prof
-s48:e10:debug	 e10:debug
-s48:e10:prof	 e10:prof
+s48:nu:e14:prof  nu:e14:prof
+s48:e10:debug    e10:debug
+s48:e10:prof     e10:prof
 s48:nu:e10:debug nu:e10:debug
-s48:nu:e10:prof	 nu:e10:prof
-s47:e14:debug	 e14:debug
-s47:e14:prof	 e14:prof
+s48:nu:e10:prof  nu:e10:prof
+s47:e14:debug    e14:debug
+s47:e14:prof     e14:prof
 s47:nu:e14:debug nu:e14:debug
-s47:nu:e14:prof	 nu:e14:prof
-s47:e10:debug	 e10:debug
-s47:e10:prof	 e10:prof
+s47:nu:e14:prof  nu:e14:prof
+s47:e10:debug    e10:debug
+s47:e10:prof     e10:prof
 s47:nu:e10:debug nu:e10:debug
-s47:nu:e10:prof	 nu:e10:prof
-s46:e14:debug	 e14:debug
-s46:e14:prof	 e14:prof
+s47:nu:e10:prof  nu:e10:prof
+s46:e14:debug    e14:debug
+s46:e14:prof     e14:prof
 s46:nu:e14:debug nu:e14:debug
-s46:nu:e14:prof	 nu:e14:prof
-s46:e10:debug	 e10:debug
-s46:e10:prof	 e10:prof
+s46:nu:e14:prof  nu:e14:prof
+s46:e10:debug    e10:debug
+s46:e10:prof     e10:prof
 s46:nu:e10:debug nu:e10:debug
-s46:nu:e10:prof	 nu:e10:prof
-s45:e14:debug	 e14:debug
-s45:e14:prof	 e14:prof
+s46:nu:e10:prof  nu:e10:prof
+s45:e14:debug    e14:debug
+s45:e14:prof     e14:prof
 s45:nu:e14:debug nu:e14:debug
-s45:nu:e14:prof	 nu:e14:prof
-s45:e10:debug	 e10:debug
-s45:e10:prof	 e10:prof
+s45:nu:e14:prof  nu:e14:prof
+s45:e10:debug    e10:debug
+s45:e10:prof     e10:prof
 s45:nu:e10:debug nu:e10:debug
-s45:nu:e10:prof	 nu:e10:prof
-s44:e10:debug	 e10:debug
-s44:e10:prof	 e10:prof
+s45:nu:e10:prof  nu:e10:prof
+s44:e10:debug    e10:debug
+s44:e10:prof     e10:prof
 s44:nu:e10:debug nu:e10:debug
-s44:nu:e10:prof	 nu:e10:prof
-s43:e10:debug	 e10:debug
-s43:e10:prof	 e10:prof
+s44:nu:e10:prof  nu:e10:prof
+s43:e10:debug    e10:debug
+s43:e10:prof     e10:prof
 s43:nu:e10:debug nu:e10:debug
-s43:nu:e10:prof	 nu:e10:prof
-s42:e10:debug	 e10:debug
-s42:e10:prof	 e10:prof
+s43:nu:e10:prof  nu:e10:prof
+s42:e10:debug    e10:debug
+s42:e10:prof     e10:prof
 s42:nu:e10:debug nu:e10:debug
-s42:nu:e10:prof	 nu:e10:prof
-s41:e10:debug	 e10:debug
-s41:e10:prof	 e10:prof
+s42:nu:e10:prof  nu:e10:prof
+s41:e10:debug    e10:debug
+s41:e10:prof     e10:prof
 s41:nu:e10:debug nu:e10:debug
-s41:nu:e10:prof	 nu:e10:prof
-s40:e10:debug	 e10:debug
-s40:e10:prof	 e10:prof
+s41:nu:e10:prof  nu:e10:prof
+s40:e10:debug    e10:debug
+s40:e10:prof     e10:prof
 s40:nu:e10:debug nu:e10:debug
-s40:nu:e10:prof	 nu:e10:prof
-s39:e10:debug	 e10:debug
-s39:e10:prof	 e10:prof
+s40:nu:e10:prof  nu:e10:prof
+s39:e10:debug    e10:debug
+s39:e10:prof     e10:prof
 s39:nu:e10:debug nu:e10:debug
-s39:nu:e10:prof	 nu:e10:prof
-s38:e10:debug	 e10:debug
-s38:e10:prof	 e10:prof
+s39:nu:e10:prof  nu:e10:prof
+s38:e10:debug    e10:debug
+s38:e10:prof     e10:prof
 s38:nu:e10:debug nu:e10:debug
-s38:nu:e10:prof	 nu:e10:prof
+s38:nu:e10:prof  nu:e10:prof
 end_qualifier_list
 
 table_fragment_begin
