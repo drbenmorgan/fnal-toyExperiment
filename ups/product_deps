@@ -1,7 +1,7 @@
 # The parent line must be the first non-comment line in the file
 # This line defines the product name and version
-parent	toyExperiment	v0_03_07
-defaultqual	s58:e14
+parent	toyExperiment	v0_03_08
+defaultqual	s60:e14
 
 # These optional lines define the installed directories where headers,
 # libraries, and executables will be found.
@@ -20,6 +20,7 @@ bindir      fq_dir      bin
 
 #
 product		version
+art             v2_09_03      s60
 art             v2_09_02      s58
 art             v2_09_01      s57
 art             v2_08_04      s56
@@ -48,6 +49,14 @@ end_product_list
 # -nq- here means there is no qualifier
 # a - here means the dependent product is not required by the parent and will not be setup
 qualifier         art		notes
+s60:e15:debug    e15:debug
+s60:e15:prof     e15:prof
+s60:nu:e15:debug nu:e15:debug
+s60:nu:e15:prof  nu:e15:prof
+s60:e14:debug    e14:debug
+s60:e14:prof     e14:prof
+s60:nu:e14:debug nu:e14:debug
+s60:nu:e14:prof  nu:e14:prof
 s58:e15:debug    e15:debug
 s58:e15:prof     e15:prof
 s58:nu:e15:debug nu:e15:debug
