@@ -29,7 +29,7 @@ double tex::RecoTrk::sigmaMass() const{
   double m = _momentum.mag();
 
   // Derivatives of the mass wrt the 4-vector components.
-  std::array<double,dimension> dm{ - _momentum.x()/m, - _momentum.y()/m, - _momentum.z()/m, _momentum.e()/m };
+  std::array<double,dimension> dm{{ - _momentum.x()/m, - _momentum.y()/m, - _momentum.z()/m, _momentum.e()/m }};
 
   // Alias for typographic convenience.
   CLHEP::HepSymMatrix const& v(_momCov);
@@ -57,7 +57,7 @@ double tex::RecoTrk::sigmaP() const{
   double p = _momentum.vect().mag();
 
   // Derivatives of the mass wrt the 4-vector components.
-  std::array<double,3> d{_momentum.x()/p, _momentum.y()/p, _momentum.z()/p};
+  std::array<double,3> d{{_momentum.x()/p, _momentum.y()/p, _momentum.z()/p}};
 
   // Alias for typographic convenience.
   CLHEP::HepSymMatrix const& v(_momCov);
