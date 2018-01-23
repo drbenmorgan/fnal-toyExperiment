@@ -51,7 +51,11 @@ namespace tex {
     // Random number distributions.
     CLHEP::RandGaussQ _gauss;
 
-    int _printCount;
+    int _printCount
+#ifdef __clang__
+    [[gnu::unused]]
+#endif
+    ;
 
     typedef std::map<art::Ptr<GenParticle>,std::vector<art::Ptr<TrkHit> > > hitmap_type;
 

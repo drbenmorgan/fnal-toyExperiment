@@ -44,7 +44,11 @@ namespace tex {
     TH1F* _hDzInner;
     TH1F* _hDzOuter;
 
-    int _printCount;
+    int _printCount
+#ifdef __clang__
+    [[gnu::unused]]
+#endif
+    ;
   };
 
 }
