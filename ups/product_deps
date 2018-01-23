@@ -1,6 +1,6 @@
 # The parent line must be the first non-comment line in the file
 # This line defines the product name and version
-parent	toyExperiment	v0_03_12
+parent	toyExperiment	v0_03_13
 defaultqual	s63:e15
 
 # These optional lines define the installed directories where headers,
@@ -20,7 +20,7 @@ bindir      fq_dir      bin
 
 #
 product		version
-art             v2_10_00      s63
+art             v2_10_01      s63
 art             v2_09_06      s62
 art             v2_09_04      s61
 art             v2_09_03      s60
