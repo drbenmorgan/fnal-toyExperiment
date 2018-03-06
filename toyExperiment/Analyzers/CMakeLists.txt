@@ -1,3 +1,8 @@
+if(ALT_CMAKE)
+  include(altCMakeLists.cmake)
+  return()
+endif()
+
 art_make_library(SOURCE EnsureTApplication.cc PlotOrientation.cc
                         WaitFor.cc
    LIBRARIES
