@@ -1,3 +1,8 @@
+if(ALT_CMAKE)
+  include(altCMakeLists.cmake)
+  return()
+endif()
+
 # ======================================================================
 #  toy experiment main build file.
 #
