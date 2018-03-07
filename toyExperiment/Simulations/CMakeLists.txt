@@ -1,3 +1,7 @@
+if(ALT_CMAKE)
+  include(altCMakeLists.cmake)
+  return()
+endif()
 
 if(DEFINED ENV{CETLIB_EXCEPT_DIR})
 simple_plugin( EventGenerator "module"

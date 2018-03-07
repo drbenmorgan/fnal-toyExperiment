@@ -15,7 +15,7 @@ include(CetCompilerSettings)
 # Add everything that the product uses directly
 find_package(art 2.10 REQUIRED)
 find_package(canvas_root_io REQUIRED)
-
+find_package(ROOT 6 REQUIRED)
 
 # macros for art_dictionary and simple_plugin
 include(ArtDictionary)
